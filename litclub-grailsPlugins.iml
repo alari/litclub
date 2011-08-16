@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="web" name="GrailsWeb">
+      <configuration>
+        <webroots>
+          <root url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/jquery-1.6.1.1/web-app" relative="/" />
+        </webroots>
+        <sourceRoots />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/db-reverse-engineer-0.3">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/db-reverse-engineer-0.3/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/db-reverse-engineer-0.3/src/groovy" isTestSource="false" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/db-reverse-engineer-0.3/target/classes" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/db-reverse-engineer-0.3/target/test-classes" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/db-reverse-engineer-0.3/web-app/plugins" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/hibernate-2.0.0.M1">
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/hibernate-2.0.0.M1/target/classes" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/hibernate-2.0.0.M1/target/test-classes" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/hibernate-2.0.0.M1/web-app/plugins" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/jquery-1.6.1.1">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/jquery-1.6.1.1/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/jquery-1.6.1.1/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/jquery-1.6.1.1/grails-app/taglib" isTestSource="false" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/jquery-1.6.1.1/target/classes" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/jquery-1.6.1.1/target/test-classes" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/jquery-1.6.1.1/web-app/plugins" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/resources-1.0.2">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/resources-1.0.2/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/resources-1.0.2/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/resources-1.0.2/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/resources-1.0.2/grails-app/taglib" isTestSource="false" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/resources-1.0.2/target/classes" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/resources-1.0.2/target/test-classes" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/resources-1.0.2/web-app/plugins" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/tomcat-2.0.0.M1">
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/tomcat-2.0.0.M1/target/classes" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/tomcat-2.0.0.M1/target/test-classes" />
+      <excludeFolder url="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/tomcat-2.0.0.M1/web-app/plugins" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-2.0.0.M1" level="application" />
+    <orderEntry type="module-library" exported="">
+      <library name="Grails User Library (litclub-grailsPlugins)">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.ivy2/cache/mysql/mysql-connector-java/jars/mysql-connector-java-5.1.16.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/freemarker/freemarker/jars/freemarker-2.3.8.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.hibernate/hibernate-tools/jars/hibernate-tools-3.2.4.GA.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.hibernate/jtidy/jars/jtidy-r8-20060801.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.beanshell/bsh/jars/bsh-2.0b4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
