@@ -26,11 +26,15 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
+
+       mavenRepo 'http://groovypp.artifactoryonline.com/groovypp/libs-releases-local'
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
          runtime 'mysql:mysql-connector-java:5.1.16'
+
+      compile 'org.mbte.groovypp:groovypp-all-nodep:0.4.296_1.8.0'
     }
 
     plugins {
@@ -39,5 +43,7 @@ grails.project.dependency.resolution = {
         compile ":resources:1.0.2"
 
         build ":tomcat:$grailsVersion"
+
+      //runtime ':aws:1.1.9.2'
     }
 }

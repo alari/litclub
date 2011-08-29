@@ -14,26 +14,25 @@
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
-grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
-                      xml: ['text/xml', 'application/xml'],
-                      text: 'text/plain',
-                      js: 'text/javascript',
-                      rss: 'application/rss+xml',
-                      atom: 'application/atom+xml',
-                      css: 'text/css',
-                      csv: 'text/csv',
-                      all: '*/*',
-                      json: ['application/json','text/json'],
-                      form: 'application/x-www-form-urlencoded',
-                      multipartForm: 'multipart/form-data'
-                    ]
+grails.mime.types = [html: ['text/html', 'application/xhtml+xml'],
+    xml: ['text/xml', 'application/xml'],
+    text: 'text/plain',
+    js: 'text/javascript',
+    rss: 'application/rss+xml',
+    atom: 'application/atom+xml',
+    css: 'text/css',
+    csv: 'text/csv',
+    all: '*/*',
+    json: ['application/json', 'text/json'],
+    form: 'application/x-www-form-urlencoded',
+    multipartForm: 'multipart/form-data'
+]
 
 // URL Mapping Cache Max Size, defaults to 5000
 //grails.urlmapping.cache.maxsize = 1000
 
 // What URL patterns should be processed by the resources plugin
 grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
-
 
 // The default codec used to encode data with ${}
 grails.views.default.codec = "none" // none, html, base64
@@ -51,42 +50,112 @@ grails.enable.native2ascii = true
 // packages to include in Spring bean scanning
 grails.spring.bean.packages = []
 // whether to disable processing of multi part requests
-grails.web.disable.multipart=false
+grails.web.disable.multipart = false
 
 // request parameters to mask when logging exceptions
 grails.exceptionresolver.params.exclude = ['password']
 
+// To convert closures into methods
+grails.compile.artefacts.closures.convert = true
+
 // set per-environment serverURL stem for creating absolute links
 environments {
-    development {
-        grails.logging.jul.usebridge = true
-    }
-    production {
-        grails.logging.jul.usebridge = false
-        grails.serverURL = "http://www.changeme.com"
-    }
+  development {
+    grails.logging.jul.usebridge = true
+    grails.mail.port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
+  }
+  production {
+    grails.logging.jul.usebridge = false
+    grails.serverURL = "http://litclub.cloudfoundry.com"
+    grails.mail.port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
+
+    grails.plugin.cloudfoundry.target = "api.cloudfoundry.com"
+  }
+  test {
+    grails.mail.port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
+  }
 }
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console
-    // appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+  // Example of changing the log pattern for the default console
+  // appender:
+  //
+  //appenders {
+  //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+  //}
 
-    error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
-           'org.codehaus.groovy.grails.web.pages', //  GSP
-           'org.codehaus.groovy.grails.web.sitemesh', //  layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping', // URL mapping
-           'org.codehaus.groovy.grails.commons', // core / classloading
-           'org.codehaus.groovy.grails.plugins', // plugins
-           'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+  error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
+      'org.codehaus.groovy.grails.web.pages', //  GSP
+      'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+      'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+      'org.codehaus.groovy.grails.web.mapping', // URL mapping
+      'org.codehaus.groovy.grails.commons', // core / classloading
+      'org.codehaus.groovy.grails.plugins', // plugins
+      'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+      'org.springframework',
+      'org.hibernate',
+      'net.sf.ehcache.hibernate'
 
-    warn   'org.mortbay.log'
+  warn 'org.mortbay.log'
 }
+
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'litclub.Person'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'litclub.PersonRole'
+grails.plugins.springsecurity.authority.className = 'litclub.Role'
+grails.plugins.springsecurity.password.algorithm = 'md5'
+
+grails.plugins.springsecurity.apf.filterProcessesUrl = "/checklogin"
+grails.plugins.springsecurity.apf.usernameParameter = "jdomain"
+grails.plugins.springsecurity.apf.passwordParameter = "jpwd"
+grails.plugins.springsecurity.logout.filterProcessesUrl = "/checklogout"
+grails.plugins.springsecurity.rememberMe.parameter = "remember_me"
+grails.plugins.springsecurity.userLookup.usernamePropertyName = "domain"
+
+grails {
+  plugins {
+    springsecurity {
+      ui {
+        register {
+          defaultRoleNames = ['ROLE_USER']
+          emailFrom = 'do.not.reply@localhost'
+          emailSubject = 'New Account'
+          defaultRoleNames = ['ROLE_USER']
+          postRegisterUrl = null // use defaultTargetUrl if not set
+        }
+
+        forgotPassword {
+          emailBody = '''\
+Hi $user.domain,<br/>
+<br/>
+You (or someone pretending to be you) requested that your password be reset.<br/>
+<br/>
+If you didn't make this request then ignore the email; no changes have been made.<br/>
+<br/>
+If you did make the request, then click <a href="$url">here</a> to reset your password.
+'''
+          emailFrom = 'do.not.reply@localhost'
+          emailSubject = 'Password Reset'
+          postResetUrl = null // use defaultTargetUrl if not set
+        }
+      }
+    }
+  }
+}
+
+// grails-app/conf/Config.groovy
+rabbitmq {
+  connectionfactory {
+    username = 'guest'
+    password = 'guest'
+    hostname = 'localhost'
+  }
+  queues = {
+    exchange name: 'mail', type: direct, durable: true, autoDelete: false, {
+      mailSenderQueue autoDelete: false, durable: true, exclusive: true, binding: "mail"
+    }
+  }
+}
+
+

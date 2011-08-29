@@ -14,13 +14,20 @@
 		<link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
+  <r:require module="jquery"/>
+   <r:layoutResources/>
 		<g:layoutHead/>
 	</head>
 	<body>
-		<div id="grailsLogo" role="banner"><a href="http://grails.org"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/></a></div>
+		<div id="grailsLogo" role="banner"><a href="<g:createLink uri="/"/>"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/></a>
+    Logged In Info:&nbsp;
+      <sec:ifLoggedIn>+LOGGED</sec:ifLoggedIn>
+      <sec:ifNotLoggedIn>-NOT-LOGGED</sec:ifNotLoggedIn>
+    </div>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
-		<g:javascript library="application"/>
+
+   <r:layoutResources/>
 	</body>
 </html>
