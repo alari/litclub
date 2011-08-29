@@ -137,7 +137,6 @@ class RegistrationService {
 
     mailSenderService.putMessage(
         to: person.email,
-        from: conf.ui.register.emailFrom.toString(),
         subject: conf.ui.register.emailSubject.toString(),
         view: "/mail-messages/confirmEmail",
         model: [personId: person.id, token: token]
@@ -150,7 +149,6 @@ class RegistrationService {
 
     mailSenderService.putMessage(
         to: person.email,
-        from: conf.ui.forgotPassword.emailFrom,
         subject: conf.ui.forgotPassword.emailSubject,
         view: "/mail-messages/forgotPassword",
         model: [personId: person.id, token: token]

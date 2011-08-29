@@ -15,13 +15,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4cc9de1-c0df-4562-83c2-ff278cc11006" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/views/mail-messages/forgotPassword.gsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/aws.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application.properties" afterPath="$PROJECT_DIR$/application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/Config.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/litclub/Person.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/litclub/Person.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/litclub/MailSenderService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/litclub/MailSenderService.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/mail-messages/confirmEmail.gsp" afterPath="$PROJECT_DIR$/grails-app/views/mail-messages/confirmEmail.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/litclub.iml" afterPath="$PROJECT_DIR$/litclub.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/groovy/litclub/ServiceResponse.groovy" afterPath="$PROJECT_DIR$/src/groovy/litclub/ServiceResponse.groovy" />
     </list>
     <ignored path="litclub.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,46 +88,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MailSenderService.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/services/litclub/MailSenderService.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="2" selection-start="152" selection-end="152" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Config.groovy" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Config.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="53" selection-start="3080" selection-end="3080" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="confirmEmail.gsp" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/grails-app/views/mail-messages/confirmEmail.gsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="62" selection-start="323" selection-end="339" vertical-scroll-proportion="0.45454547">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="forgotPassword.gsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/views/mail-messages/forgotPassword.gsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="91" selection-start="356" selection-end="356" vertical-scroll-proportion="-6.5384617">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RegistrationService.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="23" selection-start="471" selection-end="471" vertical-scroll-proportion="0.0">
+            <state line="73" column="58" selection-start="2946" selection-end="2946" vertical-scroll-proportion="0.5883777">
               <folding />
             </state>
           </provider>
@@ -140,9 +106,6 @@
   </component>
   <component name="FrameworkCommandLineHistory">
     <commandsHistory>
-      <command text="vmc targets" />
-      <command text="vmc crashes litclub" />
-      <command text="vmc crashlogs litclub" />
       <command text="vmc crashlogs litclub" />
       <command text="vmc logs litclub" />
       <command text="vmc update litclub" />
@@ -165,6 +128,9 @@
       <command text="vmc update litclub" />
       <command text="vmc crashes litclub" />
       <command text="vmc crashes litclub" />
+      <command text="vmc update litclub" />
+      <command text="grails aws-ses-verify-email" />
+      <command text="grails aws-ses-verify-email" />
     </commandsHistory>
   </component>
   <component name="Git.Settings">
@@ -184,26 +150,28 @@
     <setting file="mock:///dummy.txt" root0="SKIP_INSPECTION" />
     <setting file="mock:///dummy.txt" root0="SKIP_INSPECTION" />
     <setting file="mock:///dummy.txt" root0="SKIP_INSPECTION" />
+    <setting file="mock:///dummy.txt" root0="SKIP_INSPECTION" />
+    <setting file="mock:///dummy.txt" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/test/unit/litclub/RegistrationServiceTests.groovy" />
         <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
-        <option value="$PROJECT_DIR$/src/groovy/litclub/ServiceResponse.groovy" />
         <option value="$PROJECT_DIR$/grails-app/conf/settings.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy" />
-        <option value="$PROJECT_DIR$/application.properties" />
         <option value="$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy" />
         <option value="$PROJECT_DIR$/grails-app/views/404.gsp" />
         <option value="$PROJECT_DIR$/grails-app/controllers/LoginController.groovy" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/grails-app/domain/litclub/Person.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/services/litclub/MailSenderService.groovy" />
         <option value="$PROJECT_DIR$/grails-app/views/mail-messages/forgotPassword.gsp" />
-        <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
         <option value="$PROJECT_DIR$/grails-app/views/mail-messages/confirmEmail.gsp" />
+        <option value="$PROJECT_DIR$/application.properties" />
+        <option value="$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy" />
+        <option value="$PROJECT_DIR$/src/groovy/litclub/ServiceResponse.groovy" />
+        <option value="$PROJECT_DIR$/aws.properties" />
+        <option value="$PROJECT_DIR$/grails-app/services/litclub/MailSenderService.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
       </list>
     </option>
   </component>
@@ -523,7 +491,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="32" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="32" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -531,6 +499,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Grails View" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26595744" sideWeight="0.7482993" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -546,7 +515,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32994923" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -633,39 +601,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="40" selection-start="236" selection-end="236" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/groovy/litclub/I18n.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="38" selection-start="411" selection-end="411" vertical-scroll-proportion="0.041162226">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/groovy/litclub/ServiceResponse.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="42" selection-start="477" selection-end="477" vertical-scroll-proportion="0.38256657">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="15" selection-start="1742" selection-end="1742" vertical-scroll-proportion="0.62953997">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/error.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="4" selection-start="75" selection-end="110" vertical-scroll-proportion="0.18428184">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="49" selection-start="540" selection-end="540" vertical-scroll-proportion="0.50605327">
@@ -704,37 +639,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/services/litclub/MailSenderService.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="2" selection-start="152" selection-end="152" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="39" selection-start="1259" selection-end="1259" vertical-scroll-proportion="0.29679143">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="23" selection-start="471" selection-end="471" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/mail-messages/forgotPassword.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="91" selection-start="356" selection-end="356" vertical-scroll-proportion="-6.5384617">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="53" selection-start="3080" selection-end="3080" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -746,6 +653,69 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/mail-messages/forgotPassword.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="91" selection-start="356" selection-end="356" vertical-scroll-proportion="0.45454547">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="17" selection-start="138" selection-end="138" vertical-scroll-proportion="0.23160763">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/groovy/litclub/ServiceResponse.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="58" selection-start="725" selection-end="725" vertical-scroll-proportion="0.79418886">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="150" column="25" selection-start="5146" selection-end="5146" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.grails/2.0.0.M1/projects/litclub/plugins/aws-1.1.9.2/dependencies.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="44" selection-start="670" selection-end="674" vertical-scroll-proportion="0.5472155">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="23" selection-start="1628" selection-end="1628" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/services/litclub/MailSenderService.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="78" selection-start="707" selection-end="707" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/aws.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="30" selection-start="30" selection-end="30" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="58" selection-start="2946" selection-end="2946" vertical-scroll-proportion="0.5883777">
+          <folding />
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="grailsSettings">
     <option name="map">
@@ -753,8 +723,8 @@
         <entry key="litclub">
           <value>
             <GrailsSettings>
-              <option name="buildConfigCrc" value="-2139965275" />
-              <option name="pluginDependenciesCrc" value="-560792385" />
+              <option name="buildConfigCrc" value="1171751954" />
+              <option name="pluginDependenciesCrc" value="-1954282766" />
               <option name="properties">
                 <map>
                   <entry key="grails.project.class.dir" value="target/classes" />

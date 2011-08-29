@@ -46,15 +46,12 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.springframework.security/spring-security-web/jars/spring-security-web-3.0.5.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.springframework.security/spring-security-core/jars/spring-security-core-3.0.5.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.mbte.groovypp/groovypp-all-nodep/jars/groovypp-all-nodep-0.4.296_1.8.0.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/javax.mail/mail/jars/mail-1.4.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/stax/stax-api/jars/stax-api-1.0.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.amazonaws/aws-java-sdk/jars/aws-java-sdk-1.1.9.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.jamesmurty.utils/java-xmlbuilder/jars/java-xmlbuilder-0.4.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/commons-httpclient/commons-httpclient/jars/commons-httpclient-3.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/net.java.dev.jets3t/jets3t/jars/jets3t-0.8.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.codehaus.jackson/jackson-core-asl/jars/jackson-core-asl-1.7.2.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/javax.activation/activation/jars/activation-1.1.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/javax.mail/mail/jars/mail-1.4.3.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/xml-resolver/xml-resolver/jars/xml-resolver-1.2.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/xerces/xercesImpl/jars/xercesImpl-2.8.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.9.jar!/" />
@@ -88,6 +85,8 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/commons-cli/commons-cli/jars/commons-cli-1.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.rabbitmq/amqp-client/jars/amqp-client-2.3.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.springframework.amqp/spring-rabbit/jars/spring-rabbit-1.0.0.M3.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/javax.mail/mail/jars/mail-1.4.1.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/stax/stax/jars/stax-1.2.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

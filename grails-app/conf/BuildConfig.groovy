@@ -32,6 +32,7 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
+      runtime 'stax:stax:1.2.0'
          runtime 'mysql:mysql-connector-java:5.1.16'
 
       compile 'org.mbte.groovypp:groovypp-all-nodep:0.4.296_1.8.0'
@@ -44,6 +45,6 @@ grails.project.dependency.resolution = {
 
         build ":tomcat:$grailsVersion"
 
-      //runtime ':aws:1.1.9.2'
+      runtime ':aws:1.1.9.2'
     }
 }

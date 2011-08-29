@@ -26,7 +26,7 @@ class ServiceResponse {
     setAttributes(attributes)
   }
 
-  ServiceResponse setAttributes(Map attributes) {   System.err.println(i18n)
+  ServiceResponse setAttributes(Map attributes) {
     if(attributes.containsKey("ok")) ok = attributes.ok
     if(attributes.containsKey("messageCode")) messageCode = attributes.messageCode
     if(attributes.containsKey("redirectUri")) redirectUri = attributes.redirectUri

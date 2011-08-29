@@ -62,19 +62,19 @@ grails.compile.artefacts.closures.convert = true
 environments {
   development {
     grails.logging.jul.usebridge = true
-    grails.mail.port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
     grails.serverURL = "http://localhost:8080/litclub"
+    grails.plugin.aws.ses.enabled = false
   }
   production {
+    grails.plugin.aws.ses.enabled = true
     grails.logging.jul.usebridge = false
     grails.serverURL = "http://litclub.cloudfoundry.com"
-    grails.mail.port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
 
     grails.plugin.cloudfoundry.target = "api.cloudfoundry.com"
   }
   test {
+    grails.plugin.aws.ses.enabled = false
     grails.serverURL = "http://localhost:8080/litclub"
-    grails.mail.port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
   }
 }
 
@@ -149,6 +149,20 @@ rabbitmq {
       mailSenderQueue durable: true, binding: "mailSenderQueue"
     }
   }
+}
+
+
+grails {
+   plugin {
+      aws {
+         credentials {
+           properties = "aws.properties"
+         }
+        ses {
+          from = "noreply@litclub.net"
+        }
+      }
+   }
 }
 
 
