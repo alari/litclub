@@ -1,15 +1,31 @@
 package litclub
 
+import grails.gsp.PageRenderer
+
 class MailSenderService {
 
   static rabbitQueue = "mailSenderQueue"
 
-  void putMessage(message){
-    System.out.println("Putting "+message)
-    rabbitSend "mail", "mail", message
+  PageRenderer groovyPageRenderer
+
+
+  /**
+   * @arg to
+   * @arg from
+   * @arg view
+   * @arg model
+   * @arg body
+   * @arg subject
+   */
+  void putMessage(Map<String,Object> args){
+    rabbitSend "mail", "mailSenderQueue", args
   }
 
-  void handleMessage(message) {
-    System.out.println(message)
+  void handleMessage(Map<String,Object> message) {
+    try {
+      System.out.println( groovyPageRenderer.render(view: message.view, model: message.model) )
+    } catch(Exception e){
+      System.err.println(e)
+    }
   }
 }

@@ -11,9 +11,7 @@ import litclub.s2ui.ResetPasswordCommand
 class RegistrationService {
   def saltSource
   def springSecurityService
-  def mailService
-  LinkGenerator grailsLinkGenerator
-  PageRenderer groovyPageRenderer
+  def mailSenderService
 
   ServiceResponse handleRegistration(RegisterCommand command) {
     if (command.hasErrors()) {
@@ -135,37 +133,28 @@ class RegistrationService {
 	}
 
   private boolean sendRegisterEmail(Person person, String token) {
-    String url = grailsLinkGenerator.link(absolute: true,
-        controller: "register", action: 'verifyRegistration', params: [t: token])
-
     ConfigObject conf = SpringSecurityUtils.securityConfig
 
-    String body = url//groovyPageRenderer.render(view:"/error", model:[user: person, url: url])
-
-    mailService?.sendMail {
-      to person.email
-      from conf.ui.register.emailFrom.toString()
-      subject conf.ui.register.emailSubject.toString()
-      html body
-    } ?: System.out.println(body.toString())
+    mailSenderService.putMessage(
+        to: person.email,
+        from: conf.ui.register.emailFrom.toString(),
+        subject: conf.ui.register.emailSubject.toString(),
+        view: "/mail-messages/confirmEmail",
+        model: [personId: person.id, token: token]
+    )
     true
   }
 
   private boolean sendForgotPasswordEmail(Person person, String token){
-    String url = grailsLinkGenerator.link(absolute: true,
-        controller: "register", action: 'resetPassword', params: [t: token])
-
     def conf = SpringSecurityUtils.securityConfig
-    def body = conf.ui.forgotPassword.emailBody
-    if (body.contains('$')) {
-      body = evaluate(body, [user: person, url: url])
-    }
-    mailService?.sendMail {
-      to person.email
-      from conf.ui.forgotPassword.emailFrom
-      subject conf.ui.forgotPassword.emailSubject
-      html body.toString()
-    } ?: System.out.println(body.toString())
+
+    mailSenderService.putMessage(
+        to: person.email,
+        from: conf.ui.forgotPassword.emailFrom,
+        subject: conf.ui.forgotPassword.emailSubject,
+        view: "/mail-messages/forgotPassword",
+        model: [personId: person.id, token: token]
+    )
     true
   }
 }

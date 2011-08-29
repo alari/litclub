@@ -1,6 +1,6 @@
 package litclub
 
-class Person extends Subject {
+class Person extends Subject{
 
 	transient springSecurityService
 

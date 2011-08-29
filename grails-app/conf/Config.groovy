@@ -63,6 +63,7 @@ environments {
   development {
     grails.logging.jul.usebridge = true
     grails.mail.port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
+    grails.serverURL = "http://localhost:8080/litclub"
   }
   production {
     grails.logging.jul.usebridge = false
@@ -72,6 +73,7 @@ environments {
     grails.plugin.cloudfoundry.target = "api.cloudfoundry.com"
   }
   test {
+    grails.serverURL = "http://localhost:8080/litclub"
     grails.mail.port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
   }
 }
@@ -126,15 +128,6 @@ grails {
         }
 
         forgotPassword {
-          emailBody = '''\
-Hi $user.domain,<br/>
-<br/>
-You (or someone pretending to be you) requested that your password be reset.<br/>
-<br/>
-If you didn't make this request then ignore the email; no changes have been made.<br/>
-<br/>
-If you did make the request, then click <a href="$url">here</a> to reset your password.
-'''
           emailFrom = 'do.not.reply@localhost'
           emailSubject = 'Password Reset'
           postResetUrl = null // use defaultTargetUrl if not set
@@ -152,8 +145,8 @@ rabbitmq {
     hostname = 'localhost'
   }
   queues = {
-    exchange name: 'mail', type: direct, durable: true, autoDelete: false, {
-      mailSenderQueue autoDelete: false, durable: true, exclusive: true, binding: "mail"
+    exchange name: 'mail', type: direct, durable: true, {
+      mailSenderQueue durable: true, binding: "mailSenderQueue"
     }
   }
 }
