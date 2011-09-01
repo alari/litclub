@@ -34,37 +34,37 @@ class SecurityInfoController {
 	def index = {}
 
 	def config = {
-		[conf: new TreeMap(SpringSecurityUtils.securityConfig.flatten())]
+		render view: "/s2ui/securityInfo/config", model: [conf: new TreeMap(SpringSecurityUtils.securityConfig.flatten())]
 	}
 
 	def mappings = {
 		// Map<Object, Collection<ConfigAttribute>>
-		[configAttributeMap: new TreeMap(objectDefinitionSource.configAttributeMap),
+		render view: "/s2ui/securityInfo/mappings", model: [configAttributeMap: new TreeMap(objectDefinitionSource.configAttributeMap),
 		 securityConfigType: SpringSecurityUtils.securityConfig.securityConfigType]
 	}
 
 	def currentAuth = {
-		[auth: SecurityContextHolder.context.authentication]
+		render view: "/s2ui/securityInfo/currentAuth", model: [auth: SecurityContextHolder.context.authentication]
 	}
 
 	def usercache = {
-		[cache: SpringSecurityUtils.securityConfig.cacheUsers ? userCache.cache : null]
+		render view: "/s2ui/securityInfo/usercache", model: [cache: SpringSecurityUtils.securityConfig.cacheUsers ? userCache.cache : null]
 	}
 
 	def filterChain = {
-		[filterChainMap: springSecurityFilterChain.filterChainMap]
+		render view: "/s2ui/securityInfo/filterChain", model: [filterChainMap: springSecurityFilterChain.filterChainMap]
 	}
 
 	def logoutHandler = {
-		render view: 'logoutHandlers', model: [handlers: logoutHandlers]
+		render view: "/s2ui/securityInfo/logoutHandlers", model: [handlers: logoutHandlers]
 	}
 
 	def voters = {
-		[voters: accessDecisionManager.decisionVoters]
+		render view: "/s2ui/securityInfo/voters", model: [voters: accessDecisionManager.decisionVoters]
 	}
 
 	def providers = {
-		[providers: authenticationManager.providers]
+		render view: "/s2ui/securityInfo/providers", model: [providers: authenticationManager.providers]
 	}
 
 	def secureChannel = {

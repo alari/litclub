@@ -23,7 +23,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class RoleController extends litclub.s2ui.AbstractS2UiController {
 
 	def create = {
-		[role: lookupRoleClass().newInstance(params)]
+		render view: "/s2ui/role/create", model: [role: lookupRoleClass().newInstance(params)]
 	}
 
 	def save = {
@@ -46,7 +46,7 @@ class RoleController extends litclub.s2ui.AbstractS2UiController {
 		def users = lookupUserRoleClass().findAllByRole(role, params)*.user
 		int userCount = lookupUserRoleClass().countByRole(role)
 
-		[role: role, users: users, userCount: userCount]
+		render view: "/s2ui/role/edit", model: [role: role, users: users, userCount: userCount]
 	}
 
 	def update = {
@@ -57,7 +57,7 @@ class RoleController extends litclub.s2ui.AbstractS2UiController {
 		}
 
 		if (!springSecurityService.updateRole(role, params)) {
-			render view: 'edit', model: [role: role]
+			render view: '/s2ui/role/edit', model: [role: role]
 			return
 		}
 
@@ -102,7 +102,7 @@ class RoleController extends litclub.s2ui.AbstractS2UiController {
 			"WHERE LOWER(r.authority) LIKE :name"
 		int total = lookupRoleClass().executeQuery(hql, [name: "%${name.toLowerCase()}%"])[0]
 
-		render view: 'search', model: [results: roles,
+		render view: '/s2ui/role/search', model: [results: roles,
 		                               totalCount: total,
 		                               authority: params.authority,
 		                               searched: true]

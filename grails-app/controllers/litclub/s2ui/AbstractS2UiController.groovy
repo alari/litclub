@@ -57,7 +57,7 @@ abstract class AbstractS2UiController {
 		SpringSecurityUtils.securityConfig.userLookup.userDomainClassName
 	}
 
-	protected Class<?> lookupUserClass() {
+	protected Class<Person> lookupUserClass() {
     Person
 	}
 
@@ -65,7 +65,7 @@ abstract class AbstractS2UiController {
 		SpringSecurityUtils.securityConfig.authority.className
 	}
 
-	protected Class<?> lookupRoleClass() {
+	protected Class<Role> lookupRoleClass() {
 		Role
 	}
 
@@ -73,7 +73,7 @@ abstract class AbstractS2UiController {
 		SpringSecurityUtils.securityConfig.userLookup.authorityJoinClassName
 	}
 
-	protected Class<?> lookupUserRoleClass() {
+	protected Class<PersonRole> lookupUserRoleClass() {
 		PersonRole
 	}
 }

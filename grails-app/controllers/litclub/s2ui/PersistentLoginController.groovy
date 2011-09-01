@@ -27,7 +27,7 @@ class PersistentLoginController extends litclub.s2ui.AbstractS2UiController {
 		def persistentLogin = findById()
 		if (!persistentLogin) return
 
-		[persistentLogin: persistentLogin]
+		render view: "/s2ui/persistentLogin/edit", model: [persistentLogin: persistentLogin]
 	}
 
 	def update = {
@@ -38,7 +38,7 @@ class PersistentLoginController extends litclub.s2ui.AbstractS2UiController {
 		}
 
 		if (!springSecurityUiService.updatePersistentLogin(persistentLogin, params)) {
-			render view: 'edit', model: [persistentLogin: persistentLogin]
+			render view: '/s2ui/persistentLogin/edit', model: [persistentLogin: persistentLogin]
 			return
 		}
 
@@ -102,7 +102,7 @@ class PersistentLoginController extends litclub.s2ui.AbstractS2UiController {
 		 	model[name] = params[name]
 		}
 
-		render view: 'search', model: model
+		render view: '/s2ui/persistentLogin/search', model: model
 	}
 
 	/**

@@ -28,7 +28,7 @@ class UserController extends litclub.s2ui.AbstractS2UiController {
 
 	def create = {
 		def user = lookupUserClass().newInstance(params)
-	  [user: user, authorityList: sortedRoles()]
+	  render view: "/s2ui/user/create", model: [user: user, authorityList: sortedRoles()]
 	}
 
 	def save = {
@@ -38,7 +38,7 @@ class UserController extends litclub.s2ui.AbstractS2UiController {
 			user.password = springSecurityService.encodePassword(params.password, salt)
 		}
 		if (!user.save(flush: true)) {
-			render view: 'create', model: [user: user, authorityList: sortedRoles()]
+			render view: "/s2ui/user/create", model: [user: user, authorityList: sortedRoles()]
 			return
 		}
 
@@ -99,7 +99,7 @@ class UserController extends litclub.s2ui.AbstractS2UiController {
 	}
 
 	def search = {
-		[enabled: 0, accountExpired: 0, accountLocked: 0, passwordExpired: 0]
+		render view: "/s2ui/user/search", model: [enabled: 0, accountExpired: 0, accountLocked: 0, passwordExpired: 0]
 	}
 
 	def userSearch = {
@@ -147,7 +147,7 @@ class UserController extends litclub.s2ui.AbstractS2UiController {
 		 	model[name] = params[name]
 		}
 
-		render view: 'search', model: model
+		render view: "/s2ui/user/search", model: model
 	}
 
 	/**

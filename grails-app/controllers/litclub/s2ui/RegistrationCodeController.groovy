@@ -27,7 +27,7 @@ class RegistrationCodeController extends litclub.s2ui.AbstractS2UiController {
 		def registrationCode = findById()
 		if (!registrationCode) return
 
-		[registrationCode: registrationCode]
+		render view: "/s2ui/registrationCode/edit", model: [registrationCode: registrationCode]
 	}
 
 	def update = {
@@ -38,7 +38,7 @@ class RegistrationCodeController extends litclub.s2ui.AbstractS2UiController {
 		}
 
 		if (!springSecurityUiService.updateRegistrationCode(registrationCode, params.domain, params.token)) {
-			render view: 'edit', model: [registrationCode: registrationCode]
+			render view: '/s2ui/registrationCode/edit', model: [registrationCode: registrationCode]
 			return
 		}
 
@@ -102,7 +102,7 @@ class RegistrationCodeController extends litclub.s2ui.AbstractS2UiController {
 		 	model[name] = params[name]
 		}
 
-		render view: 'search', model: model
+		render view: '/s2ui/registrationCode/search', model: model
 	}
 
 	/**

@@ -12,6 +12,7 @@ class RegistrationService {
   def saltSource
   def springSecurityService
   def mailSenderService
+  def subjectDomainService
 
   ServiceResponse handleRegistration(RegisterCommand command) {
     if (command.hasErrors()) {
@@ -29,6 +30,7 @@ class RegistrationService {
       // TODO
     }
 
+    subjectDomainService.setDomain(user.id, user.domain)
     RegistrationCode registrationCode = new RegistrationCode(domain: user.domain).save()
 
     sendRegisterEmail(user, registrationCode.token)
@@ -128,7 +130,7 @@ class RegistrationService {
         redirectUri: conf.ui.register.postResetUrl ?: conf.successHandler.defaultTargetUrl)
   }
 
-  private  String evaluate(s, binding) {
+  private String evaluate(s, binding) {
 		new SimpleTemplateEngine().createTemplate(s).make(binding)
 	}
 
