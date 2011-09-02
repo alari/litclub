@@ -33,7 +33,7 @@ class PersonRole implements Serializable {
 	}
 
   static PersonRole create(Person person, String authority, boolean flush = false) {
-    Role role = Role.findByAuthority(authority) ?: new Role(authority: authority).save()
+    Role role = Role.findOrSaveByAuthority(authority)
 		new PersonRole(person: person, role: role).save(flush: flush, insert: true)
 	}
 

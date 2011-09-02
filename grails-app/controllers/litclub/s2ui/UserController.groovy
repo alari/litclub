@@ -48,11 +48,14 @@ class UserController extends litclub.s2ui.AbstractS2UiController {
 	}
 
 	def edit = {
-		def user = params.domain ? lookupUserClass().findByUsername(params.domain) : null
+		def user = params.domain ? lookupUserClass().findByDomain(params.domain) : null
 		if (!user) user = findById()
-		if (!user) return
+		if (!user) {
+      render view: "/s2ui/user/edit"
+      return
+    }
 
-		return buildUserModel(user)
+		render view: "/s2ui/user/edit", model: buildUserModel(user)
 	}
 
 	def update = {

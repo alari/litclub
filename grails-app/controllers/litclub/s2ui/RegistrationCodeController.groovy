@@ -61,7 +61,7 @@ class RegistrationCodeController extends litclub.s2ui.AbstractS2UiController {
 		}
 	}
 
-	def search = {}
+	def search = {render view: "/s2ui/registrationCode/search"}
 
 	def registrationCodeSearch = {
 

@@ -29,6 +29,7 @@ class Person extends Subject{
 	}
 
 	def beforeUpdate() {
+    super.beforeUpdate()
 		if (isDirty('password')) {
 			encodePassword()
 		}

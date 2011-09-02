@@ -81,7 +81,7 @@ class RoleController extends litclub.s2ui.AbstractS2UiController {
 		}
 	}
 
-	def search = {}
+	def search = {render view: "/s2ui/role/search"}
 
 	def roleSearch = {
 

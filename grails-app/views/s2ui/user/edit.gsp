@@ -2,7 +2,7 @@
 
 <sec:ifNotSwitched>
 	<sec:ifAllGranted roles='ROLE_SWITCH_USER'>
-	<g:if test='${user.username}'>
+	<g:if test='${user.domain}'>
 	<g:set var='canRunAs' value='${true}'/>
 	</g:if>
 	</sec:ifAllGranted>
@@ -39,7 +39,7 @@ if (isOpenId) {
 		<tbody>
 
 			<s2ui:textFieldRow name='username' labelCode='user.username.label' bean="${user}"
-                            labelCodeDefault='Username' value="${user?.username}"/>
+                            labelCodeDefault='Username' value="${user?.domain}"/>
 
 			<s2ui:passwordFieldRow name='password' labelCode='user.password.label' bean="${user}"
                                 labelCodeDefault='Password' value="${user?.password}"/>

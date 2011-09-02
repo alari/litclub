@@ -12,7 +12,6 @@ class RegistrationService {
   def saltSource
   def springSecurityService
   def mailSenderService
-  def subjectDomainService
 
   ServiceResponse handleRegistration(RegisterCommand command) {
     if (command.hasErrors()) {
@@ -23,14 +22,14 @@ class RegistrationService {
     String password = springSecurityService.encodePassword(command.password, salt)
 
     Person user = new Person(email: command.email, domain: command.domain,
-        password: password, accountLocked: true, enabled: true)
+        password: password, accountLocked: true, enabled: true, info: new SubjectInfo())
 
-    if (!user.validate() || !user.save()) {
+    if (!user.validate() || !user.save(flush: true)) {
+      System.err.println(user.errors)
       return new ServiceResponse(ok: false)
       // TODO
     }
 
-    subjectDomainService.setDomain(user.id, user.domain)
     RegistrationCode registrationCode = new RegistrationCode(domain: user.domain).save()
 
     sendRegisterEmail(user, registrationCode.token)

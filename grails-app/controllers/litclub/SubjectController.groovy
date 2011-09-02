@@ -2,7 +2,9 @@ package litclub
 
 class SubjectController {
 
-  def index() {
-    render request.subjectId
+  static defaultAction = "index"
+
+  def index = {
+    [person: Person.get(request.subjectId)]
   }
 }

@@ -61,7 +61,7 @@ class PersistentLoginController extends litclub.s2ui.AbstractS2UiController {
 		}
 	}
 
-	def search = {}
+	def search = {render view: "/s2ui/persistentLogin/search"}
 
 	def persistentLoginSearch = {
 

@@ -21,7 +21,7 @@
 	<body>
 		<div id="grailsLogo" role="banner"><a href="<g:createLink uri="/"/>"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/></a>
     Logged In Info:&nbsp;
-      <sec:ifLoggedIn>+LOGGED</sec:ifLoggedIn>
+      <sec:ifLoggedIn>+LOGGED as <sbj:link/></sec:ifLoggedIn>
       <sec:ifNotLoggedIn>-NOT-LOGGED</sec:ifNotLoggedIn>
     </div>
 		<g:layoutBody/>

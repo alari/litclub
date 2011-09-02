@@ -19,7 +19,7 @@
 
 			<tr>
 				<td><g:message code='user.username.label' default='Username'/>:</td>
-				<td colspan='3'><g:textField name='username' size='50' maxlength='255' autocomplete='off' value='${username}'/></td>
+				<td colspan='3'><g:textField name='username' size='50' maxlength='255' autocomplete='off' value='${domain}'/></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -82,7 +82,7 @@ def queryParams = [username: username, enabled: enabled, accountExpired: account
 		<tbody>
 		<g:each in="${results}" status="i" var="user">
 		<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-			<td><g:link action="edit" id="${user.id}">${fieldValue(bean: user, field: "username")}</g:link></td>
+			<td><g:link action="edit" id="${user.id}">${fieldValue(bean: user, field: "domain")}</g:link></td>
 			<td><g:formatBoolean boolean="${user.enabled}"/></td>
 			<td><g:formatBoolean boolean="${user.accountExpired}"/></td>
 			<td><g:formatBoolean boolean="${user.accountLocked}"/></td>

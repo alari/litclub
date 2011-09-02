@@ -25,19 +25,19 @@
 <%-- tab icons --%>
 <style>
 .icon_role {
-	background-image: url('${fam.icon(name: 'lock')}');
+	background-image: url('${fam?.icon(name: 'lock')}');
 }
 .icon_users {
-	background-image: url('${fam.icon(name: 'group')}');
+	background-image: url('${fam?.icon(name: 'group')}');
 }
 .icon_user {
-	background-image: url('${fam.icon(name: 'user')}');
+	background-image: url('${fam?.icon(name: 'user')}');
 }
 .icon_error {
-	background-image: url('${fam.icon(name: 'exclamation')}');
+	background-image: url('${fam?.icon(name: 'exclamation')}');
 }
 .icon_info {
-	background-image: url('${fam.icon(name: 'information')}');
+	background-image: url('${fam?.icon(name: 'information')}');
 }
 .icon, .ui-tabs .ui-tabs-nav li a.icon {
 	background-repeat: no-repeat;
@@ -167,21 +167,21 @@
 
 		<div id="s2ui_main">
 			<div id="s2ui_content">
-				<g:javascript plugin="spring-security-ui" src='jquery/jquery.jgrowl.js'/>
-				<g:javascript plugin="spring-security-ui" src='jquery/jquery.checkbox.js'/>
-				<g:javascript plugin="spring-security-ui" src='jquery/jquery.date_input.js'/>
-				<g:javascript plugin="spring-security-ui" src='jquery/jquery.positionBy.js'/>
-				<g:javascript plugin="spring-security-ui" src='jquery/jquery.bgiframe.js'/>
-				<g:javascript plugin="spring-security-ui" src='jquery/jquery.jdMenu.js'/>
-				<g:javascript plugin="spring-security-ui" src='jquery/jquery.dataTables.min.js'/>
-				<g:javascript plugin="spring-security-ui" src='spring-security-ui.js'/>
+				<g:javascript src='jquery/jquery.jgrowl.js'/>
+				<g:javascript src='jquery/jquery.checkbox.js'/>
+				<g:javascript src='jquery/jquery.date_input.js'/>
+				<g:javascript src='jquery/jquery.positionBy.js'/>
+				<g:javascript src='jquery/jquery.bgiframe.js'/>
+				<g:javascript src='jquery/jquery.jdMenu.js'/>
+				<g:javascript src='jquery/jquery.dataTables.min.js'/>
+				<g:javascript src='spring-security-ui.js'/>
 				<g:layoutBody/>
 			</div>
 		</div>
 
 	</div>
 
-<g:render template='/includes/ajaxLogin' plugin='spring-security-ui'/>
+<g:render template='/s2ui/includes/ajaxLogin'/>
 
 <s2ui:showFlash/>
 
