@@ -7,6 +7,10 @@ class SubjectInfo {
   String frontText = ""
 
   static constraints = {
-    frontText blank: true
+    frontText blank: true, maxSize: 21845
+  }
+
+  static mapping = {
+    frontText sqlType: "TEXT"
   }
 }

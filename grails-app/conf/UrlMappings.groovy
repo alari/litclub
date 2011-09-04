@@ -2,11 +2,14 @@ class UrlMappings {
 
   static mappings = {
 
-    "/sbj/$domain/$action?/$id?" {
+    "/$domain/$action?/$id?" {
+      constraints {
+        domain matches: '^[-_a-zA-Z0-9]{4,16}$'
+      }
       controller = "subject"
     }
 
-    "/$controller/$action?/$id?" {
+    "/x.$controller/$action?/$id?" {
       constraints {
         // apply constraints here
       }
