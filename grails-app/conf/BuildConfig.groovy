@@ -28,7 +28,7 @@ grails.project.dependency.resolution = {
     //mavenRepo "http://snapshots.repository.codehaus.org"
     //mavenRepo "http://repository.codehaus.org"
     //mavenRepo "http://download.java.net/maven/2/"
-    //mavenRepo "http://repository.jboss.com/maven2/"
+    mavenRepo "http://repository.jboss.com/maven2/"
 
     mavenRepo 'http://groovypp.artifactoryonline.com/groovypp/libs-releases-local'
 
@@ -41,6 +41,8 @@ grails.project.dependency.resolution = {
 
     runtime 'stax:stax:1.2.0'
     runtime 'mysql:mysql-connector-java:5.1.16'
+
+    build 'org.codehaus.gpars:gpars:0.11'
 
     compile 'org.mbte.groovypp:groovypp-all-nodep:0.4.296_1.8.0'
 

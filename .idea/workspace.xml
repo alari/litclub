@@ -15,11 +15,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4cc9de1-c0df-4562-83c2-ff278cc11006" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/groovy/litclub/TalkInfo.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/views/talks/create.gsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/views/talks/index.gsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/views/talks/talk.gsp" />
+      <change type="DELETED" beforePath="C:\Users\alari\shared\litclub\src\groovy\litclub\TalkInfo.groovy" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application.properties" afterPath="$PROJECT_DIR$/application.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/BootStrap.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/BootStrap.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/Config.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/DataSource.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/DataSource.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/litclub/SubjectInfo.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/litclub/SubjectInfo.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/controllers/litclub/s2ui/RegisterController.groovy" afterPath="$PROJECT_DIR$/grails-app/controllers/litclub/s2ui/RegisterController.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/litclub/Person.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/litclub/Person.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/litclub/Talk.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/litclub/Talk.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/litclub/TalkService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/litclub/TalkService.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/taglib/litclub/SubjectTagLib.groovy" afterPath="$PROJECT_DIR$/grails-app/taglib/litclub/SubjectTagLib.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" afterPath="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/litclub.iml" afterPath="$PROJECT_DIR$/litclub.iml" />
     </list>
     <ignored path="litclub.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -84,40 +98,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SubjectController.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/controllers/litclub/SubjectController.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="3" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Talk.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/domain/litclub/Talk.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="3" selection-start="354" selection-end="354" vertical-scroll-proportion="-7.9069767">
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TalkInfo.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/groovy/litclub/TalkInfo.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="17" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TalkPhrase.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/domain/litclub/TalkPhrase.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="22" selection-start="125" selection-end="125" vertical-scroll-proportion="-3.9534883">
+            <state line="18" column="15" selection-start="280" selection-end="280" vertical-scroll-proportion="-2.5348837">
               <folding />
             </state>
           </provider>
@@ -129,7 +113,70 @@
       <file leaf-file-name="TalkService.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/grails-app/services/litclub/TalkService.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="41" selection-start="3144" selection-end="3144" vertical-scroll-proportion="0.7713249">
+            <state line="85" column="30" selection-start="2498" selection-end="2498" vertical-scroll-proportion="4.448598">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SubjectTagLib.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/taglib/litclub/SubjectTagLib.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="68" selection-start="722" selection-end="722" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.gsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="10" selection-start="1604" selection-end="1604" vertical-scroll-proportion="-5.8846154">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.gsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/views/talks/index.gsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="70" selection-start="413" selection-end="413" vertical-scroll-proportion="-1.755102">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TalksController.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/controllers/litclub/own/TalksController.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="14" selection-start="1024" selection-end="1024" vertical-scroll-proportion="-5.9130435">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="talk.gsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/views/talks/talk.gsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="123" selection-start="375" selection-end="375" vertical-scroll-proportion="-2.0816326">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UrlMappings.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="28" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create.gsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/views/talks/create.gsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="32" selection-start="435" selection-end="435" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -178,21 +225,21 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/grails-app/controllers/litclub/s2ui/UserController.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/litclub/Person.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/litclub/Subject.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/litclub/PersonRole.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/views/subject/index.gsp" />
-        <option value="$PROJECT_DIR$/grails-app/controllers/litclub/SubjectController.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/views/talks/create.gsp" />
+        <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
         <option value="$PROJECT_DIR$/grails-app/conf/BootStrap.groovy" />
-        <option value="$PROJECT_DIR$/src/groovy/litclub/RedisKeys.groovy" />
-        <option value="$PROJECT_DIR$/src/groovy/litclub/RedisKey.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/litclub/SubjectInfo.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/litclub/TalkPhrase.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/litclub/Talk.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/conf/DataSource.groovy" />
         <option value="$PROJECT_DIR$/src/groovy/litclub/TalkInfo.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/litclub/Talk.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/taglib/litclub/CurrentPersonTagLib.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/views/talks/index.gsp" />
+        <option value="$PROJECT_DIR$/grails-app/taglib/litclub/SubjectTagLib.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
+        <option value="$PROJECT_DIR$/grails-app/views/talks/talk.gsp" />
+        <option value="$PROJECT_DIR$/grails-app/controllers/litclub/own/TalksController.groovy" />
         <option value="$PROJECT_DIR$/grails-app/services/litclub/TalkService.groovy" />
       </list>
     </option>
@@ -245,9 +292,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
+    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -371,6 +418,18 @@
         <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
+      </method>
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" />
       <module name="" />
@@ -394,18 +453,6 @@
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-        <option name="PhingTarget" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
         <option name="Maven.BeforeRunTask" enabled="false" />
         <option name="PhingTarget" enabled="false" />
       </method>
@@ -489,7 +536,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="32" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="32" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -497,7 +544,8 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Grails View" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20288754" sideWeight="0.61904764" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Grails View" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20288754" sideWeight="0.622449" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -506,12 +554,11 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.7414966" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38009787" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37755102" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32994923" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -599,86 +646,48 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/lang/Object.java">
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="218" column="38" selection-start="10407" selection-end="10407" vertical-scroll-proportion="0.4987775" />
+        <state line="7" column="10" selection-start="172" selection-end="172" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="28" selection-start="3928" selection-end="3928" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="27" selection-start="370" selection-end="370" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/services/litclub/RegistrationService.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="87" selection-start="944" selection-end="944" vertical-scroll-proportion="0.0" />
+        <state line="23" column="18" selection-start="792" selection-end="792" vertical-scroll-proportion="-1.4875" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/litclub/PersonRole.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/controllers/litclub/s2ui/RegisterController.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="53" selection-start="925" selection-end="925" vertical-scroll-proportion="0.03142329" />
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
+        <state line="12" column="0" selection-start="351" selection-end="351" vertical-scroll-proportion="-5.9130435" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/litclub/Role.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/views/talks/create.gsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="6" selection-start="23" selection-end="23" vertical-scroll-proportion="0.06284658" />
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
+        <state line="16" column="32" selection-start="435" selection-end="435" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/litclub/Person.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="430" selection-end="430" vertical-scroll-proportion="0.3401109" />
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/litclub/Subject.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="77" selection-start="603" selection-end="635" vertical-scroll-proportion="-8.697675" />
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/litclub/SubjectPagesFilters.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="6" selection-start="23" selection-end="23" vertical-scroll-proportion="0.103658535" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="36" selection-start="316" selection-end="316" vertical-scroll-proportion="0.88109756" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="40" selection-start="159" selection-end="159" vertical-scroll-proportion="0.27868852" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/subject/index.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="20" selection-start="189" selection-end="189" vertical-scroll-proportion="0.35015774" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/litclub/SubjectInfo.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="28" selection-start="224" selection-end="224" vertical-scroll-proportion="0.7517007" />
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/controllers/litclub/SubjectController.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="3" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
+        <state line="39" column="35" selection-start="1433" selection-end="1433" vertical-scroll-proportion="0.24523161">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/domain/litclub/Talk.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="3" selection-start="354" selection-end="354" vertical-scroll-proportion="-7.9069767">
+        <state line="18" column="15" selection-start="280" selection-end="280" vertical-scroll-proportion="-2.5348837">
           <folding />
         </state>
       </provider>
@@ -686,26 +695,51 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/groovy/litclub/TalkInfo.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="17" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0">
+        <state line="13" column="28" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/litclub/TalkPhrase.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/taglib/litclub/SubjectTagLib.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="22" selection-start="125" selection-end="125" vertical-scroll-proportion="-3.9534883">
+        <state line="24" column="68" selection-start="722" selection-end="722" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="10" selection-start="1604" selection-end="1604" vertical-scroll-proportion="-5.8846154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/talks/talk.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="123" selection-start="375" selection-end="375" vertical-scroll-proportion="-2.0816326">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/controllers/litclub/own/TalksController.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="14" selection-start="1024" selection-end="1024" vertical-scroll-proportion="-5.9130435">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/talks/index.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="70" selection-start="413" selection-end="413" vertical-scroll-proportion="-1.755102">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/services/litclub/TalkService.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="41" selection-start="3144" selection-end="3144" vertical-scroll-proportion="0.7713249">
+        <state line="85" column="30" selection-start="2498" selection-end="2498" vertical-scroll-proportion="4.448598">
           <folding />
         </state>
       </provider>
@@ -717,7 +751,7 @@
         <entry key="litclub">
           <value>
             <GrailsSettings>
-              <option name="buildConfigCrc" value="1390223410" />
+              <option name="buildConfigCrc" value="1848511395" />
               <option name="pluginDependenciesCrc" value="-1628686145" />
               <option name="properties">
                 <map>

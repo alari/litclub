@@ -13,7 +13,7 @@ hibernate {
 environments {
   development {
     dataSource {
-      dbCreate = "create-drop"
+      dbCreate = "update"//"create-drop"
       url = 'jdbc:mysql://localhost/litclub'
       driverClassName = 'com.mysql.jdbc.Driver'
       dialect = org.hibernate.dialect.MySQL5InnoDBDialect

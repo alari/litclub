@@ -5,81 +5,86 @@ import redis.clients.jedis.Jedis
 
 class TalkService {
 
+  private static final String KEY_NEW = "person.talks.new.phrases:"
+  private static final String KEY_TALKS = "person.talks:"
+  private static final String KEY_PHRASES = "talk:"
+
   def redisService
 
-  def sendPhrase(String text, long personId, long targetId, String topic) {
-    Talk talk = new Talk(topic: topic, info1: new TalkInfo(), info2: new TalkInfo())
-    talk.info1.personId = Math.min(personId, targetId)
-    talk.info2.personId = Math.max(personId, targetId)
+  TalkPhrase sendPhrase(String text, long personId, long targetId, String topic) {
+    Talk talk = new Talk(topic: topic, lastPhrasePersonId: personId)
+    talk.minPersonId = Math.min(personId, targetId)
+    talk.maxPersonId = Math.max(personId, targetId)
     if(!talk.validate() || !talk.save()) {
-      return false
+      log.error talk.errors
+      return null
     }
     sendPhrase(text, personId, talk)
   }
 
-  def sendPhrase(String text, long personId, long talkId){
+  TalkPhrase sendPhrase(String text, long personId, long talkId){
     sendPhrase(text, personId, Talk.get(talkId))
   }
 
-  def sendPhrase(String text, long personId, Talk talk){
+  TalkPhrase sendPhrase(String text, long personId, Talk talk){
     TalkPhrase phrase = new TalkPhrase(
         talk: talk,
         text: text,
         isNew: true,
     )
-    phrase.personId = personId
+    phrase.person = Person.get(personId)
+    if(!phrase.validate()) {
+      log.error phrase.errors
+    }
     phrase.save()
 
     sendPhrase(phrase)
   }
 
-  def sendPhrase(TalkPhrase phrase) {
+  TalkPhrase sendPhrase(TalkPhrase phrase) {
     String talkId = phrase.talk.id.toString()
 
     redisService.withTransaction {Transaction t->
 
     // add to phrases chain
-      t.lpush("talk:$talkId", phrase.id.toString())
+      t.lpush(KEY_PHRASES+talkId, phrase.id.toString())
 
       // add to talks chains
-    [phrase.talk.info1.personId, phrase.talk.info2.personId].each {pid->
-        t.lrem("person.talks:$pid", 1, talkId)
-        t.lpush("person.talks:$pid", talkId)
+    [phrase.talk.minPersonId, phrase.talk.maxPersonId].each {pid->
+        t.lrem(KEY_TALKS+pid, 1, talkId)
+        t.lpush(KEY_TALKS+pid, talkId)
     }
       // update unread count
-      String targetPerson = (phrase.personId == phrase.talk.info1.personId ? phrase.talk.info2.personId : phrase.talk.info1.personId).toString()
-      t.incr("person.talks.unread:"+targetPerson)
+      String targetPerson = (phrase.personId == phrase.talk.minPersonId ? phrase.talk.maxPersonId : phrase.talk.minPersonId).toString()
+      t.incr(KEY_NEW+targetPerson)
     }
 
     // update talk cache
-    String line = phrase.text.substring(0, Math.min(phrase.text.size(), 255))
-    if(phrase.personId == phrase.talk.info1.personId) {
-      phrase.talk.info1.line = line
-      phrase.talk.info1.isNew = true
-      phrase.talk.info1.phraseId = phrase.id
-    } else {
-      phrase.talk.info2.line = line
-      phrase.talk.info2.isNew = true
-      phrase.talk.info2.phraseId = phrase.id
-    }
+    phrase.talk.lastPhraseLine = phrase.text.substring(0, Math.min(phrase.text.size(), 255))
+    phrase.talk.lastPhrasePersonId = phrase.personId
+    phrase.talk.lastPhraseId = phrase.id
+    phrase.talk.lastPhraseNew = true
+
     phrase.talk.save()
+
+    phrase
   }
 
-  List<Talk> getTalks(long personId, long offset, int limit) {
+  List<Talk> getTalks(long personId, int start, int end) {
     List<Talk> talks = []
     redisService.withRedis {Jedis redis->
-      redis.lrange("person.talks:"+personId, offset, offset+limit-1).each{long talkId->
-        talks.add(Talk.get(talkId))
+      redis.lrange(KEY_TALKS+personId, start, end).each{String talkId->
+        talks.add(Talk.get(talkId.toLong()))
       }
     }
     talks
   }
 
-  List<TalkPhrase> getPhrases(long talkId, long offset, int limit) {
+  List<TalkPhrase> getPhrases(long talkId, int start, int end) {
     List<TalkPhrase> phrases = []
     redisService.withRedis {Jedis redis->
-      redis.lrange("talk:"+talkId, offset, offset+limit-1).each{long phraseId->
-        phrases.add(TalkPhrase.get(phraseId))
+      redis.lrange(KEY_PHRASES+talkId, start, end).each{String phraseId->
+        phrases.add(TalkPhrase.get(phraseId.toLong()))
       }
     }
     phrases
@@ -87,20 +92,19 @@ class TalkService {
 
   void readPhrase(TalkPhrase phrase) {
     phrase.isNew = false
-    long personId = phrase.talk.info1.personId == phrase.personId ? phrase.talk.info2.personId : phrase.talk.info1.personId
-    if(phrase.talk.info1.phraseId == phrase.id) {
-      phrase.talk.info1.isNew = false
-    } else if (phrase.talk.info2.phraseId == phrase.id) {
-      phrase.talk.info2.isNew = false
+    long personId = phrase.talk.minPersonId == phrase.personId ? phrase.talk.maxPersonId : phrase.talk.minPersonId
+    if(phrase.talk.lastPhraseId == phrase.id) {
+      phrase.talk.lastPhraseNew = false
+      phrase.talk.save()
     }
-    phrase.talk.save()
     phrase.save()
     redisService.withRedis {Jedis redis->
-      redis.decr("person.talks.unread:"+personId)
+      redis.decr(KEY_NEW+personId)
     }
   }
 
-  int getUnreadCount(long personId) {
-    return redisService."person.talks.unread:${personId}"
+  int getNewCount(long personId) {
+    def nc = redisService."${KEY_NEW}:${personId}"
+    nc ? Integer.parseInt(nc) : 0
   }
 }

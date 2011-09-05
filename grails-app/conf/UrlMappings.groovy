@@ -9,6 +9,18 @@ class UrlMappings {
       controller = "subject"
     }
 
+    "/own.talks/$id?" {
+      constraints {
+        id matches: '^[0-9]+$'
+      }
+      controller = "talks"
+      action = "talk"
+    }
+
+    "/own.talks/$action?" {
+      controller = "talks"
+    }
+
     "/x.$controller/$action?/$id?" {
       constraints {
         // apply constraints here

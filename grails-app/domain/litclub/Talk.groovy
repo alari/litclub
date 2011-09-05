@@ -7,16 +7,18 @@ class Talk {
   Date dateCreated
   Date lastUpdated
 
-  TalkInfo info1
-  TalkInfo info2
+  long minPersonId
+  long maxPersonId
 
-  static embedded = ['info1', 'info2']
+  String lastPhraseLine = ''
+  long lastPhrasePersonId = 0
+  boolean lastPhraseNew = true
+  long lastPhraseId = 0
 
   static hasMany = [phrases:TalkPhrase]
 
   static constraints = {
     topic blank: true, maxSize: 127
-    'info1.line'(blank: true, maxSize: 255)
-    'info2.line'(blank: true, maxSize: 255)
+    lastPhraseLine blank: true, maxSize: 255
   }
 }
