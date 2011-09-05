@@ -103,9 +103,6 @@ class TalkService {
       redis.lrange(KEY_TALKS + personId, -min, 0).each {String talkId ->
         talks.add(Talk.get(talkId.toLong()))
       }
-      GParsPool.withPool {
-
-      }
     }
     talks
   }
