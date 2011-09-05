@@ -28,10 +28,10 @@ class TalksController {
     }
     long targetId = personId == talk.maxPersonId ? talk.minPersonId : talk.maxPersonId
     List newPhrases = talkService.getTalkNewIds(personId, talk.id)
-    def firstNew = newPhrases.size() ? newPhrases.last() : 0
+    long firstNew = newPhrases.size() ? newPhrases.last() as long : 0
     newPhrases.addAll(talkService.getTalkNewIds(targetId, talk.id))
 
-    List<TalkPhrase> phrases = talkService.getPhrases(id, -20, -1)
+    List<TalkPhrase> phrases = talkService.getPhrasesWithNew(id, firstNew, 10, 2)
 
     [phrases: phrases, talk: talk, firstNew: firstNew, newPhrases: newPhrases]
   }

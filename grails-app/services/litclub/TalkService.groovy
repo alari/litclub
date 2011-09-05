@@ -2,13 +2,13 @@ package litclub
 
 import redis.clients.jedis.Transaction
 import redis.clients.jedis.Jedis
+import groovyx.gpars.GParsPool
 
 class TalkService {
-
-  private static final String KEY_NEW = "person.talks.new.phrases:"
-  private static final String KEY_TALKS = "person.talks:"
+  private static final String KEY_NEW = "talks:new.phrases.count:"
+  private static final String KEY_TALKS = "talks.person:"
   private static final String KEY_PHRASES = "talk:"
-  private static final String KEY_PHRASES_NEW = "talk.phrases.new:"
+  private static final String KEY_PHRASES_NEW = "talk.new.phrases:"
 
   def redisService
 
@@ -97,11 +97,45 @@ class TalkService {
     talks
   }
 
+  List<Talk> getTalksWithNew(long personId, long firstNew, int min, int step) {
+    List<Talk> talks = []
+    redisService.withRedis {Jedis redis ->
+      redis.lrange(KEY_TALKS + personId, -min, 0).each {String talkId ->
+        talks.add(Talk.get(talkId.toLong()))
+      }
+      GParsPool.withPool {
+
+      }
+    }
+    talks
+  }
+
   List<TalkPhrase> getPhrases(long talkId, int start, int end) {
     List<TalkPhrase> phrases = []
     redisService.withRedis {Jedis redis ->
       redis.lrange(KEY_PHRASES + talkId, start, end).each {String phraseId ->
         phrases.add(TalkPhrase.get(phraseId.toLong()))
+      }
+    }
+    phrases.reverse()
+  }
+
+  List<TalkPhrase> getPhrasesWithNew(long talkId, long firstNew, int minNum, int step) {
+    List<TalkPhrase> phrases = []
+    redisService.withRedis {Jedis redis ->
+      redis.lrange(KEY_PHRASES + talkId, 0, minNum).each {String phraseId ->
+        phrases.add(TalkPhrase.get(phraseId.toLong()))
+      }
+      if (firstNew) GParsPool.withPool {
+        boolean pulled = phrases.size() ? true : false
+        while (pulled && !phrases.anyParallel {it.id == firstNew}) {
+          pulled = false
+          redis.lrange(KEY_PHRASES + talkId, minNum, minNum + step).each {String phraseId ->
+            phrases.add(TalkPhrase.get(phraseId.toLong()))
+            pulled = true
+          }
+          minNum += step
+        }
       }
     }
     phrases.reverse()
