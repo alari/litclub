@@ -134,7 +134,7 @@ class TalkService {
             phrases.add(TalkPhrase.get(phraseId.toLong()))
             pulled = true
           }
-          minNum += step
+          minNum  += step
         }
       }
     }
