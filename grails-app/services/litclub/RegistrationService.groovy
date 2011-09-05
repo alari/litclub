@@ -19,10 +19,9 @@ class RegistrationService {
     }
 
     String salt = saltSource instanceof NullSaltSource ? null : command.domain
-    String password = springSecurityService.encodePassword(command.password, salt)
 
     Person user = new Person(email: command.email, domain: command.domain,
-        password: password, accountLocked: true, enabled: true, info: new SubjectInfo())
+        password: command.password, accountLocked: true, enabled: true, info: new SubjectInfo())
 
     if (!user.validate() || !user.save(flush: true)) {
       System.err.println(user.errors)

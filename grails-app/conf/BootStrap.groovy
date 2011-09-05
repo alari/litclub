@@ -5,7 +5,7 @@ class BootStrap {
 
     def init = { servletContext ->
       if(Environment.isDevelopmentMode()){
-        new Jedis("localhost").flushDB()
+        //new Jedis("localhost").flushDB()
       }
     }
     def destroy = {

@@ -38,4 +38,8 @@ class Person extends Subject{
 	protected void encodePassword() {
 		password = springSecurityService.encodePassword(password)
 	}
+
+  String toString(){
+    "@"+domain
+  }
 }

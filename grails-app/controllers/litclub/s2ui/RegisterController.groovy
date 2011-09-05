@@ -36,7 +36,7 @@ class RegisterController extends litclub.s2ui.AbstractS2UiController {
 
   def forgotPassword = {
 
-    if (!request.method.equalsIgnoreCase("POST")) {
+    if (!request.post) {
       // show the form
       render view: "/s2ui/register/forgotPassword"
       return
