@@ -2,13 +2,11 @@ package litclub
 
 class TalkPhrase {
 
-  static belongsTo = [talk:Talk]
+  static belongsTo = [talk: Talk]
 
   Person person
 
   String text
-
-  boolean isNew = true
 
   Date dateCreated
 
