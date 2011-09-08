@@ -124,6 +124,8 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/redis.clients/jedis/jars/jedis-2.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.coconut.forkjoin/jsr166y/jars/jsr166y-070108.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.codehaus.gpars/gpars/jars/gpars-0.11.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.mongodb/mongo-java-driver/jars/mongo-java-driver-2.3.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.google.code.morphia/morphia/jars/morphia-0.99.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

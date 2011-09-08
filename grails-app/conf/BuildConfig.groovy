@@ -35,6 +35,8 @@ grails.project.dependency.resolution = {
     // For Geb snapshot
     mavenRepo "https://nexus.codehaus.org/content/repositories/snapshots"
 
+    // For Morphia
+    mavenRepo "http://morphia.googlecode.com/svn/mavenrepo/"
   }
   dependencies {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -45,6 +47,8 @@ grails.project.dependency.resolution = {
     build 'org.codehaus.gpars:gpars:0.11'
 
     compile 'org.mbte.groovypp:groovypp-all-nodep:0.4.296_1.8.0'
+
+    compile 'com.google.code.morphia:morphia:0.99'
 
     test("org.seleniumhq.selenium:selenium-java:$seleniumVersion") {
       exclude "xml-apis"
