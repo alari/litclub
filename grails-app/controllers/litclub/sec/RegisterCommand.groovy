@@ -1,4 +1,4 @@
-package litclub.s2ui
+package litclub.sec
 
 import litclub.Subject
 import litclub.validators.PasswordValidators

@@ -23,8 +23,23 @@
 <div id="wrapper">
 
   <header id="header">
+    <nav id="secown">
+      <sec:ifLoggedIn>
+        <sbj:link/>
+        <g:link controller="logout">${message(code: "layout.logout")}</g:link>
+        <g:link controller="talks">${message(code: "layout.talks")} (<talk:newCount/>)</g:link>
+      </sec:ifLoggedIn>
+      <sec:ifNotLoggedIn>
+        <g:link controller="register">${message(code: "layout.register")}</g:link>
+        <g:link controller="login">${message(code: "layout.login")}</g:link>
+      </sec:ifNotLoggedIn>
+    </nav>
+    <nav id="broadcast">
     <g:link uri="/">${message(code: "layout.title")}</g:link>
-    <sec:ifLoggedIn><g:link controller="logout">${message(code: "layout.logout")}</g:link></sec:ifLoggedIn>
+      </nav>
+    <nav id="nav-main">
+      Main Menu There
+    </nav>
   </header><!-- #header-->
 
   <g:if test="${flash.message}">

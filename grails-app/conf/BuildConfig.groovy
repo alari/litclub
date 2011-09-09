@@ -46,7 +46,7 @@ grails.project.dependency.resolution = {
 
     build 'org.codehaus.gpars:gpars:0.11'
 
-    compile 'org.mbte.groovypp:groovypp-all-nodep:0.4.301_1.8.0'
+    compile 'org.mbte.groovypp:groovypp-all:0.9.0_1.8.2'
 
     compile 'com.google.code.morphia:morphia:0.99'
 

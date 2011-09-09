@@ -1,24 +1,20 @@
-package litclub.s2ui
+package litclub.sec
 
-import litclub.Person
-import litclub.RegistrationCode
 import litclub.ServiceResponse
-import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
-import org.codehaus.groovy.grails.web.mapping.LinkGenerator
 
-class RegisterController extends litclub.s2ui.AbstractS2UiController {
+class RegisterController {
 
   static defaultAction = 'index'
 
   def registrationService
 
   def index = {
-    render view: '/s2ui/register/index', model: [command: new RegisterCommand()]
+    render view: '/register/index', model: [command: new RegisterCommand()]
   }
 
   def register = {RegisterCommand command ->
     def model = registrationService.handleRegistration(command).ok ? [emailSent: true] : [command: command]
-    render view: '/s2ui/register/index', model: model
+    render view: '/register/index', model: model
   }
 
   def verifyRegistration = {
@@ -38,7 +34,7 @@ class RegisterController extends litclub.s2ui.AbstractS2UiController {
 
     if (!request.post) {
       // show the form
-      render view: "/s2ui/register/forgotPassword"
+      render view: "/register/forgotPassword"
       return
     }
 
@@ -51,7 +47,7 @@ class RegisterController extends litclub.s2ui.AbstractS2UiController {
       }
     }
 
-    render view: "/s2ui/register/forgotPassword", model: [emailSent: result.ok]
+    render view: "/register/forgotPassword", model: [emailSent: result.ok]
   }
 
   def resetPassword = { ResetPasswordCommand command ->
@@ -65,7 +61,7 @@ class RegisterController extends litclub.s2ui.AbstractS2UiController {
       if(result.redirectUri) {
         redirect uri: result.redirectUri
       } else {
-        render view: "/s2ui/register/resetPassword", model: result.model
+        render view: "/register/resetPassword", model: result.model
       }
     } else {
       if(result.messageCode) flash.message = message(code: result.messageCode)
