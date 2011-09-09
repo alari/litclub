@@ -46,7 +46,7 @@ grails.project.dependency.resolution = {
 
     build 'org.codehaus.gpars:gpars:0.11'
 
-    compile 'org.mbte.groovypp:groovypp-all-nodep:0.4.296_1.8.0'
+    compile 'org.mbte.groovypp:groovypp-all-nodep:0.4.301_1.8.0'
 
     compile 'com.google.code.morphia:morphia:0.99'
 
@@ -55,7 +55,7 @@ grails.project.dependency.resolution = {
     }
     test("com.opera:operadriver:0.6")
 
-    test "org.codehaus.geb:geb-spock:$gebVersion"
+    //test "org.codehaus.geb:geb-spock:$gebVersion"
   }
 
   plugins {
@@ -68,6 +68,6 @@ grails.project.dependency.resolution = {
     runtime ':aws:1.1.9.2'
 
     test ":geb:$gebVersion"
-    test ":spock:0.6-SNAPSHOT"
+    //test ":spock:0.6-SNAPSHOT"
   }
 }

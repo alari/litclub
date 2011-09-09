@@ -9,8 +9,8 @@
 <head>
   <meta charset="utf-8"/>
   <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  <title><g:layoutTitle default="${message(code:"layout.title")}"/></title>
-  <!--[if lte IE 6]><link rel="stylesheet" href="${resource(dir: 'css/layout', file: 'ie.css')}" type="text/css" media="screen, projection" /><![endif]-->
+   <title><g:layoutTitle default="${message(code:'layout.title')}"/></title>
+ <!--[if lte IE 6]><link rel="stylesheet" href="${resource(dir: 'css/layout', file: 'ie.css')}" type="text/css" media="screen, projection" /><![endif]-->
   <link rel="stylesheet" href="${resource(dir: 'css/layout', file: 'base.css')}" type="text/css"
         media="screen, projection"/>
   <g:layoutHead/>
