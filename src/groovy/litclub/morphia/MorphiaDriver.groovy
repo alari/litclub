@@ -1,4 +1,4 @@
-package litclub.morphia
+@Typed package litclub.morphia
 
 import com.google.code.morphia.Morphia
 import com.mongodb.Mongo
