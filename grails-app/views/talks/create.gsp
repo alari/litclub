@@ -27,7 +27,7 @@
     </mk:formLine>
 
     <mk:formLine label="Message" bean="${command}" field="text" isBlock="1">
-      <textarea class="xxxlarge" id="text" name="text">${command.text}</textarea>
+      <textarea class="xxlarge" id="text" name="text">${command.text}</textarea>
     </mk:formLine>
 
     <mk:formActions>

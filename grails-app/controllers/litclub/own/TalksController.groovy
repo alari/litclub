@@ -39,8 +39,7 @@ class TalksController {
   def create(CreateTalkCommand command) {
     Person person = (Person) springSecurityService.currentUser
 
-    if (command && request.post && command.validate()) {
-      System.out.println "command.validate?"
+    if (request.post && !command.hasErrors()) {
       // TODO: check if it is a person
       long targetId = subjectDomainService.getIdByDomain(command.targetDomain)
       if (targetId) {
@@ -50,11 +49,6 @@ class TalksController {
         return
       }
     }
-    if (!command) {
-      System.out.println "creating a command"
-      command = new CreateTalkCommand()
-    }
-     System.out.println "wow! ${command}"
     [command: command]
   }
 

@@ -18,8 +18,6 @@ class RegistrationService {
       return new ServiceResponse(ok: false)
     }
 
-    String salt = saltSource instanceof NullSaltSource ? null : command.domain
-
     Person user = new Person(email: command.email, domain: command.domain,
         password: command.password, accountLocked: true, enabled: true, info: new SubjectInfo())
 
