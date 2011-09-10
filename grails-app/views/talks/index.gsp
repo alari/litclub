@@ -6,12 +6,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-  <meta name="layout" content="main"/>
+  <meta name="layout" content="mono"/>
   <title>Talks</title>
 </head>
 
 <body>
-<h1>Your talks</h1>
+<mk:pageHeader>Your talks</mk:pageHeader>
 
 <h2><g:link action="create">Create a new one</g:link></h2>
 <g:each in="${talks}" var="talk">

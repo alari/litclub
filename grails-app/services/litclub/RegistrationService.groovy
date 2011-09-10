@@ -1,12 +1,12 @@
 package litclub
 
-import litclub.s2ui.RegisterCommand
+import litclub.sec.RegisterCommand
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import org.codehaus.groovy.grails.plugins.springsecurity.NullSaltSource
-import org.codehaus.groovy.grails.web.mapping.LinkGenerator
+
 import groovy.text.SimpleTemplateEngine
-import grails.gsp.PageRenderer
-import litclub.s2ui.ResetPasswordCommand
+
+import litclub.sec.ResetPasswordCommand
 
 class RegistrationService {
   def saltSource

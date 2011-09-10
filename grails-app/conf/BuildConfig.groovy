@@ -35,6 +35,8 @@ grails.project.dependency.resolution = {
     // For Geb snapshot
     mavenRepo "https://nexus.codehaus.org/content/repositories/snapshots"
 
+    // For Morphia
+    mavenRepo "http://morphia.googlecode.com/svn/mavenrepo/"
   }
   dependencies {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -44,26 +46,29 @@ grails.project.dependency.resolution = {
 
     build 'org.codehaus.gpars:gpars:0.11'
 
-    compile 'org.mbte.groovypp:groovypp-all-nodep:0.4.296_1.8.0'
+    compile 'org.mbte.groovypp:groovypp-all:0.9.0_1.8.2'
+
+    compile 'com.google.code.morphia:morphia:0.99'
 
     test("org.seleniumhq.selenium:selenium-java:$seleniumVersion") {
       exclude "xml-apis"
     }
     test("com.opera:operadriver:0.6")
 
-    test "org.codehaus.geb:geb-spock:$gebVersion"
+    //test "org.codehaus.geb:geb-spock:$gebVersion"
   }
 
   plugins {
     compile ":hibernate:$grailsVersion"
     compile ":jquery:1.6.1.1"
     compile ":resources:1.0.2"
+   // compile ":lesscss-resources:0.4"
 
     build ":tomcat:$grailsVersion"
 
     runtime ':aws:1.1.9.2'
 
     test ":geb:$gebVersion"
-    test ":spock:0.6-SNAPSHOT"
+    //test ":spock:0.6-SNAPSHOT"
   }
 }
