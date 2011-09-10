@@ -1,0 +1,135 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+html {
+	height: 100%;
+}
+header, nav, section, article, aside, footer {
+	display: block;
+}
+body {
+	font: 12px/18px Arial, Tahoma, Verdana, sans-serif;
+	height: 100%;
+}
+a {
+	color: blue;
+	outline: none;
+	text-decoration: underline;
+}
+a:hover {
+	text-decoration: none;
+}
+p {
+	margin: 0 0 18px
+}
+img {
+	border: none;
+}
+input {
+	vertical-align: middle;
+}
+#wrapper {
+	min-width: 800px;
+	max-width: 1400px;
+	margin: 0 auto;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+}
+
+
+/* Header
+-----------------------------------------------------------------------------*/
+#header {
+	height: 150px;
+	background: white;
+}
+#secown {
+  font-size: 15px;
+  height: 30px;
+  padding: 4px 30px;
+  vertical-align: middle;
+}
+#secown a{
+  color: #006400;
+  text-decoration: none;
+  padding: 0 5px;
+}
+#secown a:hover{
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+#nav-main {
+  border-top: 2px solid #006400;
+}
+
+
+
+
+
+
+
+
+
+
+/* Tabs
+-----------------------------------------------------------------------------*/
+#tabs {
+	height: 25px;
+	background: orange;
+}
+
+/* Footer
+-----------------------------------------------------------------------------*/
+#footer {
+	margin: -30px auto 0;
+	min-width: 800px;
+	max-width: 1400px;
+	height: 30px;
+	background: #a9a9a9;
+}
+
+/* Middle
+-----------------------------------------------------------------------------*/
+#content {
+	padding: 0 0 100px;
+}
+
+/* Middle: duo
+-----------------------------------------------------------------------------*/
+#middle {
+	width: 100%;
+	padding: 0 0 100px;
+	height: 1%;
+	position: relative;
+}
+#middle:after {
+	content: '.';
+	display: block;
+	clear: both;
+	visibility: hidden;
+	height: 0;
+}
+#middle #container {
+	width: 100%;
+	float: left;
+	overflow: hidden;
+}
+#middle #content {
+	padding: 0 270px 0 0;
+}
+
+
+/* Sidebar Right
+-----------------------------------------------------------------------------*/
+#sideRight {
+	float: left;
+	margin-right: -3px;
+	width: 250px;
+	margin-left: -250px;
+	position: relative;
+	background: #FFACAA;
+}
+
+

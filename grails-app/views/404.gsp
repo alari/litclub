@@ -6,10 +6,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
   <head>
-    <meta name="layout" content="main"/>
+    <meta name="layout" content="mono"/>
     <title>Error404</title>
   </head>
   <body>
-  <h1>404</h1>
+  <mk:pageHeader>404 <small>Page Not Found</small></mk:pageHeader>
   </body>
 </html>
