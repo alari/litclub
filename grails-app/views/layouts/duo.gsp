@@ -13,20 +13,15 @@
 
   <body>
 
-  <section id="middle">
+  <div class="container-fluid">
+    <div class="sidebar">
+      sidebar
+    </div>
 
-    <div id="container">
-      <div id="content">
-
-        <g:layoutBody/>
-      </div><!-- #content-->
-    </div><!-- #container-->
-
-    <aside id="sideRight">
-      right side
-    </aside><!-- #sideRight -->
-
-  </section><!-- #middle-->
+    <div class="content">
+      <g:layoutBody/>
+    </div>
+  </div>
 
   </body>
   </html></g:applyLayout>

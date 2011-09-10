@@ -40,6 +40,7 @@ class TalksController {
     Person person = (Person) springSecurityService.currentUser
 
     if (command && request.post && command.validate()) {
+      System.out.println "command.validate?"
       // TODO: check if it is a person
       long targetId = subjectDomainService.getIdByDomain(command.targetDomain)
       if (targetId) {
@@ -49,8 +50,11 @@ class TalksController {
         return
       }
     }
-    if (!command) command = new CreateTalkCommand()
-
+    if (!command) {
+      System.out.println "creating a command"
+      command = new CreateTalkCommand()
+    }
+     System.out.println "wow! ${command}"
     [command: command]
   }
 

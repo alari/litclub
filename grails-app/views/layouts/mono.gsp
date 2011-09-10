@@ -13,9 +13,9 @@
 
   <body>
 
-  <div id="content">
+  <div class="container">
     <g:layoutBody/>
-  </div><!-- #content-->
+  </div>
 
   </body>
   </html></g:applyLayout>

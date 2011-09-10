@@ -1,45 +1,39 @@
 <head>
 <title><g:message code='spring.security.ui.forgotPassword.title'/></title>
-<meta name='layout' content='register'/>
+<meta name='layout' content='mono'/>
 </head>
 
 <body>
 
-<p/>
-
-<s2ui:form width='350' height='220' elementId='forgotPasswordFormContainer'
-           titleCode='spring.security.ui.forgotPassword.header' center='true'>
-
-	<g:form action='forgotPassword' name="forgotPasswordForm" autocomplete='off'>
+<mk:pageHeader>${message(code:'spring.security.ui.forgotPassword.header')}</mk:pageHeader>
 
 	<g:if test='${emailSent}'>
-	<br/>
+    <div class="alert-message success">
 	<g:message code='spring.security.ui.forgotPassword.sent'/>
+    </div>
 	</g:if>
 
 	<g:else>
 
-	<br/>
+    <g:form action='forgotPassword' name="forgotPasswordForm" autocomplete='off'>
+
 	<h4><g:message code='spring.security.ui.forgotPassword.description'/></h4>
 
-	<table>
-		<tr>
-			<td><label for="domain"><g:message code='spring.security.ui.forgotPassword.username'/></label></td>
-			<td><g:textField name="domain" size="25" /></td>
-		</tr>
-	</table>
+      <mk:formLine labelCode="spring.security.ui.forgotPassword.username" field="domain">
+        <g:textField name="domain" size="25" />
+      </mk:formLine>
 
-	<s2ui:submitButton elementId='reset' form='forgotPasswordForm' messageCode='spring.security.ui.forgotPassword.submit'/>
+      <mk:formActions>
+        <g:submitButton class="btn primary" name="submit" value="${message(code:'spring.security.ui.forgotPassword.submit')}"/>
+      </mk:formActions>
 
-	</g:else>
-
-	</g:form>
-</s2ui:form>
+      </g:form>
 
 <script>
 $(document).ready(function() {
 	$('#username').focus();
 });
 </script>
+	</g:else>
 
 </body>

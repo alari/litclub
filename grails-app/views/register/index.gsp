@@ -1,55 +1,57 @@
 <head>
-	<meta name='layout' content='register'/>
-	<title><g:message code='spring.security.ui.register.title'/></title>
+  <meta name='layout' content='mono'/>
+  <title><g:message code='spring.security.ui.register.title'/></title>
 </head>
 
 <body>
 
-<p/>
-
-<s2ui:form width='650' height='300' elementId='loginFormContainer'
-           titleCode='spring.security.ui.register.description' center='true'>
-
 <g:form action='register' name='registerForm'>
+  <fieldset>
+    <legend>${message(code: 'spring.security.ui.register.description')}</legend>
 
-	<g:if test='${emailSent}'>
-	<br/>
-	<g:message code='spring.security.ui.register.sent'/>
-	</g:if>
-	<g:else>
 
-	<br/>
 
-	<table>
-	<tbody>
 
-		<s2ui:textFieldRow name='domain' labelCode='user.domain.label' bean="${command}"
-                         size='40' labelCodeDefault='Username' value="${command.domain}"/>
+  <g:if test='${emailSent}'>
+    <div class="alert-message success">
+      ${message(code: 'spring.security.ui.register.sent')}
+    </div>
+  </g:if>
+  <g:else>
 
-		<s2ui:textFieldRow name='email' bean="${command}" value="${command.email}"
-		                   size='40' labelCode='user.email.label' labelCodeDefault='E-mail'/>
+    <mk:formLine labelCode="user.domain.label" bean="${command}" field="domain">
+      <div class="input-prepend">
+        <span class="add-on">@</span>
+        <g:textField class="medium" size="16" name="domain" bean="${command}"/>
+      </div>
+    </mk:formLine>
+    <mk:formLine labelCode="user.email.label" bean="${command}" field="email">
+      <g:textField class="medium" size="16" name="email" bean="${command}"/>
+    </mk:formLine>
 
-		<s2ui:passwordFieldRow name='password' labelCode='user.password.label' bean="${command}"
-                             size='40' labelCodeDefault='Password' value="${command.password}"/>
+    <mk:formLine labelCode="user.password.label" bean="${command}" field="password">
+      <g:passwordField class="medium" size="16" name="password" bean="${command}"/>
+    </mk:formLine>
 
-		<s2ui:passwordFieldRow name='password2' labelCode='user.password2.label' bean="${command}"
-                             size='40' labelCodeDefault='Password (again)' value="${command.password2}"/>
+    <mk:formLine labelCode="user.password2.label" bean="${command}" field="password">
+      <g:passwordField class="medium" size="16" name="password2" bean="${command}"/>
+    </mk:formLine>
+    </fieldset>
 
-	</tbody>
-	</table>
+    <mk:formActions>
+      <g:submitButton class="btn primary" name="submit"
+                      value="${message(code:'spring.security.ui.register.submit')}"/>&nbsp;<button type="reset"
+                                                                                                   class="btn">Cancel</button>
+    </mk:formActions>
 
-	<s2ui:submitButton elementId='create' form='registerForm' messageCode='spring.security.ui.register.submit'/>
-
-	</g:else>
+  </g:else>
 
 </g:form>
 
-</s2ui:form>
-
 <script>
-$(document).ready(function() {
-	$('#username').focus();
-});
+  $(document).ready(function() {
+    $('#domain').focus();
+  });
 </script>
 
 </body>

@@ -4,34 +4,27 @@
 </head>
 
 <body>
-
-<p/>
-
-<s2ui:form width='475' height='250' elementId='resetPasswordFormContainer'
-           titleCode='spring.security.ui.resetPassword.header' center='true'>
+<mk:pageHeader>${message(code:'spring.security.ui.resetPassword.header')}</mk:pageHeader>
 
 	<g:form action='resetPassword' name='resetPasswordForm' autocomplete='off'>
 	<g:hiddenField name='t' value='${token}'/>
-	<div class="sign-in">
 
-	<br/>
 	<h4><g:message code='spring.security.ui.resetPassword.description'/></h4>
 
-	<table>
-		<s2ui:passwordFieldRow name='password' labelCode='resetPasswordCommand.password.label' bean="${command}"
-                             labelCodeDefault='Password' value="${command?.password}"/>
+    <mk:formLine labelCode="resetPasswordCommand.password.label" bean="${command}" field="password">
+      <g:passwordField name="password"/>
+    </mk:formLine>
 
-		<s2ui:passwordFieldRow name='password2' labelCode='resetPasswordCommand.password2.label' bean="${command}"
-                             labelCodeDefault='Password (again)' value="${command?.password2}"/>
-	</table>
+    <mk:formLine labelCode="resetPasswordCommand.password2.label" bean="${command}" field="password2">
+      <g:passwordField name="password2"/>
+    </mk:formLine>
 
-	<s2ui:submitButton elementId='reset' form='resetPasswordForm' messageCode='spring.security.ui.resetPassword.submit'/>
+    <mk:formActions>
+      <g:submitButton class="btn primary" name="submit" value="${message(code:'spring.security.ui.resetPassword.submit')}"/>
+    </mk:formActions>
 
-	</div>
+
 	</g:form>
-
-	</div>
-</s2ui:form>
 
 <script>
 $(document).ready(function() {
