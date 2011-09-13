@@ -44,7 +44,7 @@
             <a href="#" class="dropdown-toggle">${message(code: "layout.add.node")}</a>
               <ul class="dropdown-menu">
                 <g:each in="${NodeType.values()}" var="type">
-                  <li><sbj:addNode type="${type}">${type}</sbj:addNode></li>
+                  <li><sbj:addNode type="${type}">${message(code:"layout.add."+type)}</sbj:addNode></li>
                 </g:each>
                 <li class="divider"></li>
                 <li><a href="#">Another link</a></li>

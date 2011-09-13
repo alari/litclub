@@ -49,7 +49,7 @@ class TalksController {
         return
       }
     }
-    [command: command]
+    [command: request.post ? command : new CreateTalkCommand()]
   }
 
   def sayPhrase(SayPhraseCommand command) {

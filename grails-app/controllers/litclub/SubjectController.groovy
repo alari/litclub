@@ -11,7 +11,10 @@ class SubjectController {
   }
 
   def addNode = {NodeFormCommand command->
-    render view: "nodeForm", model: [command:command]
+    if(request.post) {
+      // handle the command object
+    }
+    render view: "nodeForm", model: [command: request.post ? command : new NodeFormCommand()]
   }
 }
 
