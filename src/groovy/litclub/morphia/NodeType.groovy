@@ -4,14 +4,14 @@
  * @author Dmitry Kurinskiy
  * @since 08.09.11 14:50
  */
-public enum Type {
+public enum NodeType {
   PROSE("prose"),
   POETRY("poetry"),
   ARTICLE("article"),
   BLOGPOST("post"),
   THREAD("thread");
 
-  static private Map<String,Type> byName = [:]
+  static private Map<String,NodeType> byName = [:]
 
   static {
     values().each {byName.put(it.name, it)}
@@ -19,7 +19,7 @@ public enum Type {
 
   private String name
 
-  private Type(String name){
+  private NodeType(String name){
     this.name = name
   }
 
@@ -27,7 +27,7 @@ public enum Type {
     name
   }
 
-  static Type getByName(String name){
+  static NodeType getByName(String name){
     byName.get(name)
   }
 }

@@ -9,9 +9,9 @@ import groovy.text.SimpleTemplateEngine
 import litclub.sec.ResetPasswordCommand
 
 class RegistrationService {
-  def saltSource
   def springSecurityService
   def mailSenderService
+  def i18n
 
   ServiceResponse handleRegistration(RegisterCommand command) {
     if (command.hasErrors()) {
@@ -40,14 +40,14 @@ class RegistrationService {
 
     def registrationCode = token ? RegistrationCode.findByToken(token) : null
     if (!registrationCode) {
-      return result.setAttributes(ok:false, messageCode:"spring.security.ui.register.badCode")
+      return result.setAttributes(ok:false, messageCode:"register.error.badCode")
     }
 
     Person user
     RegistrationCode.withTransaction { status ->
       user = Person.findByDomain(registrationCode.domain)
       if (!user) {
-        return result.setAttributes(ok:false, messageCode:"spring.security.ui.register.userNotFound")
+        return result.setAttributes(ok:false, messageCode:"register.error.userNotFound")
       }
 
       user.accountLocked = false
@@ -62,14 +62,14 @@ class RegistrationService {
     }
 
     if (!user) {
-      return result.setAttributes(ok:false, messageCode:"spring.security.ui.register.badCode")
+      return result.setAttributes(ok:false, messageCode:"register.error.badCode")
     }
 
     springSecurityService.reauthenticate user.domain
 
     return result.setAttributes(
         ok: true,
-        messageCode:"spring.security.ui.register.complete",
+        messageCode:"register.complete",
         redirectUri: conf.ui.register.postRegisterUrl ?: result.redirectUri
        )
   }
@@ -77,12 +77,12 @@ class RegistrationService {
   ServiceResponse handleForgotPassword(String domain) {
     ServiceResponse response = new ServiceResponse()
     if (!domain) {
-      return response.setAttributes(ok: false, messageCode: 'spring.security.ui.forgotPassword.username.missing')
+      return response.setAttributes(ok: false, messageCode: 'register.forgotPassword.username.missing')
     }
 
     Person user = Person.findByDomain(domain)
     if (!user) {
-      return response.setAttributes(ok: false, messageCode: 'spring.security.ui.forgotPassword.user.notFound')
+      return response.setAttributes(ok: false, messageCode: 'register.forgotPassword.user.notFound')
     }
 
     RegistrationCode registrationCode = new RegistrationCode(domain: user.domain).save()
@@ -94,7 +94,7 @@ class RegistrationService {
     def registrationCode = token ? RegistrationCode.findByToken(token) : null
     if (!registrationCode) {
       return new ServiceResponse(
-          messageCode: 'spring.security.ui.resetPassword.badCode',
+          messageCode: 'register.resetPassword.badCode',
           ok: false,
           redirectUri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl)
     }
@@ -122,20 +122,14 @@ class RegistrationService {
     def conf = SpringSecurityUtils.securityConfig
     return new ServiceResponse(
         ok: true,
-        messageCode: 'spring.security.ui.resetPassword.success',
+        messageCode: 'register.resetPassword.success',
         redirectUri: conf.ui.register.postResetUrl ?: conf.successHandler.defaultTargetUrl)
   }
 
-  private String evaluate(s, binding) {
-		new SimpleTemplateEngine().createTemplate(s).make(binding)
-	}
-
   private boolean sendRegisterEmail(Person person, String token) {
-    ConfigObject conf = SpringSecurityUtils.securityConfig
-
     mailSenderService.putMessage(
         to: person.email,
-        subject: conf.ui.register.emailSubject.toString(),
+        subject: i18n."register.confirm.emailSubject",
         view: "/mail-messages/confirmEmail",
         model: [personId: person.id, token: token]
     )
@@ -143,11 +137,9 @@ class RegistrationService {
   }
 
   private boolean sendForgotPasswordEmail(Person person, String token){
-    def conf = SpringSecurityUtils.securityConfig
-
     mailSenderService.putMessage(
         to: person.email,
-        subject: conf.ui.forgotPassword.emailSubject,
+        subject: i18n."register.forgotPassword.emailSubject",
         view: "/mail-messages/forgotPassword",
         model: [personId: person.id, token: token]
     )

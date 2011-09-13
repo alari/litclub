@@ -1,12 +1,24 @@
+import litclub.morphia.NodeType
+
 class UrlMappings {
 
   static mappings = {
 
-    "/$domain/$action?/$id?" {
+    def domainCheck = '^[-_a-zA-Z0-9]{4,16}$'
+
+    "/$domain/" {
       constraints {
-        domain matches: '^[-_a-zA-Z0-9]{4,16}$'
+        domain matches: domainCheck
       }
       controller = "subject"
+    }
+    "/$domain/add.$type" {
+        constraints {
+          domain matches: domainCheck
+          type inList: NodeType.values().collect {it.toString()}
+        }
+      controller = "subject"
+      action = "addNode"
     }
 
     "/own.talks/$id?" {

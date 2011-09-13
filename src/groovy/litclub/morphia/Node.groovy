@@ -5,6 +5,7 @@ import org.bson.types.ObjectId
 import com.google.code.morphia.annotations.Id
 import com.google.code.morphia.annotations.PrePersist
 import com.google.code.morphia.annotations.Version
+import com.google.code.morphia.annotations.Reference
 
 /**
  * @author Dmitry Kurinskiy
@@ -16,7 +17,10 @@ class Node {
 
   Long subjectId
 
-  Type type
+  NodeType type
+
+  @Reference(lazy=true)
+  NodeContent content
 
   String title
 

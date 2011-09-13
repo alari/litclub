@@ -5,7 +5,15 @@ class SubjectTagLib {
 
   def springSecurityService
 
-  def talkService
+  def addNode = {attrs,body->
+    attrs.params = [
+        type: attrs.remove("type"),
+        domain: attrs.remove("domain") ?: springSecurityService.currentUser.domain,
+        ]
+    attrs.controller = "subject"
+    attrs.action = "addNode"
+    out << g.link(attrs, body)
+  }
 
   def link = { attrs ->
     Subject subject = null
