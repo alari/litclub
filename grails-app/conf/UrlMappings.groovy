@@ -28,6 +28,13 @@ class UrlMappings {
       controller = "subject"
       action = "typeList"
     }
+    "/$domain/$node" {
+      constraints {
+        domain matches: domainCheck
+      }
+      controller = "subject"
+      action = "node"
+    }
 
     "/own.talks/$id?" {
       constraints {

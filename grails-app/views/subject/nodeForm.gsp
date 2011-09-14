@@ -20,7 +20,8 @@
       <textarea name="text" id="text" class="xxlarge">${command?.text}</textarea>
     </mk:formLine>
     <mk:formActions>
-      <g:submitButton name="sbm" value="publish" class="btn primary"/>
+      <g:submitButton name="publish" value="publish" class="btn primary"/>
+      <g:submitButton name="draft" value="draft" class="btn"/>
     </mk:formActions>
   </form>
 
