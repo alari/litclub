@@ -35,4 +35,8 @@ class NodeService {
 
     resp.setAttributes(ok: true, redirectUri: "/", messageCode: "okay")
   }
+
+  List<Node> listSubjectNodes(Subject subject) {
+    nodeDao.createQuery().filter("subjectId", subject.id).asList()
+  }
 }

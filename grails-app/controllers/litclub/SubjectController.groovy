@@ -30,5 +30,9 @@ class SubjectController {
     }
     render view: "nodeForm", model: [command: request.post ? command : new NodeFormCommand()]
   }
+
+  def typeList = {
+    [nodes: nodeService.listSubjectNodes(Subject.get(request.subjectId)), type: params.type]
+  }
 }
 

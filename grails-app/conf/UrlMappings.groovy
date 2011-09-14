@@ -20,6 +20,14 @@ class UrlMappings {
       controller = "subject"
       action = "addNode"
     }
+    "/$domain/$type" {
+      constraints {
+          domain matches: domainCheck
+          type inList: NodeType.values().collect {it.toString()}
+        }
+      controller = "subject"
+      action = "typeList"
+    }
 
     "/own.talks/$id?" {
       constraints {
