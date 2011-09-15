@@ -13,7 +13,7 @@
   <mk:pageHeader>list of ${type}</mk:pageHeader>
 
   <g:each in="${nodes}" var="node">
-    ${node.title} : ${node.id.toString()}
+    <nd:link node="${node}"/>
     <br/>
   </g:each>
 

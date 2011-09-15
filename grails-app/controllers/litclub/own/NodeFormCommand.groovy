@@ -1,4 +1,4 @@
-package litclub
+package litclub.own
 
 /**
  * @author Dmitry Kurinskiy

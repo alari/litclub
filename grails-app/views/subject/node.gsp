@@ -7,7 +7,7 @@
 <html>
   <head>
     <meta name="layout" content="mono"/>
-    <title>Node Page</title></head>
+    <title>${node.title}</title></head>
   <body>
   
   <mk:pageHeader>${node.title}</mk:pageHeader>
@@ -20,12 +20,12 @@
   It's a draft: <g:formatBoolean boolean="${node.isDraft}"/>
 
   <mk:formActions>
-    <g:if test="${node.isDraft}">
-      <a href="#" class="btn">Publish node from Drafts</a>
-    </g:if>
-    <g:else>
-      <a href="#" class="btn">Move to drafts</a>
-    </g:else>
+      <nd:link node="${node}" action="draft">
+        ${(node.isDraft ? "Publish node from Drafts" : "Move to drafts")}</nd:link>
+    |
+    <nd:link node="${node}" action="edit">Edit Node</nd:link>
+    |
+    <nd:link node="${node}" action="delete">Delete Node</nd:link>
   </mk:formActions>
   
   </body>

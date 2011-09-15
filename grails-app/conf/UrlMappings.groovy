@@ -4,37 +4,48 @@ class UrlMappings {
 
   static mappings = {
 
-    def domainCheck = '^[-_a-zA-Z0-9]{4,16}$'
+    Map domainCheck = [matches:'^[-_a-zA-Z0-9]{4,16}$']
+    List nodeTypes = NodeType.values().collect {it.toString()}
+    Map nodeCheck = [matches:'^[-_a-zA-Z0-9]{2,32}$', validator: {!nodeTypes.contains(it)}]
 
     "/$domain/" {
       constraints {
-        domain matches: domainCheck
+        domain domainCheck
       }
       controller = "subject"
     }
     "/$domain/add.$type" {
         constraints {
-          domain matches: domainCheck
-          type inList: NodeType.values().collect {it.toString()}
+          domain domainCheck
+          type inList: nodeTypes
         }
-      controller = "subject"
+      controller = "subjectNode"
       action = "addNode"
     }
     "/$domain/$type" {
       constraints {
-          domain matches: domainCheck
-          type inList: NodeType.values().collect {it.toString()}
+          domain domainCheck
+          type inList: nodeTypes
         }
       controller = "subject"
       action = "typeList"
     }
     "/$domain/$node" {
       constraints {
-        domain matches: domainCheck
+        domain domainCheck
+        node nodeCheck
       }
       controller = "subject"
       action = "node"
     }
+    "/$domain/$node/$action" {
+      constraints {
+        domain domainCheck
+        node nodeCheck
+      }
+      controller = "subjectNode"
+    }
+
 
     "/own.talks/$id?" {
       constraints {

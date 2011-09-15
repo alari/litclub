@@ -6,9 +6,9 @@ import litclub.morphia.Node
 import litclub.morphia.NodeType
 import litclub.morphia.NodeContent
 import litclub.morphia.dao.NodeContentDAO
-import redis.clients.jedis.Jedis
-import redis.clients.jedis.Transaction
+
 import com.google.code.morphia.query.Query
+import litclub.own.NodeFormCommand
 
 class NodeService {
 
@@ -25,7 +25,7 @@ class NodeService {
 
   ServiceResponse addNode(Subject context, Person author, NodeType type, NodeFormCommand command, boolean isDraft) {
     ServiceResponse resp = new ServiceResponse()
-    // check context, author, their rights
+    // TODO: check context, author, their rights
     if(!context || !author || context.id!=author.id) {
       return resp.setAttributes(ok:false,messageCode: "wrong context")
     }
@@ -47,7 +47,32 @@ class NodeService {
     nodeDao.save(node)
     // TODO: check if we've saved the node correctly
 
-    resp.setAttributes(ok: true, redirectUri: "/"+author.domain+"/"+node.name, messageCode: "okay, you've got it")
+    resp.setAttributes(ok: true, redirectUri: buildUri(node), messageCode: "okay, you've got it")
+  }
+
+   ServiceResponse edit(Node node, Person author, NodeFormCommand command, boolean isDraft) {
+    ServiceResponse resp = new ServiceResponse()
+    // TODO: check author, his rights
+    if(!author || node.subjectId!=author.id) {
+      return resp.setAttributes(ok:false,messageCode: "wrong context")
+    }
+
+    node.title = command.title
+    node.content.text = command.text
+     node.isDraft = isDraft
+
+     // TODO: add information about a new version in metadata
+
+    nodeContentDAO.save(node.content)
+    nodeDao.save(node)
+    // TODO: check if we've saved the node correctly
+
+    resp.setAttributes(ok: true, redirectUri: buildUri(node), messageCode: "okay, you've got it")
+  }
+
+  def delete(Node node) {
+    nodeContentDAO.delete(node.content)
+    nodeDao.delete(node)
   }
 
   long countSubjectNodes(long subjectId, NodeType type=null) {
@@ -64,5 +89,15 @@ class NodeService {
     Query<Node> q = nodeDao.createQuery().filter("subjectId", subjectId).filter("type", NodeType.getByName(type))
     if(!withDrafts) q.filter("isDraft", false)
     q.asList()
+  }
+
+  String buildUri(Node node, String action=null) {
+    Subject subject = Subject.get(node.subjectId)
+    "/"+subject.domain+"/"+node.name + (action ? "/"+action : "")
+  }
+
+  Node save(Node node) {
+    nodeDao.save(node)
+    node
   }
 }
