@@ -22,8 +22,7 @@ class RegistrationService {
         password: command.password, accountLocked: true, enabled: true, info: new SubjectInfo())
 
     if (!user.validate() || !user.save(flush: true)) {
-      System.err.println(user.errors)
-      return new ServiceResponse(ok: false)
+      return new ServiceResponse(ok: false, messageCode: user.errors)
       // TODO
     }
 
