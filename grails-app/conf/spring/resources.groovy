@@ -4,4 +4,5 @@ beans = {
 
   morphiaDriver(litclub.morphia.MorphiaDriver)
   nodeDao(litclub.morphia.dao.NodeDAO)
+  nodeContentDao(litclub.morphia.dao.NodeContentDAO)
 }

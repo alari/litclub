@@ -16,7 +16,10 @@ class MarkupTagLib {
     boolean isBlock = attrs.containsKey("isBlock")
     attrs.isBlock
 
-    String label = message(code:attrs.labelCode, default: attrs.label)
+    String label = ""
+    if(attrs.labelCode) label = message(code:attrs.labelCode, default: attrs.label)
+    else if(attrs.label) label = attrs.label
+    else label = field
 
     String help = ""
     if(attrs.containsKey("helpCode") || attrs.containsKey("help")){

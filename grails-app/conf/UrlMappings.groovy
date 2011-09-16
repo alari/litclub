@@ -1,13 +1,51 @@
+import litclub.morphia.NodeType
+
 class UrlMappings {
 
   static mappings = {
 
-    "/$domain/$action?/$id?" {
+    Map domainCheck = [matches:'^[-_a-zA-Z0-9]{4,16}$']
+    List nodeTypes = NodeType.values().collect {it.toString()}
+    Map nodeCheck = [matches:'^[-_a-zA-Z0-9]{2,32}$', validator: {!nodeTypes.contains(it)}]
+
+    "/$domain/" {
       constraints {
-        domain matches: '^[-_a-zA-Z0-9]{4,16}$'
+        domain domainCheck
       }
       controller = "subject"
     }
+    "/$domain/add.$type" {
+        constraints {
+          domain domainCheck
+          type inList: nodeTypes
+        }
+      controller = "subjectNode"
+      action = "addNode"
+    }
+    "/$domain/$type" {
+      constraints {
+          domain domainCheck
+          type inList: nodeTypes
+        }
+      controller = "subject"
+      action = "typeList"
+    }
+    "/$domain/$node" {
+      constraints {
+        domain domainCheck
+        node nodeCheck
+      }
+      controller = "subject"
+      action = "node"
+    }
+    "/$domain/$node/$action" {
+      constraints {
+        domain domainCheck
+        node nodeCheck
+      }
+      controller = "subjectNode"
+    }
+
 
     "/own.talks/$id?" {
       constraints {

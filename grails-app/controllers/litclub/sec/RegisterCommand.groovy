@@ -20,7 +20,7 @@ class RegisterCommand {
           return 'registerCommand.domain.unique'
         }
         if (!((String) value).matches('^[-_a-zA-Z0-9]{4,16}$')) {
-          return "bad domain"
+          return "registerCommand.domain.invalid"
         }
       }
     }
