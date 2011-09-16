@@ -49,6 +49,8 @@ grails.project.dependency.resolution = {
     compile 'org.mbte.groovypp:groovypp-all:0.9.0_1.8.2'
 
     compile 'com.google.code.morphia:morphia:0.99'
+    compile 'cglib:cglib-nodep:[2.1_3,)'
+    compile 'com.thoughtworks.proxytoys:proxytoys:1.0'
 
     test("org.seleniumhq.selenium:selenium-java:$seleniumVersion") {
       exclude "xml-apis"

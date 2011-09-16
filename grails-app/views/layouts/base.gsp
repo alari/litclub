@@ -3,7 +3,7 @@
   @since 09.09.11 10:42
 --%>
 
-<%@ page import="litclub.I18n" contentType="text/html;charset=UTF-8" %>
+<%@ page import="litclub.morphia.NodeType; litclub.I18n" contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -13,6 +13,17 @@
   <r:require module="jquery"/>
   <r:require module="twitterBootstrap"/>
   <r:layoutResources/>
+  <script>
+  $(document).ready(function(){
+    $("body").bind("click", function (e) {
+    $('.dropdown-toggle, .menu').parent("li").removeClass("open");
+  });
+  $(".dropdown-toggle, .menu").click(function (e) {
+    var $li = $(this).parent("li").toggleClass('open');
+    return false;
+  });
+  });
+  </script>
   <style type="text/css">
   body{padding-top:54px}
   </style>
@@ -30,10 +41,11 @@
           <li><g:link controller="logout">${message(code: "layout.logout")}</g:link></li>
           <li><g:link controller="talks">${message(code: "layout.talks")} (<talk:newCount/>)</g:link></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle">Dropdown</a>
+            <a href="#" class="dropdown-toggle">${message(code: "layout.add.node")}</a>
               <ul class="dropdown-menu">
-                <li><a href="#">Secondary link</a></li>
-                <li><a href="#">Something else here</a></li>
+                <g:each in="${NodeType.values()}" var="type">
+                  <li><sbj:addNode type="${type}">${message(code:"layout.add."+type)}</sbj:addNode></li>
+                </g:each>
                 <li class="divider"></li>
                 <li><a href="#">Another link</a></li>
               </ul>
