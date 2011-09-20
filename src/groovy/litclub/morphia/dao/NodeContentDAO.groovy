@@ -15,12 +15,12 @@ class NodeContentDAO extends BasicDAO<NodeContent, ObjectId>{
     super(morphiaDriver.mongo, morphiaDriver.morphia, morphiaDriver.dbName)
   }
 
-  public NodeContent getById(String id) {
+  NodeContent getById(String id) {
     if(!ObjectId.isValid(id)) return null
     getById(new ObjectId(id))
   }
 
-  public NodeContent getById(ObjectId id) {
+  NodeContent getById(ObjectId id) {
     get(id)
   }
 }

@@ -2,6 +2,10 @@ package litclub
 
 import litclub.morphia.PartyLevel
 import redis.clients.jedis.Jedis
+import litclub.morphia.Participation
+import litclub.morphia.dao.ParticipationDAO
+import org.springframework.beans.factory.annotation.Autowired
+import litclub.morphia.Party
 
 class ParticipationService {
 
@@ -10,68 +14,115 @@ class ParticipationService {
 
   def redisService
 
+  @Autowired
+  ParticipationDAO participationDao
+
+  private String keyParticipants(Union union) {
+    KEY_PARTICIPANTS + union.id.toString()
+  }
+
+  private String keyLevels(Union union) {
+    KEY_LEVELS + union.id.toString()
+  }
+
   PartyLevel getLevel(Union union, Person person){
     String level = PartyLevel.NOBODY.toString()
     redisService.withRedis {Jedis redis ->
-      level = redis.hget(KEY_LEVELS+union.id, person.id.toString())
+      level = redis.hget(keyLevels(union), person.id.toString())
     }
     PartyLevel.getByName(level)
   }
 
-  Set<long> getParticipants(Union union) {
-    Set<long> participants = []
+  Set<Long> getParticipants(Union union) {
+    Set<Long> participants = []
     redisService.withRedis {Jedis redis ->
-      participants = redis.smembers(KEY_PARTICIPANTS+union.id).collect {it.toLong()}
+      participants = redis.smembers(keyParticipants(union)).collect {it.toLong()}
     }
     participants
   }
 
-  def setParty(Union union, Person person, PartyLevel level) {
+  Participation getParticipation(Subject subject) {
+    participationDao.getBySubject(subject)
+  }
+
+  Collection<Party> getParties(Subject subject) {
+    participationDao.getBySubject(subject).parties.values()
+  }
+
+  void setParty(Union union, Person person, PartyLevel level) {
     PartyLevel wasLevel = PartyLevel.NOBODY
     redisService.withRedis {Jedis redis ->
       wasLevel = PartyLevel.getByName( redis.hget(KEY_LEVELS+union.id, person.id.toString()) )
-      if(wasLevel == level) return;
-      redis.hset(KEY_LEVELS+union.id, person.id.toString(), level.toString())
+      if(wasLevel.is(level)) return;
+
+      redis.hset(keyLevels(union), person.id.toString(), level.toString())
+
       // participants cache
-      if(level == PartyLevel.PARTICIPANT) {
-        redis.sadd(KEY_PARTICIPANTS+union.id, person.id.toString())
+      if(level.is(PartyLevel.PARTICIPANT)) {
+        redis.sadd(keyParticipants(union), person.id.toString())
       } else {
-        redis.srem(KEY_PARTICIPANTS+union.id, person.id.toString())
+        redis.srem(keyParticipants(union), person.id.toString())
       }
     }
-    if(wasLevel == level) return;
+    if(wasLevel.is(level)) return;
 
-    if(wasLevel.isSenior() && !level.isSenior()) {
-      // remove from union mongo participation
-    } else if(level.isSenior() && !wasLevel.isSenior()) {
-      // add to union mongo participation
+    if(wasLevel.hasSenior() && !level.hasSenior()) {
+      participationDao.remParty(union, person)
+    } else if(level.hasSenior() && !wasLevel.hasSenior()) {
+      participationDao.setParty(union, person, level)
     }
 
-    // if was not participant and now is, add to person's participation
-    if(wasLevel.toInteger() <= 0 && level.toInteger() > 0) {
+    if(!wasLevel.hasParticipant() && level.hasParticipant()) {
+      participationDao.setParty(person, union, level)
+    }
+  }
 
+  void removeParty(Union union, Person person) {
+    PartyLevel level = getLevel(union, person)
+    if(level.is(PartyLevel.NOBODY)) return;
+
+    redisService.withRedis {Jedis redis ->
+      redis.hdel(keyLevels(union), person.id.toString())
+    }
+    if(level.hasSenior()) {
+      participationDao.remParty(union, person)
+    }
+    if(level.hasParticipant()) {
+      participationDao.remParty(person, union)
+    }
+  }
+
+  void invite(Union union, Person person) {
+    PartyLevel level = getLevel(union, person)
+    if(!level.is(PartyLevel.NOBODY)) return;
+
+    redisService.withRedis {Jedis redis ->
+      redis.hset(keyLevels(union), person.id.toString(), PartyLevel.INVITED.toString())
     }
 
+    // TODO: send notice
   }
 
-  def removeParty(Union union, Person person) {
-    // take a look on redis; remove if present
-    // if was senior, remove from mongo
-    // remove from person mongo
+  void request(Union union, Person person) {
+    PartyLevel level = getLevel(union, person)
+    if(!level.is(PartyLevel.NOBODY)) return;
+
+    redisService.withRedis {Jedis redis ->
+      redis.hset(keyLevels(union), person.id.toString(), PartyLevel.REQUESTED.toString())
+    }
+
+    // TODO: send notice to community
   }
 
-  def invite(Union union, Person person) {
-    // take a look on redis
-    // if there's a value, do nothing
-    // otherwise add redis key
-    // + should send notice
-  }
-
-  def request(Union union, Person person) {
-    // take a look on redis
-    // if there is no key, add a key with request mark
-    // also check union settings!
-    // maybe we may save the request right now
-    // +add to requests redis key
+  List<Person> listSomeParticipants(Union union, long max = 5) {
+    List<Long> ids = []
+    redisService.withRedis {Jedis redis ->
+      max = Math.min(max, redis.scard(keyParticipants(union)))
+      while(ids.size() < max) {
+        long id = redis.srandmember(keyParticipants(union)).toLong()
+        if(!ids.contains(id)) ids.add(id)
+      }
+    }
+    ids.collect {Person.get(it)}
   }
 }

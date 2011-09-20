@@ -1,11 +1,9 @@
 package litclub.own
 
 import grails.plugins.springsecurity.Secured
-import litclub.morphia.Node
-import litclub.SubjectUtilController
-
-import litclub.Person
 import litclub.ServiceResponse
+import litclub.SubjectUtilController
+import litclub.morphia.Node
 import litclub.morphia.NodeType
 
 @Secured(["ROLE_USER"])
@@ -13,12 +11,12 @@ class SubjectNodeController extends SubjectUtilController {
 
   def nodeService
 
-  private Node getNode(){
+  private Node getNode() {
     nodeService.getByName(subjectId, params.node)
   }
 
   def draft = {
-    if(!node?.id) {
+    if (!node?.id) {
       errorCode = "not found"
       redirect uri: "/"
       return
@@ -30,10 +28,10 @@ class SubjectNodeController extends SubjectUtilController {
   }
 
   @Secured("ROLE_USER")
-  def addNode = {NodeFormCommand command->
-    if(request.post && !command.hasErrors()) {
+  def addNode = {NodeFormCommand command ->
+    if (request.post && !command.hasErrors()) {
       ServiceResponse resp = nodeService.addNode(subject, currentPerson, NodeType.getByName(params.type), command, params.containsKey("draft"))
-      if(resp.ok) {
+      if (resp.ok) {
         messageCode = resp.messageCode
         redirect uri: resp.redirectUri
         return
@@ -44,17 +42,17 @@ class SubjectNodeController extends SubjectUtilController {
     render view: "nodeForm", model: [command: request.post ? command : new NodeFormCommand()]
   }
 
-  def edit = {NodeFormCommand command->
+  def edit = {NodeFormCommand command ->
     // TODO: check node rights?
-       if(request.post && !command.hasErrors()) {
+    if (request.post && !command.hasErrors()) {
       ServiceResponse resp = nodeService.edit(node, currentPerson, command, params.containsKey("draft"))
-      if(resp.ok) {
+      if (resp.ok) {
         messageCode = resp.messageCode
         redirect uri: resp.redirectUri
         return
       } else {
         errorCode = resp.messageCode
-        if(resp.redirectUri) {
+        if (resp.redirectUri) {
           redirect uri: resp.redirectUri
           return
         }
@@ -70,6 +68,6 @@ class SubjectNodeController extends SubjectUtilController {
     // TODO: check user rights
     def type = node.type
     nodeService.delete(node)
-    redirect uri: "/"+subject.domain+"/"+type.toString()
+    redirect uri: "/" + subject.domain + "/" + type.toString()
   }
 }

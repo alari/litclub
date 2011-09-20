@@ -5,9 +5,10 @@ class SubjectController extends SubjectUtilController{
   static defaultAction = "index"
 
   def nodeService
+  def participationService
 
   def index = {
-    [person: subject]
+    [subject: subject, parties: participationService.getParties(subject)]
   }
 
   def typeList = {

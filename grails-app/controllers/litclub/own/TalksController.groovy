@@ -1,9 +1,9 @@
 package litclub.own
 
+import grails.plugins.springsecurity.Secured
 import litclub.Person
 import litclub.Talk
 import litclub.TalkPhrase
-import grails.plugins.springsecurity.Secured
 
 @Secured(["ROLE_USER"])
 class TalksController {

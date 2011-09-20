@@ -22,7 +22,7 @@ enum PartyLevel {
   private String name
   private short level
 
-  private PartyLevel(String name, short level){
+  private PartyLevel(String name, int level){
     this.name = name
     this.level = level
   }
@@ -35,11 +35,19 @@ enum PartyLevel {
     level
   }
 
-  boolean isSenior(){
+  boolean hasSenior(){
     level >= 2
   }
 
+  boolean hasParticipant(){
+    level >= 1
+  }
+
+  boolean is(PartyLevel level) {
+    this == level
+  }
+
   static PartyLevel getByName(String name){
-    byName.get(name)
+    byName.get(name) ?: NOBODY
   }
 }
