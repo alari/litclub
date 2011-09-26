@@ -24,7 +24,8 @@ class SubjectTagLib {
     if (!subject) {
       out << "no subject to link"
     } else {
-      out << g.link(controller: "subject", action: "", params: [domain: subject.domain], "@" + subject.domain)
+      String prefix = subject instanceof Person ? "@" : "#"
+      out << g.link(controller: "subject", action: "", params: [domain: subject.domain], prefix + subject.domain)
     }
   }
 }
