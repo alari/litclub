@@ -3,17 +3,24 @@
   @since 02.09.11 13:25
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="litclub.Person" contentType="text/html;charset=UTF-8" %>
 <html>
   <head>
     <meta name="layout" content="mono"/>
-    <title>@${person.domain}</title>
+    <title>@${subject.domain}</title>
   </head>
   <body>
-  <h1><sbj:link subject="${person}"/> frontpage</h1>
-  <p>Tell you a secret: email is <tt>${person.email}</tt></p>
+  <h1><sbj:link subject="${subject}"/> frontpage</h1>
+  <g:if test="${subject instanceof Person}">
+  <p>Tell you a secret: email is <tt>${subject?.email}</tt></p>
+    </g:if>
+    <blockquote>
+      <g:each in="${parties}" var="party">
+        <p>PARTY: ${party.level} in <sbj:link id="${party.subjectId}"/> </p>
+      </g:each>
+    </blockquote>
   <p>The text in info object is:</p>
   <hr/>
-  ${person.info.frontText}
+  ${subject.info.frontText}
   </body>
 </html>

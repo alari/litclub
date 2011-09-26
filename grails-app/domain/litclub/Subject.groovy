@@ -9,14 +9,15 @@ abstract class Subject {
 
   SubjectInfo info
 
-  def subjectDomainService
+  transient subjectDomainService
 
   def beforeDelete() {
     subjectDomainService.delDomain(domain)
   }
 
   def afterInsert(){
-    subjectDomainService.setDomain((long)this.getProperty("id"), domain)
+    // TODO: remove this hack
+    if(!this instanceof Union) subjectDomainService.setDomain((long)this.getProperty("id"), domain)
   }
 
   def beforeUpdate() {

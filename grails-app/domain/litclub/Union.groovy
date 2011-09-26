@@ -1,6 +1,8 @@
 package litclub
 
-class Community extends Subject {
+class Union extends Subject {
+
+  Person founder
 
   static constraints = {
   }

@@ -16,12 +16,12 @@ class NodeDAO extends BasicDAO<Node, ObjectId>{
     super(morphiaDriver.mongo, morphiaDriver.morphia, morphiaDriver.dbName)
   }
 
-  public Node getById(String id) {
+  Node getById(String id) {
     if(!ObjectId.isValid(id)) return null
     getById(new ObjectId(id))
   }
 
-  public Node getById(ObjectId id) {
+  Node getById(ObjectId id) {
     get(id)
   }
 }
