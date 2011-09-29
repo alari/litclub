@@ -86,7 +86,7 @@ log4j = {
   appenders {
       console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
   }
- /*
+
   error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
       'org.codehaus.groovy.grails.web.pages', //  GSP
       'org.codehaus.groovy.grails.web.sitemesh', //  layouts
@@ -100,9 +100,10 @@ log4j = {
       'net.sf.ehcache.hibernate'
 
   warn 'org.mortbay.log'
-                          */
-  all 'grails.app'
+
+  error 'grails.app'
   all 'litclub'
+  error 'resource'
 }
 
 // Added by the Spring Security Core plugin:
@@ -126,7 +127,6 @@ grails {
           defaultRoleNames = ['ROLE_USER']
           emailFrom = 'do.not.reply@localhost'
           emailSubject = 'New Account'
-          defaultRoleNames = ['ROLE_USER']
           postRegisterUrl = null // use defaultTargetUrl if not set
         }
 

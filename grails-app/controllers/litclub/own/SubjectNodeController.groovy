@@ -11,11 +11,12 @@ class SubjectNodeController extends SubjectUtilController {
 
   def nodeService
 
-  private Node getNode() {
+  private Node getCurrentNode() {
     nodeService.getByName(subjectId, params.node)
   }
 
   def draft = {
+        Node node = currentNode
     if (!node?.id) {
       errorCode = "not found"
       redirect uri: "/"
@@ -43,6 +44,7 @@ class SubjectNodeController extends SubjectUtilController {
   }
 
   def edit = {NodeFormCommand command ->
+      Node node = currentNode
     // TODO: check node rights?
     if (request.post && !command.hasErrors()) {
       ServiceResponse resp = nodeService.edit(node, currentPerson, command, params.containsKey("draft"))
@@ -65,6 +67,7 @@ class SubjectNodeController extends SubjectUtilController {
   }
 
   def delete = {
+      Node node = currentNode
     // TODO: check user rights
     def type = node.type
     nodeService.delete(node)

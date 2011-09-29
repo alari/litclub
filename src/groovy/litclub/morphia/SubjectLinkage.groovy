@@ -7,7 +7,7 @@ import com.google.code.morphia.annotations.Embedded
  * @since 18.09.11 13:24
  */
 @Embedded
-class Party {
+class SubjectLinkage {
   long subjectId
 
   PartyLevel level

@@ -10,7 +10,7 @@ class SubjectTagLib {
         type: attrs.remove("type"),
         domain: attrs.remove("domain") ?: springSecurityService.currentUser.domain,
         ]
-    attrs.controller = "subject"
+    attrs.controller = "subjectNode"
     attrs.action = "addNode"
     out << g.link(attrs, body)
   }

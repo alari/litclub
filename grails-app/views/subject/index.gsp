@@ -13,6 +13,7 @@
   <h1><sbj:link subject="${subject}"/> frontpage</h1>
   <g:if test="${subject instanceof Person}">
   <p>Tell you a secret: email is <tt>${subject?.email}</tt></p>
+      <p>Locked: <g:formatBoolean boolean="${subject.accountLocked}"/></p>
     </g:if>
     <blockquote>
       <g:each in="${parties}" var="party">
@@ -22,5 +23,6 @@
   <p>The text in info object is:</p>
   <hr/>
   ${subject.info.frontText}
+
   </body>
 </html>

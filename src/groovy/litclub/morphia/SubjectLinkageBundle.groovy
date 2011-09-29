@@ -11,13 +11,13 @@ import com.google.code.morphia.annotations.Embedded
  * @since 18.09.11 13:21
  */
 @Entity
-class Participation {
+class SubjectLinkageBundle {
   @Id ObjectId id
 
   @Indexed
   long subjectId
 
   @Embedded
-  Map<String,Party> parties = [:]
+  Map<String,SubjectLinkage> linkages = [:]
 }
 

@@ -11,6 +11,7 @@ import litclub.sec.ResetPasswordCommand
 class RegistrationService {
   def springSecurityService
   def mailSenderService
+  def subjectDomainService
   def i18n
 
   ServiceResponse handleRegistration(RegisterCommand command) {
@@ -28,6 +29,8 @@ class RegistrationService {
 
     RegistrationCode registrationCode = new RegistrationCode(domain: user.domain).save()
 
+      // TODO: move it to GORM
+      subjectDomainService.setDomain(user.id, user.domain)
     sendRegisterEmail(user, registrationCode.token)
     return new ServiceResponse(ok: true)
   }
@@ -50,7 +53,10 @@ class RegistrationService {
       }
 
       user.accountLocked = false
-      user.save()
+      if(!user.save(flush: true)) {
+          log.error "Cannot save user: "+user.errors
+          return result.setAttributes(ok:false, messageCode:"dont know what")
+      }
       for (roleName in conf.ui.register.defaultRoleNames) {
         PersonRole.create user, roleName.toString()
       }

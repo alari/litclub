@@ -2,10 +2,10 @@ package litclub
 
 import litclub.morphia.PartyLevel
 import redis.clients.jedis.Jedis
-import litclub.morphia.Participation
-import litclub.morphia.dao.ParticipationDAO
+import litclub.morphia.SubjectLinkageBundle
+import litclub.morphia.dao.SubjectLinkageBundleDAO
 import org.springframework.beans.factory.annotation.Autowired
-import litclub.morphia.Party
+import litclub.morphia.SubjectLinkage
 
 class ParticipationService {
 
@@ -13,9 +13,7 @@ class ParticipationService {
   private static final String KEY_PARTICIPANTS = "union.participants:"
 
   def redisService
-
-  @Autowired
-  ParticipationDAO participationDao
+  def subjectLinkageService
 
   private String keyParticipants(Union union) {
     KEY_PARTICIPANTS + union.id.toString()
@@ -41,12 +39,12 @@ class ParticipationService {
     participants
   }
 
-  Participation getParticipation(Subject subject) {
-    participationDao.getBySubject(subject)
+  SubjectLinkageBundle getLinkageBundle(Subject subject) {
+      subjectLinkageService.getBundle(subject)
   }
 
-  Collection<Party> getParties(Subject subject) {
-    participationDao.getBySubject(subject).parties.values()
+  List<SubjectLinkage> getParties(Subject subject) {
+      subjectLinkageService.getLinkages(subject)
   }
 
   void setParty(Union union, Person person, PartyLevel level) {
@@ -67,13 +65,13 @@ class ParticipationService {
     if(wasLevel.is(level)) return;
 
     if(wasLevel.hasSenior() && !level.hasSenior()) {
-      participationDao.remParty(union, person)
+      subjectLinkageService.remLinkage(union, person)
     } else if(level.hasSenior() && !wasLevel.hasSenior()) {
-      participationDao.setParty(union, person, level)
+      subjectLinkageService.setLinkage(union, person, level)
     }
 
     if(!wasLevel.hasParticipant() && level.hasParticipant()) {
-      participationDao.setParty(person, union, level)
+      subjectLinkageService.setLinkage(person, union, level)
     }
   }
 
@@ -85,10 +83,10 @@ class ParticipationService {
       redis.hdel(keyLevels(union), person.id.toString())
     }
     if(level.hasSenior()) {
-      participationDao.remParty(union, person)
+      subjectLinkageService.remLinkage(union, person)
     }
     if(level.hasParticipant()) {
-      participationDao.remParty(person, union)
+      subjectLinkageService.remLinkage(person, union)
     }
   }
 
