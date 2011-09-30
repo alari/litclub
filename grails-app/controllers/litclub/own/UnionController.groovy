@@ -7,18 +7,19 @@ import litclub.SubjectInfo
 import litclub.Union
 import litclub.morphia.PartyLevel
 import org.springframework.beans.factory.annotation.Autowired
+import litclub.UtilController
 
-class UnionController {
+class UnionController extends UtilController {
 
-  def springSecurityService
   def subjectDomainService
   def participationService
+  def rightsService
 
-  //TODO: add UNION_CREATE permission check
-  @Secured("ROLE_USER")
+  @Secured(["ROLE_USER", "ROLE_CREATE_UNION"])
   def create = {CreateUnionCommand command ->
+
     if (request.post && !command.hasErrors()) {
-      Person founder = (Person) springSecurityService.currentUser
+      Person founder = currentPerson
       Union union = new Union(founder: founder, domain: command.domain,
           info: new SubjectInfo(frontText: command.text)).save(flush: true)
       // TODO: move it to afterInsert GORM event

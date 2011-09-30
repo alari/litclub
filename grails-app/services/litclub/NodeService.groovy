@@ -26,12 +26,12 @@ class NodeService {
   ServiceResponse addNode(Subject context, Person author, NodeType type, NodeFormCommand command, boolean isDraft) {
     ServiceResponse resp = new ServiceResponse()
     // TODO: check context, author, their rights
-    if(!context || !author || context.id!=author.id) {
-      return resp.setAttributes(ok:false,messageCode: "wrong context")
+    if (!context || !author || context.id != author.id) {
+      return resp.setAttributes(ok: false, messageCode: "wrong context")
     }
 
     // TODO: create title from text, if title is blank
-    String name = type.toString()+"-"+(countSubjectNodes(author.id, type)+1)
+    String name = type.toString() + "-" + (countSubjectNodes(author.id, type) + 1)
     // TODO: create name from title, if it's available, otherwise from type & count
 
     Node node = new Node(
@@ -50,18 +50,18 @@ class NodeService {
     resp.setAttributes(ok: true, redirectUri: buildUri(node), messageCode: "okay, you've got it")
   }
 
-   ServiceResponse edit(Node node, Person author, NodeFormCommand command, boolean isDraft) {
+  ServiceResponse edit(Node node, Person author, NodeFormCommand command, boolean isDraft) {
     ServiceResponse resp = new ServiceResponse()
     // TODO: check author, his rights
-    if(!author || node.subjectId!=author.id) {
-      return resp.setAttributes(ok:false,messageCode: "wrong context")
+    if (!author || node.subjectId != author.id) {
+      return resp.setAttributes(ok: false, messageCode: "wrong context")
     }
 
     node.title = command.title
     node.content.text = command.text
-     node.isDraft = isDraft
+    node.isDraft = isDraft
 
-     // TODO: add information about a new version in metadata
+    // TODO: add information about a new version in metadata
 
     nodeContentDAO.save(node.content)
     nodeDao.save(node)
@@ -75,9 +75,9 @@ class NodeService {
     nodeDao.delete(node)
   }
 
-  long countSubjectNodes(long subjectId, NodeType type=null) {
+  long countSubjectNodes(long subjectId, NodeType type = null) {
     Query<Node> q = nodeDao.createQuery().filter("subjectId", subjectId)
-    if(type) q.filter("type", type)
+    if (type) q.filter("type", type)
     q.countAll()
   }
 
@@ -85,15 +85,15 @@ class NodeService {
     nodeDao.createQuery().filter("subjectId", subjectId).filter("name", name).get()
   }
 
-  List<Node> listSubjectNodes(long subjectId, String type, boolean withDrafts=false) {
+  List<Node> listSubjectNodes(long subjectId, String type, boolean withDrafts = false) {
     Query<Node> q = nodeDao.createQuery().filter("subjectId", subjectId).filter("type", NodeType.getByName(type))
-    if(!withDrafts) q.filter("isDraft", false)
+    if (!withDrafts) q.filter("isDraft", false)
     q.asList()
   }
 
-  String buildUri(Node node, String action=null) {
+  String buildUri(Node node, String action = null) {
     Subject subject = Subject.get(node.subjectId)
-    "/"+subject.domain+"/"+node.name + (action ? "/"+action : "")
+    "/" + subject.domain + "/" + node.name + (action ? "/" + action : "")
   }
 
   Node save(Node node) {
