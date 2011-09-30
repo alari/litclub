@@ -11,6 +11,7 @@ class TalksController {
   def springSecurityService
   def talkService
   def subjectDomainService
+  def rightsService
 
   def index() {
     Person person = (Person) springSecurityService.currentUser
@@ -21,7 +22,8 @@ class TalksController {
   def talk(long id) {
     Talk talk = Talk.get(id)
     long personId = springSecurityService.currentUser.id
-    if (!talk || !personId in [talk.maxPersonId, talk.minPersonId]) {
+    // TODO: correct errors & redirects
+    if (!talk || !talkAccessable(talk)) {
       flash.error = "error: ${talk}"
       redirect uri: "/"
       return
@@ -36,6 +38,7 @@ class TalksController {
     [phrases: phrases, talk: talk, firstNew: firstNew, newPhrases: newPhrases]
   }
 
+  @Secured(["ROLE_USER","ROLE_TALK"])
   def create(CreateTalkCommand command) {
     Person person = (Person) springSecurityService.currentUser
 
@@ -44,6 +47,7 @@ class TalksController {
       long targetId = subjectDomainService.getIdByDomain(command.targetDomain)
       if (targetId) {
         talkService.sendPhrase(command.text, person.id, targetId, command.topic)
+        // TODO: flash.message
         flash.message = "Phrase sent"
         redirect action: "index"
         return
@@ -52,6 +56,7 @@ class TalksController {
     [command: request.post ? command : new CreateTalkCommand()]
   }
 
+  @Secured(["ROLE_USER","ROLE_TALK"])
   def sayPhrase(SayPhraseCommand command) {
     Talk talk = Talk.get(command.talkId)
 

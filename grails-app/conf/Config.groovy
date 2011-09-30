@@ -124,7 +124,7 @@ grails {
     springsecurity {
       ui {
         register {
-          defaultRoleNames = ['ROLE_USER']
+          defaultRoleNames = ['ROLE_USER','ROLE_CREATE_UNION','ROLE_TALK']
           emailFrom = 'do.not.reply@localhost'
           emailSubject = 'New Account'
           postRegisterUrl = null // use defaultTargetUrl if not set

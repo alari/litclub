@@ -10,26 +10,43 @@ import litclub.morphia.NodeType
 class SubjectNodeController extends SubjectUtilController {
 
   def nodeService
+  def rightsService
 
   private Node getCurrentNode() {
     nodeService.getByName(subjectId, params.node)
   }
 
-  def draft = {
-        Node node = currentNode
-    if (!node?.id) {
+  private boolean nodeNotFound(Node node){
+    if(!node?.id) {
       errorCode = "not found"
       redirect uri: "/"
-      return
+      return true
     }
-    // TODO: nodeService.canManipulate(currentPerson, node)
+    false
+  }
+
+  private boolean hasNoRight(boolean rightCheck, String errCode = "permission.denied", String redirectUri = null){
+    if(!rightCheck) {
+      errorCode = errCode
+      redirect uri: redirectUri ?: "/"
+      return true
+    }
+    false
+  }
+
+  def draft = {
+    Node node = currentNode
+    if(nodeNotFound(node)) return;
+    if(hasNoRight(rightsService.canMoveDraft(node))) return;
+
     node.isDraft = !node.isDraft
     nodeService.save(node)
     redirect uri: nodeService.buildUri(node)
   }
 
-  @Secured("ROLE_USER")
   def addNode = {NodeFormCommand command ->
+    if(hasNoRight(rightsService.canAddNode(subject, NodeType.getByName(params.type)))) return;
+
     if (request.post && !command.hasErrors()) {
       ServiceResponse resp = nodeService.addNode(subject, currentPerson, NodeType.getByName(params.type), command, params.containsKey("draft"))
       if (resp.ok) {
@@ -44,8 +61,10 @@ class SubjectNodeController extends SubjectUtilController {
   }
 
   def edit = {NodeFormCommand command ->
-      Node node = currentNode
-    // TODO: check node rights?
+    Node node = currentNode
+    if(nodeNotFound(node)) return;
+    if(hasNoRight(rightsService.canEdit(node))) return;
+
     if (request.post && !command.hasErrors()) {
       ServiceResponse resp = nodeService.edit(node, currentPerson, command, params.containsKey("draft"))
       if (resp.ok) {
@@ -67,8 +86,10 @@ class SubjectNodeController extends SubjectUtilController {
   }
 
   def delete = {
-      Node node = currentNode
-    // TODO: check user rights
+    Node node = currentNode
+    if(nodeNotFound(node)) return;
+    if(hasNoRight(rightsService.canDelete(node))) return;
+
     def type = node.type
     nodeService.delete(node)
     redirect uri: "/" + subject.domain + "/" + type.toString()
