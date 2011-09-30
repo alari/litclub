@@ -7,19 +7,19 @@ class RightsService {
 
   def springSecurityService
 
-  private Person getPerson(){
-    (Person)springSecurityService.getCurrentUser()
+  private Person getPerson() {
+    (Person) springSecurityService.getCurrentUser()
   }
 
-  boolean canAddNode(Subject context, NodeType type=null) {
+  boolean canAddNode(Subject context, NodeType type = null) {
     true
   }
 
-  boolean canEdit(Node node){
+  boolean canEdit(Node node) {
     true
   }
 
-  boolean canMoveDraft(Node node){
+  boolean canMoveDraft(Node node) {
     true
   }
 

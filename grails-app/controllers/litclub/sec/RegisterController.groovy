@@ -1,6 +1,7 @@
 package litclub.sec
 
 import litclub.ServiceResponse
+import grails.plugins.springsecurity.Secured
 
 class RegisterController {
 
@@ -12,6 +13,7 @@ class RegisterController {
     render view: '/register/index', model: [command: new RegisterCommand()]
   }
 
+  @Secured("IS_AUTHENTICATED_ANUNYMOUSLY")
   def register = {RegisterCommand command ->
     def model = registrationService.handleRegistration(command).ok ? [emailSent: true] : [command: command]
     render view: '/register/index', model: model
@@ -56,15 +58,15 @@ class RegisterController {
 
     ServiceResponse result = registrationService.handleResetPassword(token, command, request.method)
 
-    if(!result.ok) {
-      if(result.messageCode) flash.error = message(code: result.messageCode)
-      if(result.redirectUri) {
+    if (!result.ok) {
+      if (result.messageCode) flash.error = message(code: result.messageCode)
+      if (result.redirectUri) {
         redirect uri: result.redirectUri
       } else {
         render view: "/register/resetPassword", model: result.model
       }
     } else {
-      if(result.messageCode) flash.message = message(code: result.messageCode)
+      if (result.messageCode) flash.message = message(code: result.messageCode)
       redirect uri: result.redirectUri
     }
   }

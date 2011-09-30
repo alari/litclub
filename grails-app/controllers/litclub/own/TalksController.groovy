@@ -4,27 +4,27 @@ import grails.plugins.springsecurity.Secured
 import litclub.Person
 import litclub.Talk
 import litclub.TalkPhrase
+import litclub.UtilController
 
 @Secured(["ROLE_USER"])
-class TalksController {
+class TalksController extends UtilController {
 
-  def springSecurityService
   def talkService
   def subjectDomainService
   def rightsService
 
   def index() {
-    Person person = (Person) springSecurityService.currentUser
+    Person person = currentPerson
 
     [talks: talkService.getTalks(person.id, -20, -1)]
   }
 
   def talk(long id) {
     Talk talk = Talk.get(id)
-    long personId = springSecurityService.currentUser.id
+    long personId = currentPerson.id
     // TODO: correct errors & redirects
     if (!talk || !talkAccessable(talk)) {
-      flash.error = "error: ${talk}"
+      errorCode = "error: ${talk}"
       redirect uri: "/"
       return
     }
@@ -38,9 +38,9 @@ class TalksController {
     [phrases: phrases, talk: talk, firstNew: firstNew, newPhrases: newPhrases]
   }
 
-  @Secured(["ROLE_USER","ROLE_TALK"])
+  @Secured(["ROLE_USER", "ROLE_TALK"])
   def create(CreateTalkCommand command) {
-    Person person = (Person) springSecurityService.currentUser
+    Person person = currentPerson
 
     if (request.post && !command.hasErrors()) {
       // TODO: check if it is a person
@@ -48,7 +48,7 @@ class TalksController {
       if (targetId) {
         talkService.sendPhrase(command.text, person.id, targetId, command.topic)
         // TODO: flash.message
-        flash.message = "Phrase sent"
+        messageCode = "Phrase sent"
         redirect action: "index"
         return
       }
@@ -56,7 +56,7 @@ class TalksController {
     [command: request.post ? command : new CreateTalkCommand()]
   }
 
-  @Secured(["ROLE_USER","ROLE_TALK"])
+  @Secured(["ROLE_USER", "ROLE_TALK"])
   def sayPhrase(SayPhraseCommand command) {
     Talk talk = Talk.get(command.talkId)
 
@@ -65,12 +65,12 @@ class TalksController {
       return
     }
 
-    talkService.sendPhrase(command.text, springSecurityService.currentUser.id as long, talk)
+    talkService.sendPhrase(command.text, currentPerson.id as long, talk)
     redirect action: "talk", params: [id: talk.id]
   }
 
   private boolean talkAccessable(Talk talk) {
-    springSecurityService.currentUser.id in [talk.minPersonId, talk.maxPersonId]
+    currentPerson.id in [talk.minPersonId, talk.maxPersonId]
   }
 }
 

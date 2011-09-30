@@ -16,8 +16,8 @@ class SubjectNodeController extends SubjectUtilController {
     nodeService.getByName(subjectId, params.node)
   }
 
-  private boolean nodeNotFound(Node node){
-    if(!node?.id) {
+  private boolean nodeNotFound(Node node) {
+    if (!node?.id) {
       errorCode = "not found"
       redirect uri: "/"
       return true
@@ -25,19 +25,10 @@ class SubjectNodeController extends SubjectUtilController {
     false
   }
 
-  private boolean hasNoRight(boolean rightCheck, String errCode = "permission.denied", String redirectUri = null){
-    if(!rightCheck) {
-      errorCode = errCode
-      redirect uri: redirectUri ?: "/"
-      return true
-    }
-    false
-  }
-
   def draft = {
     Node node = currentNode
-    if(nodeNotFound(node)) return;
-    if(hasNoRight(rightsService.canMoveDraft(node))) return;
+    if (nodeNotFound(node)) return;
+    if (hasNoRight(rightsService.canMoveDraft(node))) return;
 
     node.isDraft = !node.isDraft
     nodeService.save(node)
@@ -45,7 +36,7 @@ class SubjectNodeController extends SubjectUtilController {
   }
 
   def addNode = {NodeFormCommand command ->
-    if(hasNoRight(rightsService.canAddNode(subject, NodeType.getByName(params.type)))) return;
+    if (hasNoRight(rightsService.canAddNode(subject, NodeType.getByName(params.type)))) return;
 
     if (request.post && !command.hasErrors()) {
       ServiceResponse resp = nodeService.addNode(subject, currentPerson, NodeType.getByName(params.type), command, params.containsKey("draft"))
@@ -62,8 +53,8 @@ class SubjectNodeController extends SubjectUtilController {
 
   def edit = {NodeFormCommand command ->
     Node node = currentNode
-    if(nodeNotFound(node)) return;
-    if(hasNoRight(rightsService.canEdit(node))) return;
+    if (nodeNotFound(node)) return;
+    if (hasNoRight(rightsService.canEdit(node))) return;
 
     if (request.post && !command.hasErrors()) {
       ServiceResponse resp = nodeService.edit(node, currentPerson, command, params.containsKey("draft"))
@@ -87,8 +78,8 @@ class SubjectNodeController extends SubjectUtilController {
 
   def delete = {
     Node node = currentNode
-    if(nodeNotFound(node)) return;
-    if(hasNoRight(rightsService.canDelete(node))) return;
+    if (nodeNotFound(node)) return;
+    if (hasNoRight(rightsService.canDelete(node))) return;
 
     def type = node.type
     nodeService.delete(node)
