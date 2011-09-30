@@ -29,8 +29,8 @@ class RegistrationService {
 
     RegistrationCode registrationCode = new RegistrationCode(domain: user.domain).save()
 
-      // TODO: move it to GORM
-      subjectDomainService.setDomain(user.id, user.domain)
+    // TODO: move it to GORM
+    subjectDomainService.setDomain(user.id, user.domain)
     sendRegisterEmail(user, registrationCode.token)
     return new ServiceResponse(ok: true)
   }
@@ -38,45 +38,45 @@ class RegistrationService {
   ServiceResponse verifyRegistration(String token) {
     ServiceResponse result = new ServiceResponse(redirectUri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl)
 
-     def conf = SpringSecurityUtils.securityConfig
+    def conf = SpringSecurityUtils.securityConfig
 
     def registrationCode = token ? RegistrationCode.findByToken(token) : null
     if (!registrationCode) {
-      return result.setAttributes(ok:false, messageCode:"register.error.badCode")
+      return result.setAttributes(ok: false, messageCode: "register.error.badCode")
     }
 
     Person user
     RegistrationCode.withTransaction { status ->
       user = Person.findByDomain(registrationCode.domain)
       if (!user) {
-        return result.setAttributes(ok:false, messageCode:"register.error.userNotFound")
+        return result.setAttributes(ok: false, messageCode: "register.error.userNotFound")
       }
 
       user.accountLocked = false
-      if(!user.save(flush: true)) {
-          log.error "Cannot save user: "+user.errors
-          return result.setAttributes(ok:false, messageCode:"dont know what")
+      if (!user.save(flush: true)) {
+        log.error "Cannot save user: " + user.errors
+        return result.setAttributes(ok: false, messageCode: "dont know what")
       }
       for (roleName in conf.ui.register.defaultRoleNames) {
         PersonRole.create user, roleName.toString()
       }
       registrationCode.delete()
     }
-    if(result.messageCode) {
+    if (result.messageCode) {
       return result
     }
 
     if (!user) {
-      return result.setAttributes(ok:false, messageCode:"register.error.badCode")
+      return result.setAttributes(ok: false, messageCode: "register.error.badCode")
     }
 
     springSecurityService.reauthenticate user.domain
 
     return result.setAttributes(
         ok: true,
-        messageCode:"register.complete",
+        messageCode: "register.complete",
         redirectUri: conf.ui.register.postRegisterUrl ?: result.redirectUri
-       )
+    )
   }
 
   ServiceResponse handleForgotPassword(String domain) {
@@ -141,7 +141,7 @@ class RegistrationService {
     true
   }
 
-  private boolean sendForgotPasswordEmail(Person person, String token){
+  private boolean sendForgotPasswordEmail(Person person, String token) {
     mailSenderService.putMessage(
         to: person.email,
         subject: i18n."register.forgotPassword.emailSubject",

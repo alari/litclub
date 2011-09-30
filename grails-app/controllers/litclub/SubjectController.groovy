@@ -1,6 +1,6 @@
 package litclub
 
-class SubjectController extends SubjectUtilController{
+class SubjectController extends SubjectUtilController {
 
   static defaultAction = "index"
 
