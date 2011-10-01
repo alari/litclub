@@ -9,7 +9,7 @@ class TalkTagLib {
   def newCount = {attrs->
     if(!springSecurityService.isLoggedIn()) return;
 
-    long personId = (long)springSecurityService.getCurrentUser().id
+    def personId = springSecurityService.principal.id
 
     if(attrs.talkId) {
       out << talkService.getTalkNewCount(personId, attrs.talkId)

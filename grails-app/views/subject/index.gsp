@@ -3,7 +3,7 @@
   @since 02.09.11 13:25
 --%>
 
-<%@ page import="litclub.Person" contentType="text/html;charset=UTF-8" %>
+<%@ page import="litclub.morphia.subject.Person" contentType="text/html;charset=UTF-8" %>
 <html>
   <head>
     <meta name="layout" content="mono"/>
@@ -17,12 +17,12 @@
     </g:if>
     <blockquote>
       <g:each in="${parties}" var="party">
-        <p>PARTY: ${party.level} in <sbj:link id="${party.subjectId}"/> </p>
+        <p>PARTY: ${party.level} in <sbj:link subject="${party.subject}"/> </p>
       </g:each>
     </blockquote>
   <p>The text in info object is:</p>
   <hr/>
-  ${subject.info.frontText}
+  $ {subject.info.frontText}
 
   </body>
 </html>

@@ -5,6 +5,11 @@ import redis.clients.jedis.Jedis
 import litclub.morphia.linkage.SubjectLinkageBundle
 
 import litclub.morphia.linkage.SubjectLinkage
+import litclub.morphia.subject.Person
+import litclub.morphia.subject.Union
+import litclub.morphia.subject.Subject
+import litclub.morphia.subject.PersonDAO
+import org.springframework.beans.factory.annotation.Autowired
 
 class ParticipationService {
 
@@ -13,6 +18,7 @@ class ParticipationService {
 
   def redisService
   def subjectLinkageService
+  @Autowired PersonDAO personDao
 
   private String keyParticipants(Union union) {
     KEY_PARTICIPANTS + union.id.toString()
@@ -120,6 +126,6 @@ class ParticipationService {
         if (!ids.contains(id)) ids.add(id)
       }
     }
-    ids.collect {Person.get(it)}
+    ids.collect {personDao.getById(it.toString())}
   }
 }

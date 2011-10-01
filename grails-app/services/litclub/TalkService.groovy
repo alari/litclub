@@ -101,9 +101,9 @@ class TalkService {
     newIds
   }
 
-  int getTalkNewCount(long personId, talkId) {
+  int getTalkNewCount(personId, talkId) {
     int cnt = 0
-    redisService.withRedis {Jedis redis -> cnt = redis.llen("${KEY_PHRASES_NEW}${personId}:${talkId.toString()}")}
+    redisService.withRedis {Jedis redis -> cnt = redis.llen("${KEY_PHRASES_NEW}${personId.toString()}:${talkId.toString()}")}
     cnt
   }
 
@@ -170,8 +170,8 @@ class TalkService {
     }
   }
 
-  int getNewCount(long personId) {
-    def nc = redisService."${KEY_NEW}${personId}"
+  int getNewCount(personId) {
+    def nc = redisService."${KEY_NEW}${personId.toString()}"
     nc ? Integer.parseInt(nc) : 0
   }
 }

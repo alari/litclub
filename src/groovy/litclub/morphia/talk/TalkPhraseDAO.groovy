@@ -1,4 +1,4 @@
-package litclub.morphia.talk
+@Typed package litclub.morphia.talk
 
 import org.bson.types.ObjectId
 import litclub.morphia.MorphiaDriver

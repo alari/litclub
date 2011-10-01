@@ -1,4 +1,4 @@
-package litclub.morphia.linkage
+@Typed package litclub.morphia.linkage
 
 /**
  * @author Dmitry Kurinskiy

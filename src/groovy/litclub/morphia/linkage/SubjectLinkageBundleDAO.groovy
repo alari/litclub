@@ -1,11 +1,11 @@
-package litclub.morphia.linkage
+@Typed package litclub.morphia.linkage
 
 import org.bson.types.ObjectId
 import com.google.code.morphia.dao.BasicDAO
 import org.springframework.beans.factory.annotation.Autowired
 import litclub.morphia.MorphiaDriver
 import litclub.morphia.linkage.SubjectLinkageBundle
-import litclub.Subject
+import litclub.morphia.subject.Subject
 import litclub.morphia.linkage.SubjectLinkage
 
 /**
@@ -28,14 +28,10 @@ class SubjectLinkageBundleDAO extends BasicDAO<SubjectLinkageBundle, ObjectId> {
   }
 
   SubjectLinkageBundle getBySubject(Subject subject) {
-    getBySubject(subject.id)
-  }
-
-  SubjectLinkageBundle getBySubject(long subjectId) {
-    SubjectLinkageBundle p = createQuery().filter("subjectId", subjectId).get()
+    SubjectLinkageBundle p = createQuery().filter("subject", subject).get()
     if (!p) {
       p = new SubjectLinkageBundle()
-      p.subjectId = subjectId
+      p.subject = subject
       p.linkages = [:]
       save(p)
     }
@@ -48,7 +44,7 @@ class SubjectLinkageBundleDAO extends BasicDAO<SubjectLinkageBundle, ObjectId> {
 
   void setLinkage(Subject base, SubjectLinkage party) {
     SubjectLinkageBundle p = getBySubject(base)
-    p.linkages.put(party.subjectId.toString(), party)
+    p.linkages.put(party.subject.id.toString(), party)
     save(p)
   }
 

@@ -1,7 +1,7 @@
 package litclub.own
 
 import grails.plugins.springsecurity.Secured
-import litclub.Person
+import litclub.morphia.subject.Person
 import litclub.morphia.talk.Talk
 import litclub.morphia.talk.TalkPhrase
 import litclub.UtilController

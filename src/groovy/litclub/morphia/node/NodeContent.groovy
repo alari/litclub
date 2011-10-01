@@ -1,4 +1,4 @@
-package litclub.morphia.node
+@Typed package litclub.morphia.node
 
 import org.bson.types.ObjectId
 import com.google.code.morphia.annotations.Id

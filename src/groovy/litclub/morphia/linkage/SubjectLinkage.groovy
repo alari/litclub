@@ -1,6 +1,8 @@
-package litclub.morphia.linkage
+@Typed package litclub.morphia.linkage
 
 import com.google.code.morphia.annotations.Embedded
+import com.google.code.morphia.annotations.Reference
+import litclub.morphia.subject.Subject
 
 /**
  * @author Dmitry Kurinskiy
@@ -8,7 +10,8 @@ import com.google.code.morphia.annotations.Embedded
  */
 @Embedded
 class SubjectLinkage {
-  long subjectId
+  @Reference(lazy=true)
+  Subject subject
 
   PartyLevel level
 

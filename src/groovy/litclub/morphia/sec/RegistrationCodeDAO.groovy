@@ -1,8 +1,9 @@
-package litclub.morphia
+@Typed package litclub.morphia.sec
 
 import com.google.code.morphia.dao.BasicDAO
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
+import litclub.morphia.MorphiaDriver
 
 /**
  * @author Dmitry Kurinskiy

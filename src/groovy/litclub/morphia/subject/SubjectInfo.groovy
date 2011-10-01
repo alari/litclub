@@ -1,4 +1,4 @@
-@Typed package litclub.morphia.talk
+@Typed package litclub.morphia.subject
 
 import com.google.code.morphia.annotations.Entity
 import org.bson.types.ObjectId
@@ -7,18 +7,14 @@ import com.google.code.morphia.annotations.Reference
 
 /**
  * @author Dmitry Kurinskiy
- * @since 10/1/11 12:36 PM
+ * @since 10/1/11 1:46 PM
  */
 @Entity
-class TalkPhrase {
+class SubjectInfo {
   @Id ObjectId id
 
-  @Reference(lazy = true)
-  Talk talk
+  String frontText = ""
 
-  long personId
-
-  String text
-
-  Date dateCreated = new Date()
+  @Reference(lazy=true)
+  Subject subject
 }

@@ -5,8 +5,11 @@ import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 
 import litclub.sec.ResetPasswordCommand
 import org.springframework.beans.factory.annotation.Autowired
-import litclub.morphia.RegistrationCodeDAO
-import litclub.morphia.RegistrationCode
+import litclub.morphia.sec.RegistrationCodeDAO
+import litclub.morphia.sec.RegistrationCode
+import litclub.morphia.subject.PersonDAO
+import litclub.morphia.subject.Person
+import litclub.morphia.subject.Role
 
 class RegistrationService {
   def springSecurityService
@@ -15,6 +18,8 @@ class RegistrationService {
   def i18n
   @Autowired
   RegistrationCodeDAO registrationCodeDao
+  @Autowired
+  PersonDAO personDao
 
   ServiceResponse handleRegistration(RegisterCommand command) {
     if (command.hasErrors()) {
@@ -22,12 +27,18 @@ class RegistrationService {
     }
 
     Person user = new Person(email: command.email, domain: command.domain,
-        password: command.password, accountLocked: true, enabled: true, info: new SubjectInfo())
+        password: command.password, accountLocked: true, enabled: true)
 
+    personDao.save(user)
+    if (!user.id) {
+      return new ServiceResponse(ok: false, messageCode: "user not saved")
+    }
+    /* TODO: validate
     if (!user.validate() || !user.save(flush: true)) {
       return new ServiceResponse(ok: false, messageCode: user.errors)
       // TODO
     }
+    */
 
     RegistrationCode registrationCode = new RegistrationCode(domain: user.domain)
     registrationCodeDao.save(registrationCode)
@@ -50,19 +61,20 @@ class RegistrationService {
 
     Person user
 
-      user = Person.findByDomain(registrationCode.domain)
-      if (!user) {
-        return result.setAttributes(ok: false, messageCode: "register.error.userNotFound")
-      }
+    user = personDao.getByDomain(registrationCode.domain)
+    if (!user) {
+      return result.setAttributes(ok: false, messageCode: "register.error.userNotFound")
+    }
 
-      user.accountLocked = false
-      if (!user.save(flush: true)) {
-        log.error "Cannot save user: " + user.errors
-        return result.setAttributes(ok: false, messageCode: "dont know what")
-      }
-      for (roleName in conf.ui.register.defaultRoleNames) {
-        PersonRole.create user, roleName.toString()
-      }
+    user.accountLocked = false
+    for (roleName in conf.ui.register.defaultRoleNames) {
+      user.authorities.add(new Role(authority: roleName.toString()))
+    }
+
+    // TODO: this may fail
+    personDao.save(user)
+
+
     registrationCodeDao.delete(registrationCode)
 
     if (result.messageCode) {
@@ -88,7 +100,7 @@ class RegistrationService {
       return response.setAttributes(ok: false, messageCode: 'register.forgotPassword.username.missing')
     }
 
-    Person user = Person.findByDomain(domain)
+    Person user = subjectDomainService.getPersonByDomain(domain)
     if (!user) {
       return response.setAttributes(ok: false, messageCode: 'register.forgotPassword.user.notFound')
     }
@@ -119,10 +131,11 @@ class RegistrationService {
       return new ServiceResponse(ok: false, model: [token: token, command: command])
     }
 
+    // TODO: this may fail
+    def user = subjectDomainService.getPersonByDomain(registrationCode.domain)
+    user.password = command.password
+    personDao.save(user)
 
-      def user = Person.findByDomain(registrationCode.domain)
-      user.password = command.password
-      user.save()
     registrationCodeDao.delete registrationCode
 
     springSecurityService.reauthenticate registrationCode.domain
@@ -139,7 +152,7 @@ class RegistrationService {
         to: person.email,
         subject: i18n."register.confirm.emailSubject",
         view: "/mail-messages/confirmEmail",
-        model: [personId: person.id, token: token]
+        model: [username: person.domain, token: token]
     )
     true
   }
@@ -149,7 +162,7 @@ class RegistrationService {
         to: person.email,
         subject: i18n."register.forgotPassword.emailSubject",
         view: "/mail-messages/forgotPassword",
-        model: [personId: person.id, token: token]
+        model: [username: person.domain, token: token]
     )
     true
   }
