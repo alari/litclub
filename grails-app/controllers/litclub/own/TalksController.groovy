@@ -2,8 +2,8 @@ package litclub.own
 
 import grails.plugins.springsecurity.Secured
 import litclub.Person
-import litclub.Talk
-import litclub.TalkPhrase
+import litclub.morphia.talk.Talk
+import litclub.morphia.talk.TalkPhrase
 import litclub.UtilController
 
 @Secured(["ROLE_USER"])
@@ -19,8 +19,8 @@ class TalksController extends UtilController {
     [talks: talkService.getTalks(person.id, -20, -1)]
   }
 
-  def talk(long id) {
-    Talk talk = Talk.get(id)
+  def talk(String id) {
+    Talk talk = talkService.getTalk(id)
     long personId = currentPerson.id
     // TODO: correct errors & redirects
     if (!talk || !talkAccessable(talk)) {
@@ -30,7 +30,7 @@ class TalksController extends UtilController {
     }
     long targetId = personId == talk.maxPersonId ? talk.minPersonId : talk.maxPersonId
     List newPhrases = talkService.getTalkNewIds(personId, talk.id)
-    long firstNew = newPhrases.size() ? newPhrases.last() as long : 0
+    String firstNew = newPhrases.size() ? newPhrases.last() : ""
     newPhrases.addAll(talkService.getTalkNewIds(targetId, talk.id))
 
     List<TalkPhrase> phrases = talkService.getPhrasesWithNew(id, firstNew, 10, 2)
@@ -58,7 +58,7 @@ class TalksController extends UtilController {
 
   @Secured(["ROLE_USER", "ROLE_TALK"])
   def sayPhrase(SayPhraseCommand command) {
-    Talk talk = Talk.get(command.talkId)
+    Talk talk = talkService.getTalk(command.talkId)
 
     if (!talkAccessable(talk)) {
       redirect uri: "/"
@@ -75,12 +75,12 @@ class TalksController extends UtilController {
 }
 
 class SayPhraseCommand {
-  long talkId
+  String talkId
   String text
 
   static constraints = {
     text maxSize: 21845, blank: false
-    talkId nullable: false
+    talkId nullable: false, minSize: 24, maxSize: 24
   }
 }
 

@@ -1,11 +1,10 @@
 package litclub
 
-import litclub.morphia.PartyLevel
+import litclub.morphia.linkage.PartyLevel
 import redis.clients.jedis.Jedis
-import litclub.morphia.SubjectLinkageBundle
-import litclub.morphia.dao.SubjectLinkageBundleDAO
-import org.springframework.beans.factory.annotation.Autowired
-import litclub.morphia.SubjectLinkage
+import litclub.morphia.linkage.SubjectLinkageBundle
+
+import litclub.morphia.linkage.SubjectLinkage
 
 class ParticipationService {
 

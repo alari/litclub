@@ -1,25 +1,25 @@
-package litclub.morphia.dao
+package litclub.morphia.linkage
 
 import org.bson.types.ObjectId
 import com.google.code.morphia.dao.BasicDAO
 import org.springframework.beans.factory.annotation.Autowired
 import litclub.morphia.MorphiaDriver
-import litclub.morphia.SubjectLinkageBundle
+import litclub.morphia.linkage.SubjectLinkageBundle
 import litclub.Subject
-import litclub.morphia.SubjectLinkage
-import litclub.morphia.PartyLevel
+import litclub.morphia.linkage.SubjectLinkage
 
 /**
  * @author Dmitry Kurinskiy
  * @since 20.09.11 13:41
  */
-class SubjectLinkageBundleDAO extends BasicDAO<SubjectLinkageBundle, ObjectId>{
-  @Autowired SubjectLinkageBundleDAO(MorphiaDriver morphiaDriver){
+class SubjectLinkageBundleDAO extends BasicDAO<SubjectLinkageBundle, ObjectId> {
+  @Autowired
+  SubjectLinkageBundleDAO(MorphiaDriver morphiaDriver) {
     super(morphiaDriver.mongo, morphiaDriver.morphia, morphiaDriver.dbName)
   }
 
   SubjectLinkageBundle getById(String id) {
-    if(!ObjectId.isValid(id)) return null
+    if (!ObjectId.isValid(id)) return null
     getById(new ObjectId(id))
   }
 
@@ -27,13 +27,13 @@ class SubjectLinkageBundleDAO extends BasicDAO<SubjectLinkageBundle, ObjectId>{
     get(id)
   }
 
-  SubjectLinkageBundle getBySubject(Subject subject){
+  SubjectLinkageBundle getBySubject(Subject subject) {
     getBySubject(subject.id)
   }
 
-  SubjectLinkageBundle getBySubject(long subjectId){
+  SubjectLinkageBundle getBySubject(long subjectId) {
     SubjectLinkageBundle p = createQuery().filter("subjectId", subjectId).get()
-    if(!p) {
+    if (!p) {
       p = new SubjectLinkageBundle()
       p.subjectId = subjectId
       p.linkages = [:]

@@ -1,4 +1,4 @@
-import litclub.morphia.NodeType
+import litclub.morphia.node.NodeType
 
 class UrlMappings {
 
@@ -49,7 +49,7 @@ class UrlMappings {
 
     "/own.talks/$id?" {
       constraints {
-        id matches: '^[0-9]+$'
+        id matches: '^[a-z0-9]{24,24}$'
       }
       controller = "talks"
       action = "talk"

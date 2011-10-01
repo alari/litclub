@@ -1,11 +1,11 @@
 package litclub
 
-import litclub.morphia.dao.NodeDAO
+import litclub.morphia.node.NodeDAO
 import org.springframework.beans.factory.annotation.Autowired
-import litclub.morphia.Node
-import litclub.morphia.NodeType
-import litclub.morphia.NodeContent
-import litclub.morphia.dao.NodeContentDAO
+import litclub.morphia.node.Node
+import litclub.morphia.node.NodeType
+import litclub.morphia.node.NodeContent
+import litclub.morphia.node.NodeContentDAO
 
 import com.google.code.morphia.query.Query
 import litclub.own.NodeFormCommand

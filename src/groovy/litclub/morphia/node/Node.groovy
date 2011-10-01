@@ -1,4 +1,4 @@
-@Typed package litclub.morphia
+@Typed package litclub.morphia.node
 
 import com.google.code.morphia.annotations.Entity
 import org.bson.types.ObjectId
@@ -23,7 +23,7 @@ class Node {
 
   NodeType type
 
-  @Reference(lazy=true)
+  @Reference(lazy = true)
   NodeContent content
 
   String title

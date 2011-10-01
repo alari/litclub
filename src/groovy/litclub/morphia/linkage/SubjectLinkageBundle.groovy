@@ -1,4 +1,4 @@
-package litclub.morphia
+package litclub.morphia.linkage
 
 import com.google.code.morphia.annotations.Entity
 import org.bson.types.ObjectId
@@ -18,6 +18,6 @@ class SubjectLinkageBundle {
   long subjectId
 
   @Embedded
-  Map<String,SubjectLinkage> linkages = [:]
+  Map<String, SubjectLinkage> linkages = [:]
 }
 

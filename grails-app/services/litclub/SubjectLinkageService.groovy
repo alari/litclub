@@ -1,10 +1,10 @@
 package litclub
 
-import litclub.morphia.dao.SubjectLinkageBundleDAO
+import litclub.morphia.linkage.SubjectLinkageBundleDAO
 import org.springframework.beans.factory.annotation.Autowired
-import litclub.morphia.SubjectLinkageBundle
-import litclub.morphia.SubjectLinkage
-import litclub.morphia.PartyLevel
+import litclub.morphia.linkage.SubjectLinkageBundle
+import litclub.morphia.linkage.SubjectLinkage
+import litclub.morphia.linkage.PartyLevel
 
 class SubjectLinkageService {
 

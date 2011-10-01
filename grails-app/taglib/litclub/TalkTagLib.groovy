@@ -12,7 +12,7 @@ class TalkTagLib {
     long personId = (long)springSecurityService.getCurrentUser().id
 
     if(attrs.talkId) {
-      out << talkService.getTalkNewCount(personId, attrs.talkId as long)
+      out << talkService.getTalkNewCount(personId, attrs.talkId)
     } else {
       out << talkService.getNewCount(personId)
     }

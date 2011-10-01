@@ -5,7 +5,7 @@ import litclub.Person
 import litclub.SubjectDomainService
 import litclub.SubjectInfo
 import litclub.Union
-import litclub.morphia.PartyLevel
+import litclub.morphia.linkage.PartyLevel
 import org.springframework.beans.factory.annotation.Autowired
 import litclub.UtilController
 

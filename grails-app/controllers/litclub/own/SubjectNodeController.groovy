@@ -3,8 +3,8 @@ package litclub.own
 import grails.plugins.springsecurity.Secured
 import litclub.ServiceResponse
 import litclub.SubjectUtilController
-import litclub.morphia.Node
-import litclub.morphia.NodeType
+import litclub.morphia.node.Node
+import litclub.morphia.node.NodeType
 
 @Secured(["ROLE_USER"])
 class SubjectNodeController extends SubjectUtilController {

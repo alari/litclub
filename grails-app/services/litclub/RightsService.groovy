@@ -1,7 +1,7 @@
 package litclub
 
-import litclub.morphia.NodeType
-import litclub.morphia.Node
+import litclub.morphia.node.NodeType
+import litclub.morphia.node.Node
 
 class RightsService {
 

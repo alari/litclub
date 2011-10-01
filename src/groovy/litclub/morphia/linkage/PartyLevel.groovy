@@ -1,4 +1,4 @@
-package litclub.morphia
+package litclub.morphia.linkage
 
 /**
  * @author Dmitry Kurinskiy
@@ -13,7 +13,7 @@ enum PartyLevel {
   INVITED("invited", -1),
   REQUESTED("requested", -2);
 
-  static private Map<String,PartyLevel> byName = [:]
+  static private Map<String, PartyLevel> byName = [:]
 
   static {
     values().each {byName.put(it.name, it)}
@@ -22,24 +22,24 @@ enum PartyLevel {
   private String name
   private short level
 
-  private PartyLevel(String name, int level){
+  private PartyLevel(String name, int level) {
     this.name = name
     this.level = level
   }
 
-  String toString(){
+  String toString() {
     name
   }
 
-  Integer toInteger(){
+  Integer toInteger() {
     level
   }
 
-  boolean hasSenior(){
+  boolean hasSenior() {
     level >= 2
   }
 
-  boolean hasParticipant(){
+  boolean hasParticipant() {
     level >= 1
   }
 
@@ -47,7 +47,7 @@ enum PartyLevel {
     this == level
   }
 
-  static PartyLevel getByName(String name){
+  static PartyLevel getByName(String name) {
     byName.get(name) ?: NOBODY
   }
 }

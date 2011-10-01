@@ -1,7 +1,7 @@
 package litclub
 
-import litclub.morphia.dao.NodeDAO
-import litclub.morphia.Node
+import litclub.morphia.node.NodeDAO
+import litclub.morphia.node.Node
 import org.springframework.beans.factory.annotation.Autowired
 
 class NodeTagLib {

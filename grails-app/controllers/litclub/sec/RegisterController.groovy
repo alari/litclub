@@ -13,7 +13,7 @@ class RegisterController {
     render view: '/register/index', model: [command: new RegisterCommand()]
   }
 
-  @Secured("IS_AUTHENTICATED_ANUNYMOUSLY")
+  @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
   def register = {RegisterCommand command ->
     def model = registrationService.handleRegistration(command).ok ? [emailSent: true] : [command: command]
     render view: '/register/index', model: model

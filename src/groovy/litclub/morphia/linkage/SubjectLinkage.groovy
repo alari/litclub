@@ -1,4 +1,4 @@
-package litclub.morphia
+package litclub.morphia.linkage
 
 import com.google.code.morphia.annotations.Embedded
 
