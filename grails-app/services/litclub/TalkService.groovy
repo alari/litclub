@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import litclub.morphia.talk.Talk
 import litclub.morphia.talk.TalkPhrase
 import litclub.morphia.talk.TalkPhraseDAO
-import com.google.code.morphia.Key
+import org.bson.types.ObjectId
+import org.apache.log4j.Logger
 
 class TalkService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
+
   private static final String KEY_NEW = "talks:new.phrases.count:"
   private static final String KEY_TALKS = "talks.person:"
   private static final String KEY_PHRASES = "talk:"
@@ -26,10 +30,10 @@ class TalkService {
     talkDao.getById(id)
   }
 
-  TalkPhrase sendPhrase(String text, long personId, long targetId, String topic) {
+  TalkPhrase sendPhrase(String text, personId, targetId, String topic) {
     Talk talk = new Talk(topic: topic, lastPhrasePersonId: personId)
-    talk.minPersonId = Math.min(personId, targetId)
-    talk.maxPersonId = Math.max(personId, targetId)
+    talk.minPersonId = personId.toString() > targetId.toString() ? targetId : personId
+    talk.maxPersonId = personId.toString() < targetId.toString() ? targetId : personId
     /*TODO: validate
     if (!talk.validate() || !talk.save()) {
       log.error talk.errors
@@ -41,11 +45,11 @@ class TalkService {
     sendPhrase(text, personId, talk)
   }
 
-  TalkPhrase sendPhrase(String text, long personId, String talkId) {
+  TalkPhrase sendPhrase(String text, personId, String talkId) {
     sendPhrase(text, personId, talkDao.getById(talkId))
   }
 
-  TalkPhrase sendPhrase(String text, long personId, Talk talk) {
+  TalkPhrase sendPhrase(String text, personId, Talk talk) {
     TalkPhrase phrase = new TalkPhrase();
         phrase.talk= talk
         phrase.text= text
@@ -85,7 +89,7 @@ class TalkService {
     // update talk cache
     phrase.talk.lastPhraseLine = phrase.text.substring(0, Math.min(phrase.text.size(), 255))
     phrase.talk.lastPhrasePersonId = phrase.personId
-    phrase.talk.lastPhrase = new Key<TalkPhrase>(TalkPhrase, phrase.id)
+    phrase.talk.lastPhrase = phrase
     phrase.talk.lastPhraseNew = true
 
     talkDao.save phrase.talk
@@ -93,10 +97,10 @@ class TalkService {
     phrase
   }
 
-  List<String> getTalkNewIds(long personId, talkId) {
+  List<String> getTalkNewIds(personId, talkId) {
     List<String> newIds = []
     redisService.withRedis {Jedis redis ->
-      newIds = redis.lrange("${KEY_PHRASES_NEW}${personId}:${talkId}", 0, -1)
+      newIds = redis.lrange("${KEY_PHRASES_NEW}${personId.toString()}:${talkId}", 0, -1)
     }
     newIds
   }
@@ -107,20 +111,20 @@ class TalkService {
     cnt
   }
 
-  List<Talk> getTalks(long personId, int start, int end) {
+  List<Talk> getTalks(personId, int start, int end) {
     List<Talk> talks = []
     redisService.withRedis {Jedis redis ->
-      redis.lrange(KEY_TALKS + personId, start, end).each {String talkId ->
+      redis.lrange(KEY_TALKS + personId.toString(), start, end).each {String talkId ->
         talks.add(talkDao.getById(talkId))
       }
     }
     talks
   }
 
-  List<Talk> getTalksWithNew(long personId,  firstNew, int min, int step) {
+  List<Talk> getTalksWithNew(personId,  firstNew, int min, int step) {
     List<Talk> talks = []
     redisService.withRedis {Jedis redis ->
-      redis.lrange(KEY_TALKS + personId, -min, 0).each {String talkId ->
+      redis.lrange(KEY_TALKS + personId.toString(), -min, 0).each {String talkId ->
         talks.add(talkDao.getById(talkId))
       }
     }
@@ -159,14 +163,14 @@ class TalkService {
   }
 
   void readPhrase(TalkPhrase phrase) {
-    long personId = phrase.talk.minPersonId == phrase.personId ? phrase.talk.maxPersonId : phrase.talk.minPersonId
+    ObjectId personId = phrase.talk.minPersonId == phrase.personId ? phrase.talk.maxPersonId : phrase.talk.minPersonId
     if (phrase.talk.lastPhrase.id == phrase.id) {
       phrase.talk.lastPhraseNew = false
       talkDao.save(phrase.talk)
     }
     redisService.withRedis {Jedis redis ->
-      redis.decr(KEY_NEW + personId)
-      redis.lrem("${KEY_PHRASES_NEW}${personId}:${phrase.talk.id}", -1, phrase.id.toString())
+      redis.decr(KEY_NEW + personId.toString())
+      redis.lrem("${KEY_PHRASES_NEW}${personId.toString()}:${phrase.talk.id.toString()}", -1, phrase.id.toString())
     }
   }
 

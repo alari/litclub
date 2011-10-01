@@ -6,8 +6,11 @@ import litclub.morphia.linkage.SubjectLinkageBundle
 import litclub.morphia.linkage.SubjectLinkage
 import litclub.morphia.linkage.PartyLevel
 import litclub.morphia.subject.Subject
+import org.apache.log4j.Logger
 
 class SubjectLinkageService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
 
   @Autowired
   SubjectLinkageBundleDAO subjectLinkageBundleDao

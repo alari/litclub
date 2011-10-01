@@ -6,11 +6,16 @@ import litclub.morphia.node.Node
 import litclub.morphia.node.NodeType
 import litclub.morphia.node.NodeContent
 import litclub.morphia.node.NodeContentDAO
+import litclub.morphia.subject.Person
+import litclub.morphia.subject.Subject
 
 import com.google.code.morphia.query.Query
 import litclub.own.NodeFormCommand
+import org.apache.log4j.Logger
 
 class NodeService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
 
   @Autowired
   NodeDAO nodeDao
@@ -25,17 +30,17 @@ class NodeService {
 
   ServiceResponse addNode(Subject context, Person author, NodeType type, NodeFormCommand command, boolean isDraft) {
     ServiceResponse resp = new ServiceResponse()
-    // TODO: check context, author, their rights
+    // TODO: check context, author
     if (!context || !author || context.id != author.id) {
       return resp.setAttributes(ok: false, messageCode: "wrong context")
     }
 
     // TODO: create title from text, if title is blank
-    String name = type.toString() + "-" + (countSubjectNodes(author.id, type) + 1)
+    String name = type.toString() + "-" + (countSubjectNodes(author, type) + 1)
     // TODO: create name from title, if it's available, otherwise from type & count
 
     Node node = new Node(
-        subjectId: author.id,
+        subject: author,
         type: type,
         title: command.title,
         name: name,
@@ -53,7 +58,7 @@ class NodeService {
   ServiceResponse edit(Node node, Person author, NodeFormCommand command, boolean isDraft) {
     ServiceResponse resp = new ServiceResponse()
     // TODO: check author, his rights
-    if (!author || node.subjectId != author.id) {
+    if (!author || node.subject.id != author.id) {
       return resp.setAttributes(ok: false, messageCode: "wrong context")
     }
 
@@ -75,25 +80,24 @@ class NodeService {
     nodeDao.delete(node)
   }
 
-  long countSubjectNodes(long subjectId, NodeType type = null) {
-    Query<Node> q = nodeDao.createQuery().filter("subjectId", subjectId)
+  long countSubjectNodes(Subject subject, NodeType type = null) {
+    Query<Node> q = nodeDao.createQuery().filter("subject", subject)
     if (type) q.filter("type", type)
     q.countAll()
   }
 
-  Node getByName(long subjectId, String name) {
-    nodeDao.createQuery().filter("subjectId", subjectId).filter("name", name).get()
+  Node getByName(Subject subject, String name) {
+    nodeDao.createQuery().filter("subject", subject).filter("name", name).get()
   }
 
-  List<Node> listSubjectNodes(long subjectId, String type, boolean withDrafts = false) {
-    Query<Node> q = nodeDao.createQuery().filter("subjectId", subjectId).filter("type", NodeType.getByName(type))
+  List<Node> listSubjectNodes(Subject subject, String type, boolean withDrafts = false) {
+    Query<Node> q = nodeDao.createQuery().filter("subject", subject).filter("type", NodeType.getByName(type))
     if (!withDrafts) q.filter("isDraft", false)
     q.asList()
   }
 
   String buildUri(Node node, String action = null) {
-    Subject subject = Subject.get(node.subjectId)
-    "/" + subject.domain + "/" + node.name + (action ? "/" + action : "")
+    "/" + node.subject.domain + "/" + node.name + (action ? "/" + action : "")
   }
 
   Node save(Node node) {

@@ -10,8 +10,12 @@ import litclub.morphia.sec.RegistrationCode
 import litclub.morphia.subject.PersonDAO
 import litclub.morphia.subject.Person
 import litclub.morphia.subject.Role
+import org.apache.log4j.Logger
 
 class RegistrationService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
+
   def springSecurityService
   def mailSenderService
   def subjectDomainService
@@ -100,7 +104,7 @@ class RegistrationService {
       return response.setAttributes(ok: false, messageCode: 'register.forgotPassword.username.missing')
     }
 
-    Person user = subjectDomainService.getPersonByDomain(domain)
+    Person user = personDao.getByDomain(domain)
     if (!user) {
       return response.setAttributes(ok: false, messageCode: 'register.forgotPassword.user.notFound')
     }

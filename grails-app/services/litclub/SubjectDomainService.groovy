@@ -1,8 +1,11 @@
 package litclub
 
 import redis.clients.jedis.Jedis
+import org.apache.log4j.Logger
 
 class SubjectDomainService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
 
   private final static String KEY = "subject.domains"
 

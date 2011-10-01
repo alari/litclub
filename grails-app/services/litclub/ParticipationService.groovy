@@ -10,8 +10,11 @@ import litclub.morphia.subject.Union
 import litclub.morphia.subject.Subject
 import litclub.morphia.subject.PersonDAO
 import org.springframework.beans.factory.annotation.Autowired
+import org.apache.log4j.Logger
 
 class ParticipationService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
 
   private static final String KEY_LEVELS = "union.levels:"
   private static final String KEY_PARTICIPANTS = "union.participants:"

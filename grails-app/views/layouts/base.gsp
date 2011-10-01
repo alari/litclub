@@ -3,7 +3,7 @@
   @since 09.09.11 10:42
 --%>
 
-<%@ page import="litclub.morphia.node.NodeType; litclub.morphia.NodeType; litclub.I18n" contentType="text/html;charset=UTF-8" %>
+<%@ page import="litclub.morphia.node.NodeType; litclub.I18n" contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>

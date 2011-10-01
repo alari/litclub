@@ -4,6 +4,8 @@ import com.google.code.morphia.annotations.Entity
 import org.bson.types.ObjectId
 import com.google.code.morphia.annotations.Id
 import com.google.code.morphia.annotations.Reference
+import com.google.code.morphia.Key
+import litclub.morphia.subject.Person
 
 /**
  * @author Dmitry Kurinskiy
@@ -13,10 +15,26 @@ import com.google.code.morphia.annotations.Reference
 class TalkPhrase {
   @Id ObjectId id
 
-  @Reference(lazy = true)
+  @Reference(lazy=true)
   Talk talk
 
-  long personId
+  private Key<Person> person
+
+  void setPerson(Person person) {
+    this.person = new Key<Person>(Person, person.id)
+  }
+
+  ObjectId getPersonId() {
+    (ObjectId)person.id
+  }
+
+  void setPersonId(ObjectId id) {
+    person = new Key<Person>(Person, id)
+  }
+
+  void setPersonId(String id) {
+    setPersonId(new ObjectId(id))
+  }
 
   String text
 

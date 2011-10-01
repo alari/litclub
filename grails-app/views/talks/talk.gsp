@@ -23,7 +23,7 @@
 
 <g:form action="sayPhrase">
   <textarea name="text"></textarea>
-  <input type="hidden" name="talkId" value="${talk.id}"/>
+  <input type="hidden" name="talkId" value="${talk.id.toString()}"/>
   <g:submitButton name="submit" value="submit"/>
 </g:form>
 </body>

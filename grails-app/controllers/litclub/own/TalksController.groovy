@@ -6,6 +6,7 @@ import litclub.morphia.talk.Talk
 import litclub.morphia.talk.TalkPhrase
 import litclub.UtilController
 
+// TODO: clear the code, move to service, make more impl-indep
 @Secured(["ROLE_USER"])
 class TalksController extends UtilController {
 
@@ -21,14 +22,14 @@ class TalksController extends UtilController {
 
   def talk(String id) {
     Talk talk = talkService.getTalk(id)
-    long personId = currentPerson.id
+    def personId = currentPerson.id
     // TODO: correct errors & redirects
     if (!talk || !talkAccessable(talk)) {
       errorCode = "error: ${talk}"
       redirect uri: "/"
       return
     }
-    long targetId = personId == talk.maxPersonId ? talk.minPersonId : talk.maxPersonId
+    def targetId = personId == talk.maxPersonId ? talk.minPersonId : talk.maxPersonId
     List newPhrases = talkService.getTalkNewIds(personId, talk.id)
     String firstNew = newPhrases.size() ? newPhrases.last() : ""
     newPhrases.addAll(talkService.getTalkNewIds(targetId, talk.id))
@@ -44,7 +45,7 @@ class TalksController extends UtilController {
 
     if (request.post && !command.hasErrors()) {
       // TODO: check if it is a person
-      long targetId = subjectDomainService.getIdByDomain(command.targetDomain)
+      def targetId = subjectDomainService.getIdByDomain(command.targetDomain)
       if (targetId) {
         talkService.sendPhrase(command.text, person.id, targetId, command.topic)
         // TODO: flash.message
@@ -65,7 +66,7 @@ class TalksController extends UtilController {
       return
     }
 
-    talkService.sendPhrase(command.text, currentPerson.id as long, talk)
+    talkService.sendPhrase(command.text, currentPerson.id, talk)
     redirect action: "talk", params: [id: talk.id]
   }
 

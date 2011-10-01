@@ -13,7 +13,7 @@ class SubjectNodeController extends SubjectUtilController {
   def rightsService
 
   private Node getCurrentNode() {
-    nodeService.getByName(subjectId, params.node)
+    nodeService.getByName(subject, params.node)
   }
 
   private boolean nodeNotFound(Node node) {

@@ -22,7 +22,7 @@
     </blockquote>
   <p>The text in info object is:</p>
   <hr/>
-  $ {subject.info.frontText}
+  ${info.frontText}
 
   </body>
 </html>

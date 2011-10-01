@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import litclub.morphia.subject.PersonDAO
 
 class UserDetailsService implements GrailsUserDetailsService {
+  static transactional = false
   private Logger log = Logger.getLogger(getClass())
 
   def subjectDomainService
