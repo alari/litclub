@@ -2,17 +2,28 @@ package litclub
 
 import litclub.sec.RegisterCommand
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
-import org.codehaus.groovy.grails.plugins.springsecurity.NullSaltSource
-
-import groovy.text.SimpleTemplateEngine
 
 import litclub.sec.ResetPasswordCommand
+import org.springframework.beans.factory.annotation.Autowired
+import litclub.morphia.sec.RegistrationCodeDAO
+import litclub.morphia.sec.RegistrationCode
+import litclub.morphia.subject.PersonDAO
+import litclub.morphia.subject.Person
+import litclub.morphia.subject.Role
+import org.apache.log4j.Logger
 
 class RegistrationService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
+
   def springSecurityService
   def mailSenderService
   def subjectDomainService
   def i18n
+  @Autowired
+  RegistrationCodeDAO registrationCodeDao
+  @Autowired
+  PersonDAO personDao
 
   ServiceResponse handleRegistration(RegisterCommand command) {
     if (command.hasErrors()) {
@@ -20,14 +31,21 @@ class RegistrationService {
     }
 
     Person user = new Person(email: command.email, domain: command.domain,
-        password: command.password, accountLocked: true, enabled: true, info: new SubjectInfo())
+        password: command.password, accountLocked: true, enabled: true)
 
+    personDao.save(user)
+    if (!user.id) {
+      return new ServiceResponse(ok: false, messageCode: "user not saved")
+    }
+    /* TODO: validate
     if (!user.validate() || !user.save(flush: true)) {
       return new ServiceResponse(ok: false, messageCode: user.errors)
       // TODO
     }
+    */
 
-    RegistrationCode registrationCode = new RegistrationCode(domain: user.domain).save()
+    RegistrationCode registrationCode = new RegistrationCode(domain: user.domain)
+    registrationCodeDao.save(registrationCode)
 
     // TODO: move it to GORM
     subjectDomainService.setDomain(user.id, user.domain)
@@ -40,28 +58,29 @@ class RegistrationService {
 
     def conf = SpringSecurityUtils.securityConfig
 
-    def registrationCode = token ? RegistrationCode.findByToken(token) : null
+    def registrationCode = token ? registrationCodeDao.getByToken(token) : null
     if (!registrationCode) {
       return result.setAttributes(ok: false, messageCode: "register.error.badCode")
     }
 
     Person user
-    RegistrationCode.withTransaction { status ->
-      user = Person.findByDomain(registrationCode.domain)
-      if (!user) {
-        return result.setAttributes(ok: false, messageCode: "register.error.userNotFound")
-      }
 
-      user.accountLocked = false
-      if (!user.save(flush: true)) {
-        log.error "Cannot save user: " + user.errors
-        return result.setAttributes(ok: false, messageCode: "dont know what")
-      }
-      for (roleName in conf.ui.register.defaultRoleNames) {
-        PersonRole.create user, roleName.toString()
-      }
-      registrationCode.delete()
+    user = personDao.getByDomain(registrationCode.domain)
+    if (!user) {
+      return result.setAttributes(ok: false, messageCode: "register.error.userNotFound")
     }
+
+    user.accountLocked = false
+    for (roleName in conf.ui.register.defaultRoleNames) {
+      user.authorities.add(new Role(authority: roleName.toString()))
+    }
+
+    // TODO: this may fail
+    personDao.save(user)
+
+
+    registrationCodeDao.delete(registrationCode)
+
     if (result.messageCode) {
       return result
     }
@@ -85,18 +104,19 @@ class RegistrationService {
       return response.setAttributes(ok: false, messageCode: 'register.forgotPassword.username.missing')
     }
 
-    Person user = Person.findByDomain(domain)
+    Person user = personDao.getByDomain(domain)
     if (!user) {
       return response.setAttributes(ok: false, messageCode: 'register.forgotPassword.user.notFound')
     }
 
-    RegistrationCode registrationCode = new RegistrationCode(domain: user.domain).save()
+    RegistrationCode registrationCode = new RegistrationCode(domain: user.domain)
+    registrationCodeDao.save(registrationCode)
 
     return response.setAttributes(ok: sendForgotPasswordEmail(user, registrationCode.token))
   }
 
   ServiceResponse handleResetPassword(String token, ResetPasswordCommand command, String requestMethod) {
-    def registrationCode = token ? RegistrationCode.findByToken(token) : null
+    def registrationCode = token ? registrationCodeDao.getByToken(token) : null
     if (!registrationCode) {
       return new ServiceResponse(
           messageCode: 'register.resetPassword.badCode',
@@ -115,12 +135,12 @@ class RegistrationService {
       return new ServiceResponse(ok: false, model: [token: token, command: command])
     }
 
-    RegistrationCode.withTransaction { status ->
-      def user = Person.findByDomain(registrationCode.domain)
-      user.password = command.password
-      user.save()
-      registrationCode.delete()
-    }
+    // TODO: this may fail
+    def user = subjectDomainService.getPersonByDomain(registrationCode.domain)
+    user.password = command.password
+    personDao.save(user)
+
+    registrationCodeDao.delete registrationCode
 
     springSecurityService.reauthenticate registrationCode.domain
 
@@ -136,7 +156,7 @@ class RegistrationService {
         to: person.email,
         subject: i18n."register.confirm.emailSubject",
         view: "/mail-messages/confirmEmail",
-        model: [personId: person.id, token: token]
+        model: [username: person.domain, token: token]
     )
     true
   }
@@ -146,7 +166,7 @@ class RegistrationService {
         to: person.email,
         subject: i18n."register.forgotPassword.emailSubject",
         view: "/mail-messages/forgotPassword",
-        model: [personId: person.id, token: token]
+        model: [username: person.domain, token: token]
     )
     true
   }

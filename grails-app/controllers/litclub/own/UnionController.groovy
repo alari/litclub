@@ -1,13 +1,15 @@
 package litclub.own
 
 import grails.plugins.springsecurity.Secured
-import litclub.Person
+import litclub.morphia.subject.Person
 import litclub.SubjectDomainService
-import litclub.SubjectInfo
-import litclub.Union
-import litclub.morphia.PartyLevel
+import litclub.morphia.subject.SubjectInfo
+import litclub.morphia.subject.Union
+import litclub.morphia.linkage.PartyLevel
 import org.springframework.beans.factory.annotation.Autowired
 import litclub.UtilController
+import litclub.morphia.subject.SubjectDAO
+import litclub.morphia.subject.SubjectInfoDAO
 
 class UnionController extends UtilController {
 
@@ -15,15 +17,19 @@ class UnionController extends UtilController {
   def participationService
   def rightsService
 
+  @Autowired SubjectDAO subjectDao
+  @Autowired SubjectInfoDAO subjectInfoDao
+
   @Secured(["ROLE_USER", "ROLE_CREATE_UNION"])
   def create = {CreateUnionCommand command ->
 
     if (request.post && !command.hasErrors()) {
       Person founder = currentPerson
-      Union union = new Union(founder: founder, domain: command.domain,
-          info: new SubjectInfo(frontText: command.text)).save(flush: true)
-      // TODO: move it to afterInsert GORM event
-      subjectDomainService.setDomain(union.id, union.domain)
+      Union union = new Union(founder: founder, domain: command.domain)
+      subjectDao.save(union)
+
+      subjectInfoDao.save( new SubjectInfo(frontText: command.text, subject: union) )
+
       participationService.setParty(union, founder, PartyLevel.FOUNDER)
       redirect uri: "/" + union.domain
       return

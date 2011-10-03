@@ -1,8 +1,11 @@
 package litclub
 
 import grails.gsp.PageRenderer
+import org.apache.log4j.Logger
 
 class MailSenderService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
 
   static rabbitQueue = "mailSenderQueue"
 

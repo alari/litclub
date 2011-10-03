@@ -1,19 +1,27 @@
 package litclub
 
-import litclub.morphia.PartyLevel
+import litclub.morphia.linkage.PartyLevel
 import redis.clients.jedis.Jedis
-import litclub.morphia.SubjectLinkageBundle
-import litclub.morphia.dao.SubjectLinkageBundleDAO
+import litclub.morphia.linkage.SubjectLinkageBundle
+
+import litclub.morphia.linkage.SubjectLinkage
+import litclub.morphia.subject.Person
+import litclub.morphia.subject.Union
+import litclub.morphia.subject.Subject
+import litclub.morphia.subject.PersonDAO
 import org.springframework.beans.factory.annotation.Autowired
-import litclub.morphia.SubjectLinkage
+import org.apache.log4j.Logger
 
 class ParticipationService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
 
   private static final String KEY_LEVELS = "union.levels:"
   private static final String KEY_PARTICIPANTS = "union.participants:"
 
   def redisService
   def subjectLinkageService
+  @Autowired PersonDAO personDao
 
   private String keyParticipants(Union union) {
     KEY_PARTICIPANTS + union.id.toString()
@@ -121,6 +129,6 @@ class ParticipationService {
         if (!ids.contains(id)) ids.add(id)
       }
     }
-    ids.collect {Person.get(it)}
+    ids.collect {personDao.getById(it.toString())}
   }
 }

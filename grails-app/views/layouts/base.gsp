@@ -3,7 +3,7 @@
   @since 09.09.11 10:42
 --%>
 
-<%@ page import="litclub.morphia.NodeType; litclub.I18n" contentType="text/html;charset=UTF-8" %>
+<%@ page import="litclub.morphia.node.NodeType; litclub.I18n" contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -43,7 +43,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle">${message(code: "layout.add.node")}</a>
               <ul class="dropdown-menu">
-                <g:each in="${NodeType.values()}" var="type">
+                <g:each in="${litclub.morphia.node.NodeType.values()}" var="type">
                   <li><sbj:addNode type="${type}">${message(code:"layout.add."+type)}</sbj:addNode></li>
                 </g:each>
                 <li class="divider"></li>

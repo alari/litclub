@@ -57,11 +57,11 @@ grails.project.dependency.resolution = {
     }
     test("com.opera:operadriver:0.6")
 
-    //test "org.codehaus.geb:geb-spock:$gebVersion"
+    test "org.codehaus.geb:geb-spock:$gebVersion"
   }
 
   plugins {
-    compile ":hibernate:$grailsVersion"
+    //compile ":hibernate:$grailsVersion"
     compile ":jquery:1.6.1.1"
     compile ":resources:1.0.2"
    // compile ":lesscss-resources:0.4"
@@ -70,7 +70,9 @@ grails.project.dependency.resolution = {
 
     runtime ':aws:1.1.9.2'
 
-    test ":geb:$gebVersion"
+    test ":geb:$gebVersion", {
+      excludes "spock", "hibernate"
+    }
     //test ":spock:0.6-SNAPSHOT"
   }
 }

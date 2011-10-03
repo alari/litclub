@@ -2,7 +2,11 @@ package litclub.sec
 
 import litclub.ServiceResponse
 import grails.plugins.springsecurity.Secured
+import litclub.validators.PasswordValidators
+import litclub.SubjectDomainService
+import org.springframework.beans.factory.annotation.Autowired
 
+@Secured("IS_AUTHENTICATED_ANONYMOUSLY")
 class RegisterController {
 
   static defaultAction = 'index'
@@ -13,7 +17,6 @@ class RegisterController {
     render view: '/register/index', model: [command: new RegisterCommand()]
   }
 
-  @Secured("IS_AUTHENTICATED_ANUNYMOUSLY")
   def register = {RegisterCommand command ->
     def model = registrationService.handleRegistration(command).ok ? [emailSent: true] : [command: command]
     render view: '/register/index', model: model
@@ -74,3 +77,33 @@ class RegisterController {
 
 
 
+/**
+ * @author Dmitry Kurinskiy
+ * @since 18.08.11 23:02
+ */
+class RegisterCommand {
+
+  @Autowired
+  SubjectDomainService subjectDomainService
+
+  String domain
+  String email
+  String password
+  String password2
+
+  static constraints = {
+    domain blank: false, validator: { value, command ->
+      if (value) {
+        if (command.subjectDomainService.checkDomainExists(value)) {
+          return 'registerCommand.domain.unique'
+        }
+        if (!((String) value).matches('^[-_a-zA-Z0-9]{4,16}$')) {
+          return "registerCommand.domain.invalid"
+        }
+      }
+    }
+    email blank: false, email: true
+    password blank: false, minSize: 8, maxSize: 64, validator: PasswordValidators.passwordValidator
+    password2 validator: PasswordValidators.password2Validator
+  }
+}

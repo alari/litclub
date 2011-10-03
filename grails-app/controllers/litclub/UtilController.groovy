@@ -1,10 +1,15 @@
 package litclub
 
+import litclub.morphia.subject.Person
+import org.springframework.beans.factory.annotation.Autowired
+import litclub.morphia.subject.PersonDAO
+
 abstract class UtilController {
   def springSecurityService
+  @Autowired PersonDAO personDao
 
   protected Person getCurrentPerson() {
-    (Person) springSecurityService.currentUser
+    personDao.getById( springSecurityService.principal?.id?.toString() )
   }
 
   protected void setMessageCode(String code) {

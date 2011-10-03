@@ -1,11 +1,12 @@
 package litclub.own
 
 import grails.plugins.springsecurity.Secured
-import litclub.Person
-import litclub.Talk
-import litclub.TalkPhrase
+import litclub.morphia.subject.Person
+import litclub.morphia.talk.Talk
+import litclub.morphia.talk.TalkPhrase
 import litclub.UtilController
 
+// TODO: clear the code, move to service, make more impl-indep
 @Secured(["ROLE_USER"])
 class TalksController extends UtilController {
 
@@ -19,18 +20,18 @@ class TalksController extends UtilController {
     [talks: talkService.getTalks(person.id, -20, -1)]
   }
 
-  def talk(long id) {
-    Talk talk = Talk.get(id)
-    long personId = currentPerson.id
+  def talk(String id) {
+    Talk talk = talkService.getTalk(id)
+    def personId = currentPerson.id
     // TODO: correct errors & redirects
     if (!talk || !talkAccessable(talk)) {
       errorCode = "error: ${talk}"
       redirect uri: "/"
       return
     }
-    long targetId = personId == talk.maxPersonId ? talk.minPersonId : talk.maxPersonId
+    def targetId = personId == talk.maxPersonId ? talk.minPersonId : talk.maxPersonId
     List newPhrases = talkService.getTalkNewIds(personId, talk.id)
-    long firstNew = newPhrases.size() ? newPhrases.last() as long : 0
+    String firstNew = newPhrases.size() ? newPhrases.last() : ""
     newPhrases.addAll(talkService.getTalkNewIds(targetId, talk.id))
 
     List<TalkPhrase> phrases = talkService.getPhrasesWithNew(id, firstNew, 10, 2)
@@ -44,7 +45,7 @@ class TalksController extends UtilController {
 
     if (request.post && !command.hasErrors()) {
       // TODO: check if it is a person
-      long targetId = subjectDomainService.getIdByDomain(command.targetDomain)
+      def targetId = subjectDomainService.getIdByDomain(command.targetDomain)
       if (targetId) {
         talkService.sendPhrase(command.text, person.id, targetId, command.topic)
         // TODO: flash.message
@@ -58,14 +59,14 @@ class TalksController extends UtilController {
 
   @Secured(["ROLE_USER", "ROLE_TALK"])
   def sayPhrase(SayPhraseCommand command) {
-    Talk talk = Talk.get(command.talkId)
+    Talk talk = talkService.getTalk(command.talkId)
 
     if (!talkAccessable(talk)) {
       redirect uri: "/"
       return
     }
 
-    talkService.sendPhrase(command.text, currentPerson.id as long, talk)
+    talkService.sendPhrase(command.text, currentPerson.id, talk)
     redirect action: "talk", params: [id: talk.id]
   }
 
@@ -75,12 +76,12 @@ class TalksController extends UtilController {
 }
 
 class SayPhraseCommand {
-  long talkId
+  String talkId
   String text
 
   static constraints = {
     text maxSize: 21845, blank: false
-    talkId nullable: false
+    talkId nullable: false, minSize: 24, maxSize: 24
   }
 }
 

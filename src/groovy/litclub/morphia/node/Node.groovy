@@ -1,4 +1,4 @@
-@Typed package litclub.morphia
+@Typed package litclub.morphia.node
 
 import com.google.code.morphia.annotations.Entity
 import org.bson.types.ObjectId
@@ -8,6 +8,7 @@ import com.google.code.morphia.annotations.Version
 import com.google.code.morphia.annotations.Reference
 import com.google.code.morphia.annotations.Index
 import com.google.code.morphia.annotations.Indexes
+import litclub.morphia.subject.Subject
 
 /**
  * @author Dmitry Kurinskiy
@@ -15,15 +16,16 @@ import com.google.code.morphia.annotations.Indexes
  */
 @Entity
 @Indexes([
-@Index(value = "subjectId,name", unique = true, dropDups = true)])
+@Index(value = "subject,name", unique = true, dropDups = true)])
 class Node {
   @Id ObjectId id
 
-  Long subjectId
+  @Reference(lazy=true)
+  Subject subject
 
   NodeType type
 
-  @Reference(lazy=true)
+  @Reference(lazy = true)
   NodeContent content
 
   String title

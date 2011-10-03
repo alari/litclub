@@ -1,35 +1,31 @@
 package litclub
 
-import litclub.morphia.dao.SubjectLinkageBundleDAO
+import litclub.morphia.linkage.SubjectLinkageBundleDAO
 import org.springframework.beans.factory.annotation.Autowired
-import litclub.morphia.SubjectLinkageBundle
-import litclub.morphia.SubjectLinkage
-import litclub.morphia.PartyLevel
+import litclub.morphia.linkage.SubjectLinkageBundle
+import litclub.morphia.linkage.SubjectLinkage
+import litclub.morphia.linkage.PartyLevel
+import litclub.morphia.subject.Subject
+import org.apache.log4j.Logger
 
 class SubjectLinkageService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
 
   @Autowired
   SubjectLinkageBundleDAO subjectLinkageBundleDao
-
-  SubjectLinkageBundle getBundle(long subjectId) {
-    subjectLinkageBundleDao.getBySubject(subjectId)
-  }
 
   SubjectLinkageBundle getBundle(Subject subject) {
     subjectLinkageBundleDao.getBySubject(subject)
   }
 
-  List<SubjectLinkage> getLinkages(long subjectId) {
-    subjectLinkageBundleDao.getBySubject(subjectId).linkages.collect {it.value}
-  }
-
   List<SubjectLinkage> getLinkages(Subject subject) {
-    getLinkages(subject.id)
+    subjectLinkageBundleDao.getBySubject(subject).linkages.collect {it.value}
   }
 
 
   void setLinkage(Subject base, Subject rel, PartyLevel level) {
-    subjectLinkageBundleDao.setLinkage(base, new SubjectLinkage(subjectId: rel.id, level: level, info: ""))
+    subjectLinkageBundleDao.setLinkage(base, new SubjectLinkage(subject: rel, level: level, info: ""))
   }
 
   SubjectLinkage getLinkage(Subject base, Subject rel) {
