@@ -7,7 +7,8 @@ import geb.Page
  * @since 31.08.11 13:11
  */
 class RegisterPage extends Page{
-  static url = "register"
+  static url = "x.register"
+  static at = { $("input[name=password]").size()>0 }
 
   static content = {
     domainInput { $("input[name=domain]") }
