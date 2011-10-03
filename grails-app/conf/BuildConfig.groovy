@@ -58,6 +58,10 @@ grails.project.dependency.resolution = {
     test("com.opera:operadriver:0.6")
 
     test "org.codehaus.geb:geb-spock:$gebVersion"
+
+    build('net.sourceforge.nekohtml:nekohtml:1.9.15') {
+       excludes "xml-apis"
+    }
   }
 
   plugins {
@@ -73,6 +77,10 @@ grails.project.dependency.resolution = {
     test ":geb:$gebVersion", {
       excludes "spock", "hibernate"
     }
-    //test ":spock:0.6-SNAPSHOT"
+    test ":spock:0.6-SNAPSHOT"
+
+    build(':release:1.0.0.RC3') {
+      excludes "svn", "nekohtml"
+    }
   }
 }

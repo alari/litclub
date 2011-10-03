@@ -7,16 +7,16 @@
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.chrome.ChromeDriver
-//import com.opera.core.systems.OperaDriver
+import com.opera.core.systems.OperaDriver
 
 System.out.println("Running GebConfig")
 
 // Use htmlunit as the default
 // See: http://code.google.com/p/selenium/wiki/HtmlUnitDriver
 driver = {
-	def driver = new HtmlUnitDriver()
-	driver.javascriptEnabled = true
-	driver
+  // FIREFOX as the default
+  new FirefoxDriver()
+  //new HtmlUnitDriver(false)
 }
 
 environments {
@@ -32,9 +32,9 @@ environments {
 	firefox {
 		driver = { new FirefoxDriver() }
 	}
- /*
+
   opera {
 		driver = { new OperaDriver() }
 	}
-   */
+
 }
