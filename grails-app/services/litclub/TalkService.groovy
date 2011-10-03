@@ -15,16 +15,13 @@ class TalkService {
   static transactional = false
   private Logger log = Logger.getLogger(getClass())
 
-  private static final String KEY_NEW = "talks:new.phrases.count:"
-  private static final String KEY_TALKS = "talks.person:"
-  private static final String KEY_PHRASES = "talk:"
-  private static final String KEY_PHRASES_NEW = "talk.new.phrases:"
-
   def redisService
   @Autowired
   TalkDAO talkDao
   @Autowired
   TalkPhraseDAO talkPhraseDao
+  @Autowired
+  RedisKeys redisKeys
 
   Talk getTalk(String id){
     talkDao.getById(id)
@@ -71,19 +68,19 @@ class TalkService {
     redisService.withTransaction {Transaction t ->
 
       // add to phrases chain
-      t.lpush(KEY_PHRASES + talkId, phrase.id.toString())
+      t.lpush(redisKeys.talkPhrases(talkId), phrase.id.toString())
 
       // add to talks chains
       [phrase.talk.minPersonId, phrase.talk.maxPersonId].each {pid ->
-        t.lrem(KEY_TALKS + pid, 1, talkId)
-        t.lpush(KEY_TALKS + pid, talkId)
+        t.lrem(redisKeys.talks(pid.toString()), 1, talkId)
+        t.lpush(redisKeys.talks(pid.toString()), talkId)
       }
       // update unread count
       String targetPerson = (phrase.personId == phrase.talk.minPersonId ? phrase.talk.maxPersonId : phrase.talk.minPersonId).toString()
-      t.incr(KEY_NEW + targetPerson)
+      t.incr(redisKeys.talkNewPhrasesCount(targetPerson))
 
       // add to unread
-      t.lpush(KEY_PHRASES_NEW + targetPerson + ":" + talkId, phrase.id.toString())
+      t.lpush(redisKeys.talkNewPhrases(targetPerson, talkId), phrase.id.toString())
     }
 
     // update talk cache
@@ -100,21 +97,21 @@ class TalkService {
   List<String> getTalkNewIds(personId, talkId) {
     List<String> newIds = []
     redisService.withRedis {Jedis redis ->
-      newIds = redis.lrange("${KEY_PHRASES_NEW}${personId.toString()}:${talkId}", 0, -1)
+      newIds = redis.lrange("${redisKeys.talkNewPhrases(personId.toString(), talkId)}", 0, -1)
     }
     newIds
   }
 
   int getTalkNewCount(personId, talkId) {
     int cnt = 0
-    redisService.withRedis {Jedis redis -> cnt = redis.llen("${KEY_PHRASES_NEW}${personId.toString()}:${talkId.toString()}")}
+    redisService.withRedis {Jedis redis -> cnt = redis.llen("${redisKeys.talkNewPhrases(personId.toString(), talkId.toString)}")}
     cnt
   }
 
   List<Talk> getTalks(personId, int start, int end) {
     List<Talk> talks = []
     redisService.withRedis {Jedis redis ->
-      redis.lrange(KEY_TALKS + personId.toString(), start, end).each {String talkId ->
+      redis.lrange(redisKeys.talks(personId.toString()), start, end).each {String talkId ->
         talks.add(talkDao.getById(talkId))
       }
     }
@@ -124,7 +121,7 @@ class TalkService {
   List<Talk> getTalksWithNew(personId,  firstNew, int min, int step) {
     List<Talk> talks = []
     redisService.withRedis {Jedis redis ->
-      redis.lrange(KEY_TALKS + personId.toString(), -min, 0).each {String talkId ->
+      redis.lrange(redisKeys.talks(personId.toString()), -min, 0).each {String talkId ->
         talks.add(talkDao.getById(talkId))
       }
     }
@@ -134,7 +131,7 @@ class TalkService {
   List<TalkPhrase> getPhrases(String talkId, int start, int end) {
     List<TalkPhrase> phrases = []
     redisService.withRedis {Jedis redis ->
-      redis.lrange(KEY_PHRASES + talkId, start, end).each {String phraseId ->
+      redis.lrange(redisKeys.talkPhrases(talkId), start, end).each {String phraseId ->
         phrases.add(talkPhraseDao.getById(phraseId))
       }
     }
@@ -144,14 +141,14 @@ class TalkService {
   List<TalkPhrase> getPhrasesWithNew(String talkId, firstNew, int minNum, int step) {
     List<TalkPhrase> phrases = []
     redisService.withRedis {Jedis redis ->
-      redis.lrange(KEY_PHRASES + talkId, 0, minNum).each {String phraseId ->
+      redis.lrange(redisKeys.talkPhrases(talkId), 0, minNum).each {String phraseId ->
         phrases.add(talkPhraseDao.getById(phraseId))
       }
       if (firstNew) GParsPool.withPool {
         boolean pulled = phrases.size() ? true : false
         while (pulled && !phrases.anyParallel {it.id == firstNew}) {
           pulled = false
-          redis.lrange(KEY_PHRASES + talkId, minNum, minNum + step).each {String phraseId ->
+          redis.lrange(redisKeys.talkPhrases(talkId), minNum, minNum + step).each {String phraseId ->
             phrases.add(talkPhraseDao.getById(phraseId))
             pulled = true
           }
@@ -169,13 +166,13 @@ class TalkService {
       talkDao.save(phrase.talk)
     }
     redisService.withRedis {Jedis redis ->
-      redis.decr(KEY_NEW + personId.toString())
-      redis.lrem("${KEY_PHRASES_NEW}${personId.toString()}:${phrase.talk.id.toString()}", -1, phrase.id.toString())
+      redis.decr(redisKeys.talkNewPhrasesCount(personId.toString()))
+      redis.lrem("${redisKeys.talkNewPhrases(personId.toString(), phrase.talk.id.toString())}", -1, phrase.id.toString())
     }
   }
 
   int getNewCount(personId) {
-    def nc = redisService."${KEY_NEW}${personId.toString()}"
+    def nc = redisService."${redisKeys.talkNewPhrasesCount(personId.toString())}"
     nc ? Integer.parseInt(nc) : 0
   }
 }

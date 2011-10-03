@@ -17,10 +17,10 @@ class RegistrationStorySpec extends GebReportingSpec {
   def "can sign up"(){
     when:
       to RegisterPage
-      domainInput.value = "test"
-      emailInput.value = "test@123.dl"
-      pwdInput.value = "test123\$"
-      pwd2Input.value = "test123\$"
+      domainInput.value( "test" )
+      emailInput.value( "test@123.dl" )
+      pwdInput.value( "test123\$" )
+      pwd2Input.value( "test123\$" )
       submit.click()
     then:
       $("form input").size() == 0

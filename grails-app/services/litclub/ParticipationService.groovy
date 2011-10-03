@@ -16,19 +16,17 @@ class ParticipationService {
   static transactional = false
   private Logger log = Logger.getLogger(getClass())
 
-  private static final String KEY_LEVELS = "union.levels:"
-  private static final String KEY_PARTICIPANTS = "union.participants:"
-
   def redisService
   def subjectLinkageService
   @Autowired PersonDAO personDao
+  @Autowired RedisKeys redisKeys
 
   private String keyParticipants(Union union) {
-    KEY_PARTICIPANTS + union.id.toString()
+    redisKeys.participants(union.id.toString())
   }
 
   private String keyLevels(Union union) {
-    KEY_LEVELS + union.id.toString()
+    redisKeys.partyLevels(union.id.toString())
   }
 
   PartyLevel getLevel(Union union, Person person) {
@@ -58,7 +56,7 @@ class ParticipationService {
   void setParty(Union union, Person person, PartyLevel level) {
     PartyLevel wasLevel = PartyLevel.NOBODY
     redisService.withRedis {Jedis redis ->
-      wasLevel = PartyLevel.getByName(redis.hget(KEY_LEVELS + union.id, person.id.toString()))
+      wasLevel = PartyLevel.getByName(redis.hget(keyLevels(union), person.id.toString()))
       if (wasLevel.is(level)) return;
 
       redis.hset(keyLevels(union), person.id.toString(), level.toString())
