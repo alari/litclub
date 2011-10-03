@@ -16,5 +16,7 @@ class RegisterPage extends Page{
     pwdInput {$("input[name=password]")}
     pwd2Input {$("input[name=password2]")}
     submit{$("input[type=submit]")}
+
+    verifyLink{$("a.test.verify-registration")}
   }
 }

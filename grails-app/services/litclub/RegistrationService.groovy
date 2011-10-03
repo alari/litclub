@@ -26,8 +26,9 @@ class RegistrationService {
   PersonDAO personDao
 
   ServiceResponse handleRegistration(RegisterCommand command) {
+    ServiceResponse resp = new ServiceResponse(ok: false)
     if (command.hasErrors()) {
-      return new ServiceResponse(ok: false)
+      return resp.setAttributes(model: [commmand: command])
     }
 
     Person user = new Person(email: command.email, domain: command.domain,
@@ -35,7 +36,7 @@ class RegistrationService {
 
     personDao.save(user)
     if (!user.id) {
-      return new ServiceResponse(ok: false, messageCode: "user not saved")
+      return resp.setAttributes(model: [commmand: command], messageCode: "user not saved")
     }
     /* TODO: validate
     if (!user.validate() || !user.save(flush: true)) {
@@ -47,10 +48,8 @@ class RegistrationService {
     RegistrationCode registrationCode = new RegistrationCode(domain: user.domain)
     registrationCodeDao.save(registrationCode)
 
-    // TODO: move it to GORM
-    subjectDomainService.setDomain(user.id, user.domain)
     sendRegisterEmail(user, registrationCode.token)
-    return new ServiceResponse(ok: true)
+    return new ServiceResponse(ok: true, model: [emailSent: true, token: registrationCode.token])
   }
 
   ServiceResponse verifyRegistration(String token) {
