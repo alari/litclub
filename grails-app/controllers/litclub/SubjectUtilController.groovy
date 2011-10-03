@@ -1,11 +1,17 @@
 package litclub
 
+import org.springframework.beans.factory.annotation.Autowired
+import litclub.morphia.subject.SubjectDAO
+import litclub.morphia.subject.Subject
+
 abstract class SubjectUtilController extends UtilController {
-  protected long getSubjectId() {
+  @Autowired SubjectDAO subjectDao
+
+  protected String getSubjectId() {
     request.subjectId
   }
 
   protected Subject getSubject() {
-    Subject.get(subjectId)
+    subjectDao.getById(subjectId)
   }
 }

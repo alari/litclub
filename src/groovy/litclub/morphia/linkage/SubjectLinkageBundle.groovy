@@ -1,10 +1,12 @@
-package litclub.morphia
+@Typed package litclub.morphia.linkage
 
 import com.google.code.morphia.annotations.Entity
 import org.bson.types.ObjectId
 import com.google.code.morphia.annotations.Id
 import com.google.code.morphia.annotations.Indexed
 import com.google.code.morphia.annotations.Embedded
+import com.google.code.morphia.annotations.Reference
+import litclub.morphia.subject.Subject
 
 /**
  * @author Dmitry Kurinskiy
@@ -15,9 +17,10 @@ class SubjectLinkageBundle {
   @Id ObjectId id
 
   @Indexed
-  long subjectId
+  @Reference(lazy=true)
+  Subject subject
 
   @Embedded
-  Map<String,SubjectLinkage> linkages = [:]
+  Map<String, SubjectLinkage> linkages = [:]
 }
 

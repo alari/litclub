@@ -1,4 +1,4 @@
-@Typed package litclub.morphia
+@Typed package litclub.morphia.node
 
 /**
  * @author Dmitry Kurinskiy
@@ -11,7 +11,7 @@ public enum NodeType {
   BLOGPOST("post"),
   THREAD("thread");
 
-  static private Map<String,NodeType> byName = [:]
+  static private Map<String, NodeType> byName = [:]
 
   static {
     values().each {byName.put(it.name, it)}
@@ -19,15 +19,15 @@ public enum NodeType {
 
   private String name
 
-  private NodeType(String name){
+  private NodeType(String name) {
     this.name = name
   }
 
-  String toString(){
+  String toString() {
     name
   }
 
-  static NodeType getByName(String name){
+  static NodeType getByName(String name) {
     byName.get(name)
   }
 }

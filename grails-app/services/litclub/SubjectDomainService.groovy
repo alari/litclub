@@ -1,25 +1,23 @@
 package litclub
 
 import redis.clients.jedis.Jedis
+import org.apache.log4j.Logger
 
 class SubjectDomainService {
+  static transactional = false
+  private Logger log = Logger.getLogger(getClass())
 
-  private final static String KEY = "subject:domains"
+  private final static String KEY = "subject.domains"
 
   def redisService
 
-  long getIdByDomain(String domain) {
-    if (!domain) return 0
-    long id = 0
+  String getIdByDomain(String domain) {
+    if (!domain) return ""
+    String id = ""
     redisService.withRedis {Jedis jedis ->
-      id = jedis.hget(KEY, domain)?.toLong() ?: 0
+      id = jedis.hget(KEY, domain) ?: ""
     }
     id
-  }
-
-  Subject getSubjectByDomain(String domain) {
-    long id = getIdByDomain(domain)
-    id ? Subject.get(id) : null
   }
 
   boolean checkDomainExists(String domain) {
@@ -38,7 +36,7 @@ class SubjectDomainService {
     }
   }
 
-  boolean setDomain(long subjectId, String domain, String oldDomain = null) {
+  boolean setDomain(subjectId, String domain, String oldDomain = null) {
     if (!subjectId || !domain) return false
     int ok = 0
     redisService.withRedis {Jedis jedis ->

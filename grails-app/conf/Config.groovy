@@ -107,9 +107,8 @@ log4j = {
 }
 
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'litclub.Person'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'litclub.PersonRole'
-grails.plugins.springsecurity.authority.className = 'litclub.Role'
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'litclub.morphia.subject.Person'
+grails.plugins.springsecurity.authority.className = 'litclub.morphia.subject.Role'
 grails.plugins.springsecurity.password.algorithm = 'md5'
 
 grails.plugins.springsecurity.apf.filterProcessesUrl = "/checklogin"
