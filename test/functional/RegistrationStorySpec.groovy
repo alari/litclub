@@ -7,6 +7,13 @@ import spock.lang.Stepwise
  */
 @Stepwise
 class RegistrationStorySpec extends GebReportingSpec {
+  def "can open reg page"(){
+    when:
+      to RegisterPage
+    then:
+      at RegisterPage
+  }
+
   def "can sign up"(){
     when:
       to RegisterPage
