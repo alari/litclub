@@ -6,8 +6,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-  <meta name="layout" content="mono"/>
-  <title>Talks</title>
+    <meta name="layout" content="mono"/>
+    <title>Talks</title>
 </head>
 
 <body>
@@ -15,13 +15,13 @@
 
 <h2><g:link action="create">Create a new one</g:link></h2>
 <g:each in="${talks}" var="talk">
-  <div>
-    <h4><g:link action="talk" id="${talk.id}">${talk.topic}</g:link> (<talk:newCount talkId="${talk.id}"/>)</h4>
+    <div>
+        <h4><g:link action="talk" id="${talk.id}">${talk.topic}</g:link> (<talk:newCount talkId="${talk.id}"/>)</h4>
 
-    <p><sbj:link id="${talk.lastPhrasePersonId}"/> ${talk.lastPhraseLine} | <g:formatBoolean
-        boolean="${talk.lastPhraseNew}"/></p>
-  </div>
-  <hr/>
+        <p><sbj:link id="${talk.lastPhrasePersonId}"/> ${talk.lastPhraseLine} | <g:formatBoolean
+                boolean="${talk.lastPhraseNew}"/></p>
+    </div>
+    <hr/>
 </g:each>
 </body>
 </html>

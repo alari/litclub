@@ -52,4 +52,21 @@ class MarkupTagLib {
     out << body()
     out << '</div>'
   }
+
+  /**
+   * @attr active
+   * @attr labelCode required
+   * @attr link required
+   */
+  def tab = {attrs, body->
+    if(!request.tabs) {
+      request.tabs = []
+    }
+    (request.tabs as List).add([
+        labelCode: attrs.labelCode,
+        active: attrs.containsKey("active"),
+        link: attrs.link,
+        body: body()
+    ])
+  }
 }

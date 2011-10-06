@@ -5,12 +5,13 @@
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
-  <head>
+<head>
     <meta name="layout" content="mono"/>
-      <meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <title>Error404</title>
-  </head>
-  <body>
-  <mk:pageHeader>404 <small>Page Not Found</small></mk:pageHeader>
-  </body>
+</head>
+
+<body>
+<mk:pageHeader>404 <small>Page Not Found</small></mk:pageHeader>
+</body>
 </html>

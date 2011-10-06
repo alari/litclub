@@ -7,83 +7,75 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8"/>
-  <title><g:layoutTitle default="${message(code:'layout.title')}"/></title>
-  <g:layoutHead/>
-  <r:require module="jquery"/>
-  <r:require module="twitterBootstrap"/>
-  <r:layoutResources/>
-  <script>
-  $(document).ready(function(){
-    $("body").bind("click", function (e) {
-    $('.dropdown-toggle, .menu').parent("li").removeClass("open");
-  });
-  $(".dropdown-toggle, .menu").click(function (e) {
-    var $li = $(this).parent("li").toggleClass('open');
-    return false;
-  });
-  });
-  </script>
-  <style type="text/css">
-  body{padding-top:54px}
-  </style>
+    <meta charset="utf-8"/>
+    <title><g:layoutTitle default="${message(code:'layout.title')}"/></title>
+    <g:layoutHead/>
+    <r:require module="jquery"/>
+    <r:require module="twitterBootstrap"/>
+    <r:require module="twitterDropdown"/>
+    <r:layoutResources/>
+    <style type="text/css">
+    body {
+        padding-top: 54px
+    }
+    </style>
 </head>
 
 <body>
 <div class="topbar">
-  <div class="topbar-inner">
-    <div class="container">
-      <h3><g:link uri="/">${message(code: "layout.title")}</g:link></h3>
-      <ul class="nav">
+    <div class="topbar-inner">
+        <div class="container">
+            <h3><g:link uri="/">${message(code: "layout.title")}</g:link></h3>
+            <ul class="nav">
 
-        <sec:ifLoggedIn>
-          <li><sbj:link/></li>
-          <li><g:link controller="logout">${message(code: "layout.logout")}</g:link></li>
-          <li><g:link controller="talks">${message(code: "layout.talks")} (<talk:newCount/>)</g:link></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle">${message(code: "layout.add.node")}</a>
-              <ul class="dropdown-menu">
-                <g:each in="${litclub.morphia.node.NodeType.values()}" var="type">
-                  <li><sbj:addNode type="${type}">${message(code:"layout.add."+type)}</sbj:addNode></li>
-                </g:each>
-                <li class="divider"></li>
-                <li><a href="#">Another link</a></li>
-              </ul>
-          </li>
-        </sec:ifLoggedIn>
-        <sec:ifNotLoggedIn>
-          <li><g:link controller="register">${message(code: "layout.register")}</g:link></li>
-          <li><g:link controller="login">${message(code: "layout.login")}</g:link></li>
-        </sec:ifNotLoggedIn>
+                <sec:ifLoggedIn>
+                    <li><sbj:link/></li>
+                    <li><g:link controller="logout">${message(code: "layout.logout")}</g:link></li>
+                    <li><g:link controller="talks">${message(code: "layout.talks")} (<talk:newCount/>)</g:link></li>
+                    <li class="dropdown" data-dropdown="dropdown">
+                        <a href="#" class="dropdown-toggle">${message(code: "layout.add.node")}</a>
+                        <ul class="dropdown-menu">
+                            <g:each in="${litclub.morphia.node.NodeType.values()}" var="type">
+                                <li><sbj:addNode
+                                        type="${type}">${message(code: "layout.add." + type)}</sbj:addNode></li>
+                            </g:each>
+                            <li class="divider"></li>
+                            <li><a href="#">Another link</a></li>
+                        </ul>
+                    </li>
+                </sec:ifLoggedIn>
+                <sec:ifNotLoggedIn>
+                    <li><g:link controller="register">${message(code: "layout.register")}</g:link></li>
+                    <li><g:link controller="login">${message(code: "layout.login")}</g:link></li>
+                </sec:ifNotLoggedIn>
 
-      </ul>
-    </div></div></div>
+            </ul>
+        </div></div></div>
 
 
 
 
 <g:if test="${flash.message}">
-  <div class="alert-message info">
-    <a class="close" href="#">&times;</a>
+    <div class="alert-message info">
+        <a class="close" href="#">&times;</a>
 
-    <p>${flash.message}</p>
-  </div>
+        <p>${flash.message}</p>
+    </div>
 </g:if>
 <g:if test="${flash.error}">
-  <div class="alert-message error">
-    <a class="close" href="#">&times;</a>
+    <div class="alert-message error">
+        <a class="close" href="#">&times;</a>
 
-    <p>${flash.error}</p>
-  </div>
+        <p>${flash.error}</p>
+    </div>
 </g:if>
 
 <g:layoutBody/>
 
-<div id="footer">
-  <div class="inner">
+<footer class="footer">
     <div class="container">
     &copy; ${message(code: "layout.footer.copyright")}
-    </div></div></div>
+    </div></footer>
 
 <r:layoutResources/>
 

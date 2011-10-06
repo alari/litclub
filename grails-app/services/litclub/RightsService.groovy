@@ -33,4 +33,8 @@ class RightsService {
   boolean canDelete(Node node) {
     true
   }
+
+  boolean canAdministrate(Subject context) {
+    true
+  }
 }
