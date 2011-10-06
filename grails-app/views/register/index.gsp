@@ -17,6 +17,9 @@
   <g:if test='${emailSent}'>
     <div class="alert-message success">
       ${message(code: 'register.confirm.sent')}
+        <g:if env="test">
+            <g:link class="test verify-registration" controller="register" action="verifyRegistration" params="[t:token]">TEST:confirm</g:link>
+        </g:if>
     </div>
   </g:if>
   <g:else>

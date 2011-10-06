@@ -10,6 +10,7 @@ import litclub.I18n
 import litclub.morphia.subject.SubjectInfoDAO
 import litclub.UserDetailsService
 import litclub.morphia.subject.PersonDAO
+import litclub.RedisKeys
 
 // Place your Spring DSL code here
 beans = {
@@ -28,4 +29,5 @@ beans = {
   personDao(PersonDAO)
 
   userDetailsService(UserDetailsService)
+  redisKeys(RedisKeys)
 }

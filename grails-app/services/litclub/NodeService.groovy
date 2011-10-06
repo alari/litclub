@@ -26,8 +26,6 @@ class NodeService {
       ""
   ] + NodeType.values().collect {it.toString()}
 
-  def redisService
-
   ServiceResponse addNode(Subject context, Person author, NodeType type, NodeFormCommand command, boolean isDraft) {
     ServiceResponse resp = new ServiceResponse()
     // TODO: check context, author
