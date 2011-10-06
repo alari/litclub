@@ -12,7 +12,7 @@ class SubjectController extends SubjectUtilController {
   @Autowired SubjectInfoDAO subjectInfoDao
 
   def index = {
-    [subject: subject, parties: participationService.getParties(subject), info: subjectInfoDao.getBySubject(subject)]
+    [subject: subject, parties: participationService.getLinkageParties(subject), info: subjectInfoDao.getBySubject(subject)]
   }
 
   def typeList = {

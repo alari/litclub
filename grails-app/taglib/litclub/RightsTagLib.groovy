@@ -1,6 +1,7 @@
 package litclub
 
 import litclub.morphia.subject.Subject
+import litclub.morphia.subject.Union
 
 class RightsTagLib {
   static namespace = "right"
@@ -10,5 +11,10 @@ class RightsTagLib {
   def canAdministrate = {attrs, body ->
     Subject subject = attrs.subject
     if(rightsService.canAdministrate(subject)) out << body()
+  }
+
+  def canJoin = {attrs,body ->
+    Union subject = attrs.union
+    if(rightsService.canJoin(subject)) out << body()
   }
 }

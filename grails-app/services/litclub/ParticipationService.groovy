@@ -29,6 +29,18 @@ class ParticipationService {
     redisKeys.partyLevels(union.id.toString())
   }
 
+  private String keyLevels(String unionId) {
+    redisKeys.partyLevels(unionId)
+  }
+
+  PartyLevel getLevel(String unionId, Person person) {
+    String level = PartyLevel.NOBODY.toString()
+    redisService.withRedis {Jedis redis ->
+      level = redis.hget(keyLevels(unionId), person.id.toString())
+    }
+    PartyLevel.getByName(level)
+  }
+
   PartyLevel getLevel(Union union, Person person) {
     String level = PartyLevel.NOBODY.toString()
     redisService.withRedis {Jedis redis ->
@@ -49,7 +61,7 @@ class ParticipationService {
     subjectLinkageService.getBundle(subject)
   }
 
-  List<SubjectLinkage> getParties(Subject subject) {
+  List<SubjectLinkage> getLinkageParties(Subject subject) {
     subjectLinkageService.getLinkages(subject)
   }
 

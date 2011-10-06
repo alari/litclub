@@ -11,7 +11,8 @@ enum PartyLevel {
   PARTICIPANT("participant", 1),
   NOBODY("nobody", 0),
   INVITED("invited", -1),
-  REQUESTED("requested", -2);
+  REQUESTED("requested", -2),
+  BANNED("banned", -3);
 
   static private Map<String, PartyLevel> byName = [:]
 

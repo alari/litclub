@@ -5,11 +5,14 @@ import litclub.morphia.subject.Subject
 import org.springframework.beans.factory.annotation.Autowired
 import litclub.morphia.subject.SubjectDAO
 import litclub.morphia.subject.PersonDAO
+import litclub.morphia.subject.Union
+import litclub.morphia.linkage.PartyLevel
 
 class SubjectTagLib {
   static namespace = "sbj"
 
   def springSecurityService
+  def participationService
   @Autowired SubjectDAO subjectDao
   @Autowired PersonDAO personDao
 
@@ -34,5 +37,35 @@ class SubjectTagLib {
     } else {
       out << g.link(controller: "subject", action: "", params: [domain: subject.domain], subject.domain+"(${subject.class.simpleName})")
     }
+  }
+
+  def ifParticipate = {attrs,body->
+    if(!springSecurityService.isLoggedIn()) return;
+    String unionId
+    if(attrs.in instanceof Union){
+      unionId = attrs.in.id.toString()
+    } else {
+      unionId = attrs.in
+    }
+    if(!unionId) return;
+
+    Person person = personDao.getById(springSecurityService.principal.id?.toString())
+
+    if(participationService.getLevel(unionId, person).hasParticipant()) out << body()
+  }
+
+  def ifNotParticipate = {attrs,body->
+    if(!springSecurityService.isLoggedIn()) return;
+    String unionId
+    if(attrs.in instanceof Union){
+      unionId = attrs.in.id.toString()
+    } else {
+      unionId = attrs.in
+    }
+    if(!unionId) return;
+
+    Person person = personDao.getById(springSecurityService.principal.id?.toString())
+
+    if(!participationService.getLevel(unionId, person).hasParticipant()) out << body()
   }
 }
