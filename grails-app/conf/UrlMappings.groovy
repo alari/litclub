@@ -45,6 +45,12 @@ class UrlMappings {
       }
       controller = "subjectNode"
     }
+    "/$domain/adm.$action" {
+      constraints {
+        domain domainCheck
+      }
+      controller = "subjectAdm"
+    }
 
 
     "/own.talks/$id?" {
