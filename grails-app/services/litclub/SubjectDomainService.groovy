@@ -2,20 +2,21 @@ package litclub
 
 import redis.clients.jedis.Jedis
 import org.apache.log4j.Logger
+import org.springframework.beans.factory.annotation.Autowired
 
 class SubjectDomainService {
   static transactional = false
   private Logger log = Logger.getLogger(getClass())
 
-  private final static String KEY = "subject.domains"
-
   def redisService
+  @Autowired
+  RedisKeys redisKeys
 
   String getIdByDomain(String domain) {
     if (!domain) return ""
     String id = ""
     redisService.withRedis {Jedis jedis ->
-      id = jedis.hget(KEY, domain) ?: ""
+      id = jedis.hget(redisKeys.subjectDomains(), domain) ?: ""
     }
     id
   }
@@ -24,7 +25,7 @@ class SubjectDomainService {
     if (!domain) return false
     boolean exists = true
     redisService.withRedis {Jedis jedis ->
-      exists = jedis.hexists(KEY, domain)
+      exists = jedis.hexists(redisKeys.subjectDomains(), domain)
     }
     exists
   }
@@ -32,7 +33,7 @@ class SubjectDomainService {
   void delDomain(String domain) {
     if (!domain) return;
     redisService.withRedis {Jedis jedis ->
-      jedis.hdel(KEY, domain)
+      jedis.hdel(redisKeys.subjectDomains(), domain)
     }
   }
 
@@ -40,7 +41,7 @@ class SubjectDomainService {
     if (!subjectId || !domain) return false
     int ok = 0
     redisService.withRedis {Jedis jedis ->
-      ok = jedis.hsetnx(KEY, domain, subjectId.toString())
+      ok = jedis.hsetnx(redisKeys.subjectDomains(), domain, subjectId.toString())
       if (ok && oldDomain) {
         delDomain(oldDomain)
       }

@@ -18,8 +18,7 @@ class RegisterController {
   }
 
   def register = {RegisterCommand command ->
-    def model = registrationService.handleRegistration(command).ok ? [emailSent: true] : [command: command]
-    render view: '/register/index', model: model
+    render view: '/register/index', model: registrationService.handleRegistration(command).model
   }
 
   def verifyRegistration = {
