@@ -30,7 +30,7 @@ class NodeService {
     ServiceResponse resp = new ServiceResponse()
     // TODO: check context, author
     if (!context || !author || context.id != author.id) {
-      return resp.setAttributes(ok: false, messageCode: "wrong context")
+      return resp.setAttributes(ok: false, messageCode: "node.error.context")
     }
 
     // TODO: create title from text, if title is blank
@@ -50,14 +50,14 @@ class NodeService {
     nodeDao.save(node)
     // TODO: check if we've saved the node correctly
 
-    resp.setAttributes(ok: true, redirectUri: buildUri(node), messageCode: "okay, you've got it")
+    resp.setAttributes(ok: true, redirectUri: buildUri(node), messageCode: "node.add.success")
   }
 
   ServiceResponse edit(Node node, Person author, NodeFormCommand command, boolean isDraft) {
     ServiceResponse resp = new ServiceResponse()
     // TODO: check author, his rights
     if (!author || node.subject.id != author.id) {
-      return resp.setAttributes(ok: false, messageCode: "wrong context")
+      return resp.setAttributes(ok: false, messageCode: "node.error.context")
     }
 
     node.title = command.title
@@ -70,7 +70,7 @@ class NodeService {
     nodeDao.save(node)
     // TODO: check if we've saved the node correctly
 
-    resp.setAttributes(ok: true, redirectUri: buildUri(node), messageCode: "okay, you've got it")
+    resp.setAttributes(ok: true, redirectUri: buildUri(node), messageCode: "node.edit.success")
   }
 
   def delete(Node node) {

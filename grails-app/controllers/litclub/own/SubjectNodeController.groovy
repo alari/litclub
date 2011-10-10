@@ -18,7 +18,7 @@ class SubjectNodeController extends SubjectUtilController {
 
   private boolean nodeNotFound(Node node) {
     if (!node?.id) {
-      errorCode = "not found"
+      errorCode = "node.error.notFound"
       redirect uri: "/"
       return true
     }
