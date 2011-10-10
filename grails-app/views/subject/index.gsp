@@ -32,5 +32,11 @@
     </mk:tab>
 </right:canAdministrate>
 
+<g:if test="${participants}">
+    <mk:tab labelCode="Participants" link="#sbj-participants">
+        <g:render template="unionParticipants" model="[subject: subject, participants: participants]"/>
+    </mk:tab>
+</g:if>
+
 </body>
 </html>

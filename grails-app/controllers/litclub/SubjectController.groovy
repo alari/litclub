@@ -2,6 +2,7 @@ package litclub
 
 import litclub.morphia.subject.SubjectInfoDAO
 import org.springframework.beans.factory.annotation.Autowired
+import litclub.morphia.subject.Union
 
 class SubjectController extends SubjectUtilController {
 
@@ -12,7 +13,11 @@ class SubjectController extends SubjectUtilController {
   @Autowired SubjectInfoDAO subjectInfoDao
 
   def index = {
-    [subject: subject, parties: participationService.getLinkageParties(subject), info: subjectInfoDao.getBySubject(subject)]
+    [
+        subject: subject,
+        parties: participationService.getLinkageParties(subject),
+        info: subjectInfoDao.getBySubject(subject),
+        participants: subject instanceof Union ? participationService.getParticipants(subject) : null]
   }
 
   def typeList = {

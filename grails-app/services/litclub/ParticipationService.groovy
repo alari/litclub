@@ -49,10 +49,10 @@ class ParticipationService {
     PartyLevel.getByName(level)
   }
 
-  Set<Long> getParticipants(Union union) {
-    Set<Long> participants = []
+  Set<Person> getParticipants(Union union) {
+    Set<Person> participants = []
     redisService.withRedis {Jedis redis ->
-      participants = redis.smembers(keyParticipants(union)).collect {it.toLong()}
+      participants = redis.smembers(keyParticipants(union)).collect{personDao.getById(it)}
     }
     participants
   }
@@ -98,6 +98,7 @@ class ParticipationService {
     if (level.is(PartyLevel.NOBODY)) return;
 
     redisService.withRedis {Jedis redis ->
+      redis.srem(keyParticipants(union), person.id.toString())
       redis.hdel(keyLevels(union), person.id.toString())
     }
     if (level.hasSenior()) {

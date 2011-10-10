@@ -3,7 +3,7 @@
     <p><strong><g:link controller="subjectAdm" action="join" params="[domain:subject.domain]">YOU MAY JOIN</g:link></strong></p>
 </right:canJoin>
 <sbj:ifParticipate in="${subject}">
-    <p><i>You do participate there.</i></p>
+    <p><i>You do participate there. <right:canLeave union="${subject}"><g:link controller="subjectAdm" action="leave" params="[domain:subject.domain]">YOU MAY LEAVE</g:link></right:canLeave> </i></p>
 </sbj:ifParticipate>
         <blockquote>
             <g:each in="${parties}" var="party">

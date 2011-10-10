@@ -50,4 +50,17 @@ class RightsService {
     if(subjectInfoDao.getBySubject(union).membershipPolicy != MembershipPolicy.OPEN) return false
     true
   }
+
+  boolean canLeave(Union union) {
+    if(!springSecurityService.isLoggedIn()) return false
+    PartyLevel level = participationService.getLevel(union, person)
+    if(level.is(PartyLevel.FOUNDER)) return false
+    return level.hasParticipant()
+  }
+
+  boolean canRevokeParticipant(Union union) {
+    if(!springSecurityService.isLoggedIn()) return false
+    PartyLevel level = participationService.getLevel(union, person)
+    level.is(PartyLevel.FOUNDER)
+  }
 }

@@ -17,4 +17,14 @@ class RightsTagLib {
     Union subject = attrs.union
     if(rightsService.canJoin(subject)) out << body()
   }
+
+  def canLeave = {attrs,body ->
+    Union subject = attrs.union
+    if(rightsService.canLeave(subject)) out << body()
+  }
+
+  def canRevokeParticipant = {attrs,body ->
+    Union subject = attrs.union
+    if(rightsService.canRevokeParticipant(subject)) out << body()
+  }
 }
