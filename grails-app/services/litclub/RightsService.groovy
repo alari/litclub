@@ -9,7 +9,7 @@ import org.apache.log4j.Logger
 import litclub.morphia.subject.Union
 import litclub.morphia.subject.SubjectInfoDAO
 import litclub.morphia.linkage.PartyLevel
-import litclub.morphia.subject.MembershipPolicy
+import litclub.morphia.subject.ParticipationPolicy
 
 class RightsService {
   static transactional = false
@@ -47,7 +47,7 @@ class RightsService {
   boolean canJoin(Union union) {
     if(!springSecurityService.isLoggedIn()) return false
     if(participationService.getLevel(union, person) != PartyLevel.NOBODY) return false
-    if(subjectInfoDao.getBySubject(union).membershipPolicy != MembershipPolicy.OPEN) return false
+    if(subjectInfoDao.getBySubject(union).participationPolicy != ParticipationPolicy.OPEN) return false
     true
   }
 
@@ -58,7 +58,7 @@ class RightsService {
     return level.hasParticipant()
   }
 
-  boolean canRevokeParticipant(Union union) {
+  boolean canRevokeParticipant(Union union, Person person) {
     if(!springSecurityService.isLoggedIn()) return false
     PartyLevel level = participationService.getLevel(union, person)
     level.is(PartyLevel.FOUNDER)

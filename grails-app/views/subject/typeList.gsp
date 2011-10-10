@@ -7,11 +7,11 @@
 <html>
 <head>
     <meta name="layout" content="mono"/>
-    <title>Simple GSP page</title></head>
+    <title>TODO: nodes list</title></head>
 
 <body>
 
-<mk:pageHeader>list of ${type}</mk:pageHeader>
+<mk:pageHeader>${type}</mk:pageHeader>
 
 <g:each in="${nodes}" var="node">
     <nd:link node="${node}"/>

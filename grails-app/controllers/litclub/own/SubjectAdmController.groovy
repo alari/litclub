@@ -3,11 +3,12 @@ package litclub.own
 import litclub.SubjectUtilController
 import litclub.morphia.subject.SubjectInfoDAO
 import org.springframework.beans.factory.annotation.Autowired
-import litclub.morphia.subject.MembershipPolicy
+
 import litclub.morphia.subject.Union
 import litclub.morphia.subject.SubjectInfo
 import litclub.morphia.linkage.PartyLevel
 import litclub.morphia.subject.Person
+import litclub.morphia.subject.ParticipationPolicy
 
 class SubjectAdmController extends SubjectUtilController{
 
@@ -15,11 +16,11 @@ class SubjectAdmController extends SubjectUtilController{
   def rightsService
   def participationService
 
-  def membershipPolicy = {
-    MembershipPolicy policy = MembershipPolicy.getByName(params.membershipPolicy)
+  def participationPolicy = {
+    ParticipationPolicy policy = ParticipationPolicy.getByName(params.participationPolicy)
     if(subject instanceof Union && rightsService.canAdministrate(subject)) {
       SubjectInfo info = subjectInfoDao.getBySubject(subject)
-      info.membershipPolicy = policy
+      info.participationPolicy = policy
       subjectInfoDao.save(info)
     }
     redirect controller: "subject", params: [domain: subject.domain]
@@ -29,27 +30,27 @@ class SubjectAdmController extends SubjectUtilController{
     Union union = (Union)subject
     if(rightsService.canJoin(union)) {
       participationService.setParty(union, currentPerson, PartyLevel.PARTICIPANT)
-      setMessageCode("member success")
-    } else setErrorCode("membership unavailable, sry")
+      setMessageCode("participation.join.success")
+    } else setErrorCode("participation.join.failed")
     redirect controller: "subject", params: [domain: subject.domain]
   }
 
   def leave = {
     Union union = (Union)subject
-    if(rightsService.canJoin(union)) {
+    if(rightsService.canLeave(union)) {
       participationService.removeParty(union, currentPerson)
-      setMessageCode("leave success")
-    } else setErrorCode("leave unavailable, sry")
+      setMessageCode("participation.leave.success")
+    } else setErrorCode("participation.leave.failed")
     redirect controller: "subject", params: [domain: subject.domain]
   }
 
   def revokeParticipant = {
     Union union = (Union)subject
-    if(rightsService.canRevokeParticipant(union)) {
       Person person = personDao.getByDomain(params.d)
+    if(rightsService.canRevokeParticipant(union, person)) {
       participationService.removeParty(union, person)
-      setMessageCode("revoke success")
-    } else setErrorCode("revoke unavailable, sry")
+      setMessageCode("participation.revoke.success")
+    } else setErrorCode("participation.revoke.failed")
     redirect controller: "subject", params: [domain: subject.domain]
   }
 }

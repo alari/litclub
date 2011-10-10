@@ -24,4 +24,12 @@ abstract class Subject {
   void prePersist() {
     lastUpdated = new Date();
   }
+
+  boolean isUnion() {
+    this.class == Union
+  }
+
+  boolean isPerson() {
+    this.class == Person
+  }
 }

@@ -15,7 +15,7 @@ class SubjectInfo {
 
   String frontText = ""
 
-  MembershipPolicy membershipPolicy = MembershipPolicy.CLOSED
+  ParticipationPolicy participationPolicy = ParticipationPolicy.CLOSED
 
   @Reference(lazy=true)
   Subject subject

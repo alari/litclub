@@ -18,15 +18,15 @@
 <g:formatDate date="${node.dateCreated}"/>
 
 <br/>
-It's a draft: <g:formatBoolean boolean="${node.isDraft}"/>
+<g:if test="${node.isDraft}"><b>${message(code:"node.draft.title")}</b></g:if>
 
 <mk:formActions>
     <nd:link node="${node}" action="draft">
-        ${(node.isDraft ? "Publish node from Drafts" : "Move to drafts")}</nd:link>
+        ${message(code:(node.isDraft ? "node.draft.publish" : "node.draft.moveTo"))}</nd:link>
     |
-    <nd:link node="${node}" action="edit">Edit Node</nd:link>
+    <nd:link node="${node}" action="edit">${message(code:"node.edit")}</nd:link>
     |
-    <nd:link node="${node}" action="delete">Delete Node</nd:link>
+    <nd:link node="${node}" action="delete">${message(code:"node.edit")}</nd:link>
 </mk:formActions>
 
 </body>

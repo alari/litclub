@@ -4,12 +4,12 @@ package litclub.morphia.subject
  * @author Dmitry Kurinskiy
  * @since 10/6/11 9:24 PM
  */
-public enum MembershipPolicy {
+public enum ParticipationPolicy {
   OPEN("open"),
   REQUEST("request"),
   CLOSED("closed");
 
-  static private Map<String,MembershipPolicy> byName = new HashMap<String, MembershipPolicy>(3)
+  static private Map<String,ParticipationPolicy> byName = new HashMap<String, ParticipationPolicy>(3)
 
   static{
     values().each {
@@ -18,7 +18,8 @@ public enum MembershipPolicy {
   }
 
   private final String name
-  MembershipPolicy(name) {
+
+  ParticipationPolicy(name) {
     this.name = name
   }
 
@@ -26,7 +27,7 @@ public enum MembershipPolicy {
     name
   }
 
-  static MembershipPolicy getByName(String name) {
+  static ParticipationPolicy getByName(String name) {
     byName.get(name)
   }
 }
